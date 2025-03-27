@@ -14,6 +14,37 @@ app.secret_key = key
 app.permanent_session_lifetime = timedelta(hours=1)
 
 
+
+
+# Basics and files
+
+
+@app.route('/favicon.ico')
+@app.route('/favicon')
+def favicon():
+    return send_from_directory('static', "favs/tempfav.ico", mimetype='image/vnd.microsoft.icon')
+
+
+@app.route("/.well-known/security.txt")
+def securitytxt():
+    return send_from_directory('static', "txts/security.txt", mimetype="text/plain")
+
+@app.route("/security.txt")
+def securitytxtredirect():
+    return redirect(url_for('securitytxt')), 301
+
+
+@app.route("/robots")
+@app.route("/robots.txt")
+def robots():
+    return send_from_directory("static", "txts/robots.txt", mimetype="text/plain")
+
+
+
+
+# Things with logging in and getting the tokens
+
+
 # All the routes that do not require login, so just the excluded routes
 def excluded(endpoint):
     endpoint.is_excluded = True
@@ -22,6 +53,9 @@ def excluded(endpoint):
 
 @app.before_request
 def check_login():
+    if request.endpoint is None:
+        return  # For 404 and stuff
+
     view_func = app.view_functions.get(request.endpoint)
 
     if view_func and getattr(view_func, "is_excluded", False):
@@ -42,21 +76,6 @@ def use_session_data(f):
         return f(*args, **kwargs)
 
     return wrapper
-
-
-@app.route('/favicon.ico')
-@app.route('/favicon')
-def favicon():
-    return send_from_directory('static', "tempfav.ico", mimetype='image/vnd.microsoft.icon')
-
-
-@app.route("/")
-@excluded
-def index():
-    if 'token' in session and datetime.now(timezone.utc).timestamp() - session.get("login_time", 10000) <= 3600:
-        # If user is already logged in and the token is valid, redirect to dashboard
-        return redirect(url_for("dashboard"))
-    return redirect(url_for("login"))
 
 
 @app.route("/login")
@@ -158,12 +177,6 @@ def set_token_and_info(token):
     return True
 
 
-@app.route("/dashboard")
-@use_session_data
-def dashboard():
-    return render_template("main/dashboard.html")
-
-
 @app.route("/logout")
 @excluded
 def logout():
@@ -194,6 +207,27 @@ def logindev():
     set_token_and_info(data.get("access_token"))
 
     return redirect(url_for("dashboard"))
+
+
+
+@app.route("/")
+@excluded
+def index():
+    if 'token' in session and datetime.now(timezone.utc).timestamp() - session.get("login_time", 10000) <= 3600:
+        # If user is already logged in and the token is valid, redirect to dashboard
+        return redirect(url_for("dashboard"))
+    return redirect(url_for("login"))
+
+
+# Main pages
+
+
+@app.route("/dashboard")
+@use_session_data
+def dashboard():
+    return render_template("main/dashboard.html")
+
+
 
 
 @app.errorhandler(404)

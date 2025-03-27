@@ -89,7 +89,7 @@ header {
     gap: 20px;
 }
 
-.menu-item {
+.menu-item, #logout {
     color: inherit;
     font-weight: bold;
     text-decoration: none;
@@ -102,7 +102,7 @@ header {
     border-style: solid;
 }
 
-.menu-item.active, .menu-item:hover {
+.menu-item.active, .menu-item:hover, #logout:hover {
     padding: 10px 0;
     border-bottom: 2px solid white;
 }
