@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for, session, flash, send_from_directory, g
-from datetime import timedelta, datetime
+from datetime import timedelta, datetime, timezone
 import requests
 from functools import wraps
 import os
@@ -30,7 +30,7 @@ def check_login():
     if "static" in request.endpoint or "favicon" in request.endpoint:
         return  # Static files are also excluded
 
-    if "token" not in session or datetime.utcnow().timestamp() - session.get("login_time", 0) > 3600:
+    if "token" not in session or datetime.now(timezone.utc).timestamp() - session.get("login_time", 0) > 3600:
         return redirect(url_for("logout"))
 
 
@@ -53,7 +53,7 @@ def favicon():
 @app.route("/")
 @excluded
 def index():
-    if 'token' in session and datetime.utcnow().timestamp() - session.get("login_time", 10000) <= 3600:
+    if 'token' in session and datetime.now(timezone.utc).timestamp() - session.get("login_time", 10000) <= 3600:
         # If user is already logged in and the token is valid, redirect to dashboard
         return redirect(url_for("dashboard"))
     return redirect(url_for("login"))
@@ -132,8 +132,7 @@ def set_token_and_info(token):
     student_id = response_data["items"][0]["links"][0]["id"]
     first_name = response_data["items"][0]["roepnaam"]
 
-    last_name = f"{middle_name} {response_data['items'][0]['achternaam']}" if (
-        middle_name := response_data["items"][0].get("voorvoegsel")) else response_data['items'][0]['achternaam']
+    last_name = f"{middle_name} {response_data['items'][0]['achternaam']}" if (middle_name := response_data["items"][0].get("voorvoegsel")) else response_data['items'][0]['achternaam']
 
     url = f"https://api.somtoday.nl/rest/v1/leerlingen/{student_id}/schoolgegevens"
 
@@ -153,8 +152,9 @@ def set_token_and_info(token):
     session["school_name"] = schooldata_data["huidigeVestiging"]["naam"]
     session["main_class"] = schooldata_data["stamgroepnaam"]
     session["token"] = token
-    session['login_time'] = datetime.utcnow().timestamp()
+    session['login_time'] = datetime.now(timezone.utc).timestamp()
 
+    
     return True
 
 
@@ -169,6 +169,31 @@ def dashboard():
 def logout():
     session.clear()
     return redirect(url_for("login"))
+
+
+# TEMPORARY
+@app.route("/login/dev")
+@excluded
+def logindev():
+    with open("rtoken.txt", "r") as file:
+        rtoken = file.read()
+    url = "https://somtoday.nl/oauth2/token"
+    body = {
+        "grant_type": "refresh_token",
+        "refresh_token": rtoken,
+        "client_id": "somtoday-leerling-native"
+    }
+    response = requests.post(url, data=body)
+
+    data = response.json()
+
+    with open("rtoken.txt", "w") as file:
+        file.write(data.get("refresh_token"))
+
+
+    set_token_and_info(data.get("access_token"))
+
+    return redirect(url_for("dashboard"))
 
 
 @app.errorhandler(404)
