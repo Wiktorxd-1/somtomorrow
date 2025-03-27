@@ -10,9 +10,6 @@
     </head>
     <body>
         <div id="header">
-            <div id="menu">
-
-            </div>
             <div id="profile">
                 <img id="avatar" src="https://upload.wikimedia.org/wikipedia/commons/6/6d/Phoenicopterus_roseus_%28Walvis_bay%29.jpg">
                 <div id="userinfocontainer">
@@ -21,6 +18,38 @@
                     <span id="userinfoclass">{{ g.main_class }}</span>
                 </div>
             </div>
+            <div id="menu">
+                <a href="/dashboard" class="menu-item {% if active_page == 'dashboard' %}active{% endif %} primary">
+                    Dashboard <i class="fa-solid fa-house-user"></i>
+                </a>
+                <a href="/rooster" class="menu-item {% if active_page == 'schedule' %}active{% endif %} primary">
+                    Rooster <i class="fa-solid fa-calendar-days"></i>
+                </a>
+                <a href="/planner" class="menu-item {% if active_page == 'planner' %}active{% endif %} primary">
+                    Planner <i class="fa-solid fa-clipboard-list"></i>
+                </a>
+                <a href="/cijfers" class="menu-item {% if active_page == 'grades' %}active{% endif %} primary">
+                    Cijfers <i class="fa-solid fa-square-poll-vertical"></i>
+                </a>
+                <a href="/materialen" class="menu-item {% if active_page == 'materials' %}active{% endif %} primary">
+                    Materialen <i class="fa-solid fa-book"></i>
+                </a>
+                <a href="/afwezigheid" class="menu-item {% if active_page == 'absence' %}active{% endif %} secondary">
+                    Afwezigheid <i class="fa-solid fa-clock"></i>
+                </a>
+                <a href="/vakken" class="menu-item {% if active_page == 'classes' %}active{% endif %} secondary">
+                    Vakken <i class="fa-solid fa-book-open"></i>
+                </a>
+                <a href="/schoolinformatie" class="menu-item {% if active_page == 'schoolinfo' %}active{% endif %} secondary">
+                    Schoolinformatie <i class="fa-solid fa-school"></i>
+                </a>
+                <a href="/instellingen" class="menu-item {% if active_page == 'settings' %}active{% endif %} secondary">
+                    Instellingen <i class="fa-solid fa-gears"></i>
+                </a>
+            </div>
+            <a href="/logout" id="logoutcontainer">
+                Uitloggen <i class="fa-solid fa-right-from-bracket"></i>
+            </a>
         </div>
 
         <div id="content">

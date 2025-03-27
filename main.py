@@ -188,7 +188,7 @@ def logindev():
     data = response.json()
 
     with open("rtoken.txt", "w") as file:
-        file.write(data.get("refresh_token"))
+        file.write(data.get("refresh_token", rtoken))
 
 
     set_token_and_info(data.get("access_token"))

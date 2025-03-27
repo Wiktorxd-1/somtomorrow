@@ -42,37 +42,61 @@ body {
 #header {
     display: flex;
     flex-direction: row;
-    gap: 30px;
+    gap: 20px;
+    justify-content: space-between;
+    align-items: center;
 }
 
 #profile {
     display: flex;
     flex-direction: row;
-    gap: 5px;
-    align-items: stretch;
+    gap: 10px;
+    align-items: center;
 }
 
 #userinfocontainer {
     display: flex;
     flex-direction: column;
-    justify-content: center;
 }
 
 #userinfoname {
-    font-size: .9em;
+    font-size: 1.1em;
     font-weight: 700;
 }
 
 #userinfoschool,
 #userinfoclass {
-    font-size: .7em;
+    font-size: .9em;
     color: #aaa;
     font-weight: 400;
 }
 
-
 #avatar {
     aspect-ratio: 1/1;
-    border-radius: 5px;
-    height: 3em;
+    border-radius: 10px;
+    height: 3.5em;
+}
+
+#menu {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+
+.menu-item {
+    color: inherit;
+    font-weight: bold;
+    text-decoration: none;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+    border-width: 2px 0px;
+    border-color: transparent;
+    border-style: solid;
+}
+
+.menu-item.active, .menu-item:hover {
+    padding: 10px 0;
+    border-bottom: 2px solid white;
 }
