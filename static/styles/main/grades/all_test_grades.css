@@ -1,0 +1,9 @@
+img.icon {
+    height: 1em;
+}
+
+.gradeitem {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}

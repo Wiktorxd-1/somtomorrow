@@ -1,9 +1,12 @@
 from flask import Flask, render_template, request, redirect, url_for, session, flash, send_from_directory, g
 from datetime import timedelta, datetime, timezone
-import requests
 from functools import wraps
 import os
 from dotenv import load_dotenv
+import requests
+import pytz
+import locale
+import json
 
 load_dotenv()
 
@@ -12,6 +15,8 @@ key = os.getenv("key")
 app = Flask(__name__)
 app.secret_key = key
 app.permanent_session_lifetime = timedelta(hours=1)
+
+locale.setlocale(locale.LC_TIME, "nl_NL")
 
 
 
@@ -226,6 +231,116 @@ def index():
 @use_session_data
 def dashboard():
     return render_template("main/dashboard.html")
+
+
+@app.route("/cijfers")
+@use_session_data
+def grades_main():
+    return redirect(url_for("grades_all"))
+
+@app.route("/cijfers/toetscijfers")
+@use_session_data
+def grades_all():
+    student_id = session["student_id"]
+    token = session["token"]
+
+    api_url = f"https://api.somtoday.nl/rest/v1/resultaten/huidigVoorLeerling/{student_id}"
+
+    api_headers = {
+        "Authorization": f"Bearer {token}",
+        "Accept": "application/json",
+        "Origin": "https://somtoday.nl",
+        "Range": "items=0-1000"
+    }
+
+    response = requests.get(api_url, headers=api_headers)
+    response_data = response.json()
+    api_data = response_data["items"]
+
+
+    types_to_remove = ["PeriodeGemiddeldeKolom", "RapportGemiddeldeKolom", "SEGemiddeldeKolom"]
+    api_data = [item for item in api_data if item["type"] not in types_to_remove and ("geldendResultaat" in item or "resultaatLabelAfkorting" in item)] # Filter unwanted grade types
+
+    def get_icon(subject):
+        subjects_icons = {
+            "engels": '<img class="icon uk" src="/static/images/flags/uk.svg">',
+            "nederlands": '<img class="icon nl" src="/static/images/flags/nl.svg">',
+            "latijn": '<img class="icon la" src="/static/images/flags/va.svg">',
+            "grieks": '<img class="icon gr" src="/static/images/flags/gr.svg">',
+            "frans": '<img class="icon fr" src="/static/images/flags/fr.svg">',
+            "spaans": '<img class="icon es" src="/static/images/flags/es.svg">',
+            "duits": '<img class="icon de" src="/static/images/flags/de.svg">',
+            "fries": '<img class="icon frr" src="/static/images/flags/frr.svg">',
+            "italiaans": '<img class="icon it" src="/static/images/flags/it.svg">',
+            "russisch": '<img class="icon it" src="/static/images/flags/ru.svg">',
+            "arabisch": '<img class="icon ar" src="/static/images/flags/ar.svg">',
+            "turks": '<img class="icon tr" src="/static/images/flags/tr.svg">',
+            "chinees": '<img class="icon cn" src="/static/images/flags/cn.svg">',
+            "scheikunde": '<i class="fa-solid fa-vial"></i>',
+            "biologie": '<i class="fa-solid fa-seedling"></i>',
+            "techniek": '<i class="fa-solid fa-screwdriver-wrench"></i>',
+            "rekenen": '<i class="fa-solid fa-plus-minus"></i>',
+            "dans": '<i class="fa-solid fa-person-rays"></i>',
+            "maatschappijleer": '<i class="fa-solid fa-people-group"></i>',
+            "burgerschap": '<i class="fa-solid fa-people-group"></i>',
+            "onderzoek & ontwerpen": '<i class="fa-solid fa-pen-ruler"></i>',
+            "kunst": '<i class="fa-solid fa-palette"></i>',
+            "beeldende vorming": '<i class="fa-solid fa-palette"></i>',
+            "muziek": '<i class="fa-solid fa-music"></i>',
+            "natuur, leven en technologie": '<i class="fa-solid fa-microscope"></i>',
+            "drama": '<i class="fa-solid fa-masks-theater"></i>',
+            "geschiedenis": '<i class="fa-solid fa-landmark"></i>',
+            "lichamelijke opvoeding": '<i class="fa-solid fa-futbol"></i>',
+            "beweging": '<i class="fa-solid fa-futbol"></i>',
+            "economie": '<i class="fa-solid fa-euro-sign"></i>',
+            "aardrijkskunde": '<i class="fa-solid fa-earth-europe"></i>',
+            "godsdienst": '<i class="fa-solid fa-dove"></i>',
+            "levensbeschouwing": '<i class="fa-solid fa-dove"></i>',
+            "digitale geletterdheid": '<i class="fa-solid fa-computer"></i>',
+            "informatica": '<i class="fa-solid fa-code"></i>',
+            "wiskunde": '<i class="fa-solid fa-calculator"></i>',
+            "bedrijfseconomie": '<i class="fa-solid fa-building"></i>',
+            "management & organisatie": '<i class="fa-solid fa-building"></i>',
+            "filosofie": '<i class="fa-solid fa-brain"></i>',
+            "natuurkunde": '<i class="fa-solid fa-atom"></i>'
+        }
+        for key in subjects_icons:
+            if key.lower() in subject.lower():
+                return subjects_icons[key]
+        return '<i class="fa-solid fa-book"></i>'
+    
+    
+
+    now = datetime.now(pytz.timezone("Europe/Amsterdam"))
+
+    for grade in api_data:
+        dt_entered = datetime.strptime(grade["datumInvoer"], "%Y-%m-%dT%H:%M:%S.%f%z")
+
+        if dt_entered.date() == now.date():
+            formatted = f"Vandaag om {dt_entered.strftime('%H:%M:%S')}"
+        elif dt_entered.date() == (now.date() - timedelta(days=1)):
+            formatted = f"Gisteren om {dt_entered.strftime('%H:%M:%S')}"
+        else:
+            formatted = dt_entered.strftime("%a %d %B om %H:%M:%S")
+
+
+        grade["datetime_sort"] = dt_entered.isoformat()
+        grade["datuminvoer_nice"] = formatted
+        grade["icon"] = get_icon(grade["vak"]["naam"])
+
+
+    api_data = sorted(api_data, key=lambda x: x["datetime_sort"], reverse=True)
+
+    with open("temp.json", "w") as jsonfile:
+        json.dump(api_data, jsonfile, indent=4)
+    
+
+    return render_template("main/grades/all_test_grades.html", gradelist = api_data)
+
+
+
+
+
 
 
 

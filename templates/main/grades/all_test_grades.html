@@ -1,0 +1,29 @@
+{% extends "main/base.html" %}
+
+{% set active_page = "grades" %}
+
+{% block title %}Toetscijfers{% endblock %}
+
+
+{% block extra_headers %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/main/grades/all_test_grades.css') }}">
+{% endblock %}
+
+
+{% block content %}
+    <h1 id="page_title">Alle toetscijfers</h1>
+    
+    <div id="gradelist_container">
+        {% for grade in gradelist %}
+            <div class="gradeitem">
+                <span>{{ grade.icon | safe }}</span>
+                <span>{{ grade.vak.naam }}</span>
+                <span>{{ grade.datumiice }}</span>
+                <span>{{ grade.weging }}</span>
+                <span>{{ grade.examenWeging }}</span>
+                <span>{{ grade.periode }}</span>
+                <span>{{ grade.geldendResultaat }}</span>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

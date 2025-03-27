@@ -81,6 +81,7 @@ header {
     aspect-ratio: 1/1;
     border-radius: 10px;
     height: 3.5em;
+    object-fit: cover;
 }
 
 #menu {
