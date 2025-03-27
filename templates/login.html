@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>SomData</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='login.css') }}">
+    </head>
+    <body>
+        <h1>Inloggen bij SomData</h1>
+        <h2>Via Somtoday</h2>
+
+        <form method="post" action="/login/get_token">
+            <div class="schoolcontainer">
+                <label for="school">Schoolnaam</label>
+                <input type="text" id="schoolinput" name="school" required>
+            </div>
+
+            <div class="usernamecontainer">
+                <label for="username">Gebruikersnaam</label>
+                <input type="text" id="usernameinput" name="username" required>
+            </div>
+
+            <div class="passwordcontainer">
+                <label for="pass">Wachtwoord</label>
+                <input type="password" id="passwordinput" name="password" required>
+            </div>
+
+            <input type="submit" id="loginbutton" value="Inloggen">
+        </form>
+
+        {% with messages = get_flashed_messages(with_categories=True) %}
+            {% if messages %}
+                <div id="messages">
+                    {% for category, message in messages %}
+                        <div class="message {{ category }}">{{ message }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <a href="/login/own_token" id="otherloginmethod">Inloggen met een OAuth-token</a>
+    </body>
+</html>

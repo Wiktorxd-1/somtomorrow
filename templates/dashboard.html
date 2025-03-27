@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% set active_page = "dashboard" %}
+
+{% block title %}Dashboard{% endblock %}
+
+<!--
+{% block extra_headers %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='public/home.css') }}">
+{% endblock %}
+-->
+
+{% block content %}
+    Welkom, {{ g.first_name }}!
+{% endblock %}

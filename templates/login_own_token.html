@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>SomData</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='login.css') }}">
+    </head>
+    <body>
+        <h1>Inloggen bij SomData</h1>
+        <h2>Via Somtoday</h2>
+
+        <form method="post" action="/login/own_token">
+            <div class="tokeninputcontainer">
+                <label for="username">access_token</label>
+                <input type="text" id="tokeninput" name="token" required>
+            </div>
+
+            <input type="submit" id="loginbutton" value="Inloggen">
+        </form>
+
+        {% with messages = get_flashed_messages(with_categories=True) %}
+            {% if messages %}
+                <div id="messages">
+                    {% for category, message in messages %}
+                        <div class="message {{ category }}">{{ message }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <a href="/login" id="otherloginmethod">Inloggen met school, gebruikersnaam en wachtwoord</a>
+    </body>
+</html>

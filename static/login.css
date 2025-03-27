@@ -1,0 +1,64 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: inherit;
+}
+
+body {
+  font-family: sans-serif;
+  padding: 40px;
+  background: seagreen;
+  color: white;
+}
+
+form {
+  margin-top: 30px;
+}
+
+form div {
+  display: flex;
+  flex-direction: column;
+}
+
+form input {
+  margin-top: 5px;
+  margin-bottom: 10px;
+  border-radius: 7.5px;
+  border: none;
+  padding: 5px 10px;
+  max-width: 300px;
+  outline: 1.5px solid #aaa;
+}
+
+form input:focus {
+  outline: 1.5px solid #002244;
+}
+
+
+form #loginbutton {
+  color: black;
+  background: white;
+  padding: 7.5px;
+  font-size: 1em;
+  font-weight: bold;
+  outline: none;
+}
+
+form #loginbutton:hover, #otherloginmethod:hover {
+  background: #0066b2;
+  color: white;
+}
+
+#otherloginmethod {
+  outline: none;
+  color: black;
+  background: white;
+  margin-top: 35px;
+  display: block;
+  width: fit-content;
+  padding: 7.5px 15px;
+  border-radius: 7.5px;
+  font-size: .75em;
+  font-weight: normal;
+}

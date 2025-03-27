@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>{% block title %}{% endblock %} - SomData</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='base.css') }}">
+        <script src="https://kit.fontawesome.com/4a94c21782.js" crossorigin="anonymous"></script>
+        {% block extra_headers %}{% endblock %}
+    </head>
+    <body>
+        <div id="header">
+            <div id="menu">
+
+            </div>
+            <div id="profile">
+                <img id="avatar" src="https://upload.wikimedia.org/wikipedia/commons/6/6d/Phoenicopterus_roseus_%28Walvis_bay%29.jpg">
+                <div id="userinfocontainer">
+                    <span id="userinfoname">{{ g.first_name }} {{ g.last_name }}</span>
+                    <span id="userinfoschool">{{ g.school_name }}</span>
+                    <span id="userinfoclass">{{ g.main_class }}</span>
+                </div>
+            </div>
+        </div>
+
+        <div id="content">
+            {% block content %}{% endblock %}
+        </div>
+
+        <div id="footer">
+            <p>A <a href="https://dupunkto.org">{du}punkto</a> project</p>
+            <p>Content and code are <strong>public domain</strong> under the <a href="https://unlicense.org/" target="_blank">Unlicense</a> and <a href="https://creativecommons.org/publicdomain/zero/1.0/" target="_blank">CC0</a></p>
+            <p>Made with <a href="https://github.com/pallets/flask" target="_blank">Flask</a> and <a href="https://github.com/pallets/jinja" target="_blank">Jinja</a>, hosted at <a href="https://eu.pythonanywhere.com/" target="_blank">PythonAnwyhere</a></p>
+            <!--<p>View the <a href="url" target="_blank">source code on GitHub</a></p>-->
+        </div>
+    </body>
+</html>
