@@ -62,7 +62,7 @@ def index():
 @app.route("/login")
 @excluded
 def login():
-    return render_template("login.html")
+    return render_template("login/login.html")
 
 
 @app.route("/login/get_token", methods=["POST"])
@@ -92,7 +92,7 @@ def get_token():
 
     if not success:
         flash("Dat is geen geldige token!", "error")
-        return render_template("login_own_token.html")
+        return render_template("login/login.html")
 
     return redirect(url_for("dashboard"))
 
@@ -107,11 +107,11 @@ def login_own_token():
 
         if not success:
             flash("Dat is geen geldige token!", "error")
-            return render_template("login_own_token.html")
+            return render_template("login/login_own_token.html")
 
         return redirect(url_for("dashboard"))
 
-    return render_template("login_own_token.html")
+    return render_template("login/login_own_token.html")
 
 
 def set_token_and_info(token):
@@ -161,7 +161,7 @@ def set_token_and_info(token):
 @app.route("/dashboard")
 @use_session_data
 def dashboard():
-    return render_template("dashboard.html")
+    return render_template("main/dashboard.html")
 
 
 @app.route("/logout")
@@ -174,10 +174,13 @@ def logout():
 @app.errorhandler(404)
 @excluded
 def not_found(e):
-    return render_template("404.html", e=e), 404
+    return render_template("other/404.html", e=e), 404
 
 
 @app.errorhandler(500)
 @excluded
 def internal_server_error(e):
-    return render_template('500.html', e=e), 500
+    return render_template('other/500.html', e=e), 500
+
+if __name__ == "__main__":
+    app.run(debug=True)

@@ -4,11 +4,10 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>SomData</title>
-        <link rel="stylesheet" href="{{ url_for('static', filename='login.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='styles/other/login.css') }}">
     </head>
     <body>
         <h1>Inloggen bij SomData</h1>
-        <h2>Via Somtoday</h2>
 
         <form method="post" action="/login/own_token">
             <div class="tokeninputcontainer">
@@ -28,7 +27,11 @@
                 </div>
             {% endif %}
         {% endwith %}
+        
+        <h2>Andere inlogmethodes</h2>
 
-        <a href="/login" id="otherloginmethod">Inloggen met school, gebruikersnaam en wachtwoord</a>
+        <div class="otherloginmethodscontainer">
+            <a href="/login" class="otherloginmethod">Inloggen met school, gebruikersnaam en wachtwoord</a>
+        </div>
     </body>
 </html>

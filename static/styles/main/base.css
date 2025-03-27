@@ -40,38 +40,39 @@ body {
 
 
 #header {
-  display: flex;
-  flex-direction: row;
-  gap: 30px;
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
 }
 
 #profile {
-  display: flex;
-  flex-direction: row;
-  gap: 5px;
-  align-items: stretch;
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+    align-items: stretch;
 }
 
 #userinfocontainer {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 #userinfoname {
-  font-size: .9em;
-  font-weight: 700;
+    font-size: .9em;
+    font-weight: 700;
 }
 
-#userinfoschool, #userinfoclass {
-  font-size: .7em;
-  color: #aaa;
-  font-weight: 400;
+#userinfoschool,
+#userinfoclass {
+    font-size: .7em;
+    color: #aaa;
+    font-weight: 400;
 }
 
 
 #avatar {
-  aspect-ratio: 1/1;
-  border-radius: 5px;
-  height: 3em;
+    aspect-ratio: 1/1;
+    border-radius: 5px;
+    height: 3em;
 }
