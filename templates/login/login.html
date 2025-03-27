@@ -7,42 +7,48 @@
         <link rel="stylesheet" href="{{ url_for('static', filename='styles/other/login.css') }}">
     </head>
     <body>
-        <h1>Inloggen bij Somtomorrow</h1>
+        <div id="mainlogin">
+            <h1>Inloggen bij Somtomorrow</h1>
 
-        <form method="post" action="/login/get_token">
-            <div class="schoolcontainer">
-                <label for="school">Schoolnaam</label>
-                <input type="text" id="schoolinput" name="school" required>
-            </div>
-
-            <div class="usernamecontainer">
-                <label for="username">Gebruikersnaam</label>
-                <input type="text" id="usernameinput" name="username" required>
-            </div>
-
-            <div class="passwordcontainer">
-                <label for="pass">Wachtwoord</label>
-                <input type="password" id="passwordinput" name="password" required>
-            </div>
-
-            <input type="submit" id="loginbutton" value="Inloggen">
-        </form>
-
-        {% with messages = get_flashed_messages(with_categories=True) %}
-            {% if messages %}
-                <div id="messages">
-                    {% for category, message in messages %}
-                        <div class="message {{ category }}">{{ message }}</div>
-                    {% endfor %}
+            <form method="post" action="/login/get_token">
+                <div class="schoolcontainer">
+                    <label for="school">Schoolnaam</label>
+                    <input type="text" id="schoolinput" name="school" required>
                 </div>
-            {% endif %}
-        {% endwith %}
 
-        <h2>Andere inlogmethodes</h2>
+                <div class="usernamecontainer">
+                    <label for="username">Gebruikersnaam</label>
+                    <input type="text" id="usernameinput" name="username" required>
+                </div>
 
-        <div class="otherloginmethodscontainer">
-            <a href="/login/own_token" class="otherloginmethod">Inloggen met een OAuth-token</a>
-            <a href="/login/dev" class="otherloginmethod"><strong><em>Temporary</em></strong> shortcut: sign in as Gijs</a>
+                <div class="passwordcontainer">
+                    <label for="pass">Wachtwoord</label>
+                    <input type="password" id="passwordinput" name="password" required>
+                </div>
+
+                <input type="submit" id="loginbutton" value="Inloggen">
+            </form>
+
+            {% with messages = get_flashed_messages(with_categories=True) %}
+                {% if messages %}
+                    <div id="messages">
+                        {% for category, message in messages %}
+                            <div class="message {{ category }}">{{ message }}</div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}
         </div>
+
+        <div id="secondarylogin">
+            <h2>Andere inlogmethodes</h2>
+
+            <div class="otherloginmethodscontainer">
+                <a href="/login/own_token" class="otherloginmethod">Inloggen met een OAuth-token</a>
+                <a href="/login/dev" class="otherloginmethod"><strong><em>Temporary</em></strong> shortcut: sign in as Gijs</a>
+            </div>
+        </div>
+
+        <span id="imgcredit">Foto van <a href="https://unsplash.com/@mariamsoliman">Mariam Soliman</a> via <a href="https://unsplash.com/photos/silhouette-of-camel-Ht5XmeuLyDg">Unsplash</a></span>
     </body>
 </html>

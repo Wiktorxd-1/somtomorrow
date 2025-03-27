@@ -36,10 +36,16 @@ body {
     color: var(--front);
     font-family: 'Montserrat', sans-serif;
     padding: 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 35px;
 }
 
+main {
+    flex-grow: 1;
+}
 
-#header {
+header {
     display: flex;
     flex-direction: row;
     gap: 20px;
@@ -99,4 +105,14 @@ body {
 .menu-item.active, .menu-item:hover {
     padding: 10px 0;
     border-bottom: 2px solid white;
+}
+
+footer {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid #888;
+}
+
+footer a {
+    color: inherit;
 }

@@ -9,7 +9,7 @@
         {% block extra_headers %}{% endblock %}
     </head>
     <body>
-        <div id="header">
+        <header>
             <div id="profile">
                 <img id="avatar" src="https://upload.wikimedia.org/wikipedia/commons/6/6d/Phoenicopterus_roseus_%28Walvis_bay%29.jpg">
                 <div id="userinfocontainer">
@@ -50,17 +50,17 @@
             <a href="/logout" id="logoutcontainer">
                 Uitloggen <i class="fa-solid fa-right-from-bracket"></i>
             </a>
-        </div>
+        </header>
 
-        <div id="content">
+        <main>
             {% block content %}{% endblock %}
-        </div>
+        </main>
 
-        <div id="footer">
+        <footer>
             <p>A <a href="https://dupunkto.org">{du}punkto</a> project</p>
             <p>Content and code are <strong>public domain</strong> under the <a href="https://unlicense.org/" target="_blank">Unlicense</a> and <a href="https://creativecommons.org/publicdomain/zero/1.0/" target="_blank">CC0</a></p>
             <p>Made with <a href="https://github.com/pallets/flask" target="_blank">Flask</a> and <a href="https://github.com/pallets/jinja" target="_blank">Jinja</a>, hosted at <a href="https://eu.pythonanywhere.com/" target="_blank">PythonAnwyhere</a></p>
             <!--<p>View the <a href="url" target="_blank">source code on GitHub</a></p>-->
-        </div>
+        </footer>
     </body>
 </html>
