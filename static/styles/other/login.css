@@ -1,15 +1,27 @@
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap');
+
+:root {
+    --black: #0f212e;
+    --white: #eaf2ef;
+    --gray: #6b6d76;
+    --yellow: #ffa630;
+    --red: #e65039;
+    --green: #06c749;
+    --purple: #6822cb;
+    --light-purple: #823ce5;
+    --dark-purple: #511b9e;
+}
+
 * {
-    margin: 0;
     padding: 0;
+    margin: 0;
     box-sizing: border-box;
-    font-family: inherit;
 }
 
 body {
     font-family: sans-serif;
     padding: 40px;
-    background: #6822cb;
-    background: #6822cb url("/static/images/camel.jpg");
+    background: var(--purple) url("/static/images/camel.jpg");
     background-blend-mode: luminosity;
     color: white;
     background-size: cover;
@@ -19,6 +31,7 @@ body {
     flex-direction: column;
     justify-content: center;
     position: relative;
+    font-family: "Ubuntu", sans-serif;
 }
 
 h1 {
