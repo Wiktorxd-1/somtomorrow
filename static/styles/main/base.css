@@ -63,6 +63,8 @@ header {
 #userinfocontainer {
     display: flex;
     flex-direction: column;
+    width: max-content;
+    max-width: 175px;
 }
 
 #userinfoname {
@@ -91,6 +93,8 @@ header {
     
     /* Temporary, until I find a way to put secondary menu items under a other submenu-like thingy */
     flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
 }
 
 .menu-item, #logout {

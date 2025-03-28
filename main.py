@@ -6,7 +6,6 @@ from dotenv import load_dotenv
 import requests
 import pytz
 import locale
-import json
 
 load_dotenv()
 
@@ -275,6 +274,7 @@ def grades_all():
             "turks": '<img class="icon tr" src="/static/images/flags/tr.svg">',
             "chinees": '<img class="icon cn" src="/static/images/flags/cn.svg">',
             "scheikunde": '<i class="fa-solid fa-vial"></i>',
+            "natuurkunde": '<i class="fa-solid fa-atom"></i>',
             "biologie": '<i class="fa-solid fa-seedling"></i>',
             "techniek": '<i class="fa-solid fa-screwdriver-wrench"></i>',
             "rekenen": '<i class="fa-solid fa-plus-minus"></i>',
@@ -301,8 +301,7 @@ def grades_all():
             "wiskunde": '<i class="fa-solid fa-calculator"></i>',
             "bedrijfseconomie": '<i class="fa-solid fa-building"></i>',
             "management": '<i class="fa-solid fa-building"></i>',
-            "filosofie": '<i class="fa-solid fa-brain"></i>',
-            "natuurkunde": '<i class="fa-solid fa-atom"></i>'
+            "filosofie": '<i class="fa-solid fa-brain"></i>'
         }
         for key in subjects_icons:
             if key.lower() in subject.lower():
@@ -322,20 +321,20 @@ def grades_all():
             formatted = f"Gisteren om {dt_entered.strftime('%H:%M:%S')}"
         else:
             formatted = dt_entered.strftime("%a %d %B om %H:%M:%S")
+        
+        grade_subject_name = grade["vak"]["naam"]
+        grade_test_name = grade["omschrijving"]
 
-        grade["subject_nice"] = grade["vak"]["naam"][:1].upper() + grade["vak"]["naam"][1:]
+        grade["subject_nice"] = grade_subject_name[:1].upper() + grade_subject_name[1:]
         grade["datetime_sort"] = dt_entered.isoformat()
         grade["datetime_nice"] = formatted
         grade["icon"] = get_icon(grade["vak"]["naam"])
-        grade["test_nice"] = grade["omschrijving"][:37] + "..." if len(grade["omschrijving"]) > 40 else grade["omschrijving"]
+        grade["test_nice"] = grade_test_name[:1].upper() + grade_test_name[1:]
         grade["result"] = grade.get("geldendResultaat", grade.get("resultaatLabelAfkorting", "?"))
 
 
 
     api_data = sorted(api_data, key=lambda x: x["datetime_sort"], reverse=True)
-
-    with open("temp.json", "w") as jsonfile:
-        json.dump(api_data, jsonfile, indent=4)
     
 
     return render_template("main/grades/all_test_grades.html", gradelist = api_data)
