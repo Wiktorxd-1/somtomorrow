@@ -17,11 +17,16 @@ visit `localhost:5000` and there it is!
 
 Yeah it's a lot...
 
+### Other
+
+- [ ] Add better error handling at login (from Vik)
+
 ### Auth
 
-- [ ] Finish auth with school/username/password (with Vik)
+- [x] Finish auth with school/username/password (with Vik)
 - [ ] Add long term login with refresh tokens
-- [ ] Maybe look into using the Somtoday login with a kind of redirect?
+- [ ] Maybe look into using the Somtoday login after all with a kind of redirect?
+- [ ] Add some kind of loading screen when getting the tokens from Vik
 
 ### Features
 
@@ -39,8 +44,8 @@ Yeah it's a lot...
 #### Grades
 
 - [ ] Finish current grade page
-  - [ ] Extra info on click
-  - [ ] Finish styles
+  - [x] Extra info on click
+  - [x] Finish styles
 - [ ] Add reports
 - [ ] Add herkansingen
 - [ ] Add future tests (empty test columns)
