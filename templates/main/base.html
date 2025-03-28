@@ -9,7 +9,44 @@
         {% block extra_headers %}{% endblock %}
     </head>
     <body>
-        <header>
+        <header id="sidebar">
+            <div id="menu">
+                <a href="/dashboard" class="menu-item{% if active_page == 'dashboard' %} active{% endif %} primary">
+                    <i class="fa-solid fa-house-user"></i> <span>Dashboard<span>
+                </a>
+                <a href="/rooster" class="menu-item{% if active_page == 'schedule' %} active{% endif %} primary">
+                    <i class="fa-solid fa-calendar-days"></i> <span>Rooster</span>
+                </a>
+                <a href="/planner" class="menu-item{% if active_page == 'planner' %} active{% endif %} primary">
+                    <i class="fa-solid fa-clipboard-list"></i> <span>Planner</span>
+                </a>
+                <a href="/cijfers" class="menu-item{% if active_page == 'grades' %} active{% endif %} primary">
+                    <i class="fa-solid fa-square-poll-vertical"></i> <span>Cijfers</span>
+                </a>
+                <a href="/materialen" class="menu-item{% if active_page == 'materials' %} active{% endif %} primary">
+                    <i class="fa-solid fa-book"></i> <span>Materialen</span>
+                </a>
+                <a href="/afwezigheid" class="menu-item{% if active_page == 'absence' %} active{% endif %} secondary">
+                    <i class="fa-solid fa-clock"></i> <span>Afwezigheid</span>
+                </a>
+                <a href="/vakken" class="menu-item{% if active_page == 'classes' %} active{% endif %} secondary">
+                    <i class="fa-solid fa-book-open"></i> <span>Vakken</span>
+                </a>
+                <!--<a href="/schoolinformatie" class="menu-item{% if active_page == 'schoolinfo' %} active{% endif %} secondary">
+                    <i class="fa-solid fa-school"></i> <span>Schoolinformatie</span>
+                </a>
+                <a href="/instellingen" class="menu-item{% if active_page == 'settings' %} active{% endif %} secondary">
+                    <i class="fa-solid fa-gears"></i> <span>Instellingen</span>
+                </a>-->
+            </div>
+            <div id="logout">
+                <a href="/logout" class="menu-item">
+                    <i class="fa-solid fa-right-from-bracket"></i> <span>Uitloggen</span>
+                </a>
+            </div>
+        </header>
+
+        <main>
             <div id="profile">
                 <img id="avatar" src="/identicon/{{ g.first_name }} {{ g.last_name }}">
                 <div id="userinfocontainer">
@@ -18,49 +55,7 @@
                     <span id="userinfoclass">{{ g.main_class }}</span>
                 </div>
             </div>
-            <div id="menu">
-                <a href="/dashboard" class="menu-item{% if active_page == 'dashboard' %} active{% endif %} primary">
-                    <i class="fa-solid fa-house-user"></i> Dashboard
-                </a>
-                <a href="/rooster" class="menu-item{% if active_page == 'schedule' %} active{% endif %} primary">
-                    <i class="fa-solid fa-calendar-days"></i> Rooster
-                </a>
-                <a href="/planner" class="menu-item{% if active_page == 'planner' %} active{% endif %} primary">
-                    <i class="fa-solid fa-clipboard-list"></i> Planner
-                </a>
-                <a href="/cijfers" class="menu-item{% if active_page == 'grades' %} active{% endif %} primary">
-                    <i class="fa-solid fa-square-poll-vertical"></i> Cijfers
-                </a>
-                <a href="/materialen" class="menu-item{% if active_page == 'materials' %} active{% endif %} primary">
-                    <i class="fa-solid fa-book"></i> Materialen
-                </a>
-                <a href="/afwezigheid" class="menu-item{% if active_page == 'absence' %} active{% endif %} secondary">
-                    <i class="fa-solid fa-clock"></i> Afwezigheid
-                </a>
-                <a href="/vakken" class="menu-item{% if active_page == 'classes' %} active{% endif %} secondary">
-                    <i class="fa-solid fa-book-open"></i> Vakken
-                </a>
-                <a href="/schoolinformatie" class="menu-item{% if active_page == 'schoolinfo' %} active{% endif %} secondary">
-                    <i class="fa-solid fa-school"></i> Schoolinformatie
-                </a>
-                <a href="/instellingen" class="menu-item{% if active_page == 'settings' %} active{% endif %} secondary">
-                    <i class="fa-solid fa-gears"></i> Instellingen
-                </a>
-            </div>
-            <a href="/logout" id="logout">
-                <i class="fa-solid fa-right-from-bracket"></i> Uitloggen
-            </a>
-        </header>
-
-        <main>
             {% block content %}{% endblock %}
         </main>
-
-        <footer>
-            <p>A <a href="https://dupunkto.org">{du}punkto</a> project</p>
-            <p>Content and code are <strong>public domain</strong> under the <a href="https://unlicense.org/" target="_blank">Unlicense</a> and <a href="https://creativecommons.org/publicdomain/zero/1.0/" target="_blank">CC0</a></p>
-            <p>Made with <a href="https://github.com/pallets/flask" target="_blank">Flask</a> and <a href="https://github.com/pallets/jinja" target="_blank">Jinja</a>, hosted at <a href="https://eu.pythonanywhere.com/" target="_blank">PythonAnwyhere</a></p>
-            <!--<p>View the <a href="url" target="_blank">source code on GitHub</a></p>-->
-        </footer>
     </body>
 </html>

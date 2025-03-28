@@ -2,11 +2,8 @@
 
 :root {
     --black: #0f212e;
-    --whiteblue: #d1e3f0;
     --white: #eaf2ef;
     --gray: #6b6d76;
-    --darkblue: #28587b;
-    --lightblue: #0f95b0;
     --yellow: #ffa630;
     --red: #e65039;
     --green: #06c749;
@@ -28,29 +25,72 @@
     box-sizing: border-box;
 }
 
-
 body {
-    background-color: var(--back);
-    height: 100vh;
+    display: grid;
     margin: 0;
+    height: 100vh;
+    grid-template-areas: "sidebar main";
+    grid-template-columns: 60px 1fr;
+    background-color: var(--back);
     color: var(--front);
-    font-family: 'Montserrat', sans-serif;
-    padding: 25px;
-    display: flex;
-    flex-direction: column;
-    gap: 35px;
+    font-family: Inter, sans-serif;
 }
 
 main {
-    flex-grow: 1;
+    padding: 20px;
 }
 
-header {
+#sidebar {
     display: flex;
-    flex-direction: row;
-    gap: 20px;
-    justify-content: space-between;
+    flex-direction: column;
+    background: #6822cb;
+}
+
+#menu {
+    display: flex;
+    flex-direction: column;
+}
+
+.menu-item {
+    width: 100%;
+    text-decoration: none;
+    position: relative;
+    aspect-ratio: 1;
+    display: flex;
+    justify-content: center;
     align-items: center;
+    color: white;
+    font-size: 1.5em;
+}
+
+.menu-item span {
+    display: none;
+    font-size: 0.6em;
+    position: absolute;
+    background: black;
+    color: white;
+    padding: 5px 20px;
+    right: -125px;
+    width: 120px;
+}
+
+.menu-item:hover span {
+    display: block;
+}
+
+.menu-item.active {
+    background: #511b9e;
+}
+
+.menu-item:not(.active):hover {
+    background: #823ce5;
+}
+
+#logout {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
 }
 
 #profile {
@@ -58,6 +98,8 @@ header {
     flex-direction: row;
     gap: 10px;
     align-items: center;
+    justify-content: flex-end;
+    margin-right: 30px;
 }
 
 #userinfocontainer {
@@ -85,50 +127,10 @@ header {
     object-fit: cover;
 }
 
-#menu {
-    display: flex;
-    flex-direction: row;
-    gap: 15px;
-    
-    /* Temporary, until I find a way to put secondary menu items under a other submenu-like thingy */
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-}
-
-.menu-item, #logout {
-    color: inherit;
-    font-weight: bold;
-    text-decoration: none;
-    display: flex;
-    gap: 10px;
-    align-items: center;
-    justify-content: center;
-    border-width: 2px 0px;
-    border-color: transparent;
-    border-style: solid;
-    padding: 5px 0;
-}
-
-.menu-item.active, .menu-item:hover, #logout:hover {
-    border-bottom: 2px solid white;
-}
-
-footer {
-    margin-top: 10px;
-    padding-top: 10px;
-    border-top: 1px solid #888;
-}
-
-footer a {
-    color: inherit;
-}
-
 #page_title {
     text-align: center;
     margin-bottom: 15px;
 }
-
 
 #subpagemenu {
     margin: 0 0 35px 0;
@@ -150,5 +152,5 @@ footer a {
 }
 
 .subpagemenu-item.active, .subpagemenu-item:hover {
-    border: 2px solid var(--lightblue);
+    border: 2px solid #823ce5;
 }
