@@ -42,6 +42,7 @@ img.icon {
     overflow: hidden;
     white-space: nowrap;
     padding: 2px 0px;
+    font-weight: 500;
 }
 
 .secondary-info {
@@ -65,4 +66,9 @@ img.icon {
     margin: auto;
     max-width: 600px;
     gap: 20px;
+}
+
+
+.gradeitem.ignore div {
+    color: #687784;
 }

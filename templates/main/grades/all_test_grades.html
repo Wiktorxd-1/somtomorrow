@@ -25,11 +25,11 @@
     
     <div id="gradelist_container">
         {% for grade in gradelist %}
-            <div class="gradeitem{% if grade.weging == 0 %} ignore{% endif %}">
+            <div class="gradeitem{% if grade.max_weight == 0 %} ignore{% endif %}">
                 <div class="icon">{{ grade.icon | safe }}</div>
                 <div class="subject-name">{{ grade.subject_nice }}</div>
                 <div class="test-name">{{ grade.test_nice }}</div>
-                <div class="secondary-info"><i class="fa-solid fa-calendar-day"></i> {{ grade.datetime_nice }} • <i class="fa-solid fa-scale-unbalanced"></i> {{ grade.weging }}x</div>
+                <div class="secondary-info"><i class="fa-solid fa-calendar-day"></i> {{ grade.datetime_nice }} • <i class="fa-solid fa-scale-unbalanced"></i> {{ grade.weging }}{% if grade.examenWeging != 0 %} • <i class="fa-solid fa-scale-unbalanced-flip"></i> {{ grade.examenWeging }} (examen){% endif %}</div>
                 <div class="grade-result">{{ grade.result }}</div>
             </div>
         {% endfor %}
