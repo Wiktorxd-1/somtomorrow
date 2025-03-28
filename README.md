@@ -37,6 +37,7 @@ Yeah it's a lot...
 - [ ] Add herkansingen
 - [ ] Add future tests (empty test columns)
 - [ ] Add grade page for each subject
+- [ ] Add *deeltoetsen*
 - [ ] Add stats
   - [ ] Timeline for each grade
   - [ ] Histograph for all grades

@@ -24,7 +24,7 @@ import io
 import hashlib
 from PIL import Image, ImageDraw
 
-BACKGROUND_COLOR = (0, 0, 0)
+BACKGROUND_COLOR = (8, 17, 23)
 
 def render_identicon(code):
     hash = hashlib.md5(code.encode('utf8'))

@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, session, flash, send_from_directory, g, send_file, make_response
+from flask import Flask, render_template, request, redirect, url_for, session, flash, send_from_directory, g, send_file
 from datetime import timedelta, datetime, timezone
 from functools import wraps
 from dotenv import load_dotenv
@@ -190,9 +190,9 @@ def logout():
 
 
 # TEMPORARY
-@app.route("/login/dev")
+@app.route("/login/devauto")
 @excluded
-def logindev():
+def logindevauto():
     with open("rtoken.txt", "r") as file:
         rtoken = file.read()
     url = "https://somtoday.nl/oauth2/token"
@@ -212,6 +212,52 @@ def logindev():
     set_token_and_info(data.get("access_token"))
 
     return redirect(url_for("dashboard"))
+
+
+@app.route("/login/devtester",methods=["GET", "POST"])
+@excluded
+def logindevtester():
+    if request.method == "POST":
+        choice = request.form.get("choice")
+        
+        with open(f"dev/rtoken{choice}.txt", "r") as file:
+            rtoken = file.read()
+
+        url = "https://somtoday.nl/oauth2/token"
+        body = {
+            "grant_type": "refresh_token",
+            "refresh_token": rtoken,
+            "client_id": "somtoday-leerling-native"
+        }
+        response = requests.post(url, data=body)
+
+        data = response.json()
+
+        with open(f"dev/rtoken{choice}.txt", "w") as file:
+            file.write(data.get("refresh_token", rtoken))
+
+        set_token_and_info(data.get("access_token"))
+
+        return redirect(url_for("dashboard"))
+
+    return '''
+        <form method="post">
+            <label>Choose a token</label><br>
+            
+            <input type="radio" id="choice-a" name="choice" value="a">
+            <label for="choice-a">a</label><br>
+            
+            <input type="radio" id="choice-b" name="choice" value="b">
+            <label for="choice-b">b</label><br>
+            
+            <input type="radio" id="choice-c" name="choice" value="c">
+            <label for="choice-c">c</label><br>
+            
+            <input type="submit" value="Continue">
+        </form>
+    '''
+
+
 
 
 
@@ -258,7 +304,7 @@ def grades_all():
     api_data = response_data["items"]
 
 
-    types_to_remove = ["PeriodeGemiddeldeKolom", "RapportGemiddeldeKolom", "SEGemiddeldeKolom"]
+    types_to_remove = ["PeriodeGemiddeldeKolom", "RapportGemiddeldeKolom", "SEGemiddeldeKolom", "DeeltoetsKolom"]
     api_data = [item for item in api_data if item["type"] not in types_to_remove and ("geldendResultaat" in item or "resultaatLabelAfkorting" in item)] # Filter unwanted grade types
 
     def get_icon(subject):
@@ -323,7 +369,10 @@ def grades_all():
         elif dt_entered.date() == (now.date() - timedelta(days=1)):
             formatted = f"Gisteren om {dt_entered.strftime('%H:%M:%S')}"
         else:
-            formatted = dt_entered.strftime("%a %d %B om %H:%M:%S")
+            if dt_entered.year == now.year:
+                formatted = dt_entered.strftime("%a %d %b om %H:%M:%S")
+            else:
+                formatted = dt_entered.strftime("%a %d %b %Y om %H:%M:%S")
         
         grade_subject_name = grade["vak"]["naam"]
         grade_test_name = grade["omschrijving"]
@@ -331,14 +380,20 @@ def grades_all():
         grade["subject_nice"] = grade_subject_name[:1].upper() + grade_subject_name[1:]
         grade["datetime_sort"] = dt_entered.isoformat()
         grade["datetime_nice"] = formatted
+        grade["datetime_nice_extended"] = dt_entered.strftime("%A %d %B %Y om %H:%M:%S")
         grade["icon"] = get_icon(grade["vak"]["naam"])
         grade["test_nice"] = grade_test_name[:1].upper() + grade_test_name[1:]
         grade["result"] = grade.get("geldendResultaat", grade.get("resultaatLabelAfkorting", "?"))
-        grade["max_weight"] = max(grade["weging"], grade["examenWeging"])
+        grade["max_weight"] = max(grade["weging"], grade.get("examenWeging", 0))
 
 
 
     api_data = sorted(api_data, key=lambda x: x["datetime_sort"], reverse=True)
+
+    import json
+    with open("temp.json", "w") as jsonfile:
+        json.dump(api_data, jsonfile, indent=4)
+
     
 
     return render_template("main/grades/all_test_grades.html", gradelist = api_data)
@@ -350,12 +405,11 @@ def grades_all():
 # Profile pictures
 
 @app.route('/identicon/<username>')
+@excluded
 def identicon(username):
     image_bytes = render_identicon(username)
-    image_io = io.BytesIO(image_bytes)  # Convert bytes back to BytesIO
-    response = make_response(send_file(image_io, mimetype='image/png'))
-    response.headers['Cache-Control'] = 'public, max-age=0, must-revalidate'
-    return response
+    image_io = io.BytesIO(image_bytes)
+    return send_file(image_io, mimetype='image/png')
 
 
 @app.errorhandler(404)
