@@ -1,11 +1,14 @@
-from flask import Flask, render_template, request, redirect, url_for, session, flash, send_from_directory, g
+from flask import Flask, render_template, request, redirect, url_for, session, flash, send_from_directory, g, send_file, make_response
 from datetime import timedelta, datetime, timezone
 from functools import wraps
-import os
 from dotenv import load_dotenv
+from identicon import render_identicon
+import os
+import io
 import requests
 import pytz
 import locale
+
 
 load_dotenv()
 
@@ -331,6 +334,7 @@ def grades_all():
         grade["icon"] = get_icon(grade["vak"]["naam"])
         grade["test_nice"] = grade_test_name[:1].upper() + grade_test_name[1:]
         grade["result"] = grade.get("geldendResultaat", grade.get("resultaatLabelAfkorting", "?"))
+        grade["max_weight"] = max(grade["weging"], grade["examenWeging"])
 
 
 
@@ -343,8 +347,15 @@ def grades_all():
 
 
 
+# Profile pictures
 
-
+@app.route('/identicon/<username>')
+def identicon(username):
+    image_bytes = render_identicon(username)
+    image_io = io.BytesIO(image_bytes)  # Convert bytes back to BytesIO
+    response = make_response(send_file(image_io, mimetype='image/png'))
+    response.headers['Cache-Control'] = 'public, max-age=0, must-revalidate'
+    return response
 
 
 @app.errorhandler(404)
