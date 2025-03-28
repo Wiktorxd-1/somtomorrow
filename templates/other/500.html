@@ -1,26 +1,18 @@
-<!DOCTYPE html>
-<html lang=en>
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>500 Internal Server Error</title>
-        <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favs/error.ico') }}">
-        <link rel="stylesheet" href="{{ url_for('static', filename='styles/other/min.css') }}">
-    </head>
-    <body>
-        <div class="container">
-            <h1>Oops! Something went wrong</h1>
-            <p>There seems to be an internal server error.</p>
-            <br>
-            <p>Just blame Somtoday.</p>
-            <br>
-            <h1>Oeps! Er is iets misgegaan</h1>
-            <p>Onze excuses, er lijkt een probleem te zijn aan onze kant.</p>
-            <br>
-            <p>Geef Somtoday maar gewoon de schuld</p>
-            <br>
-            <br>
-            <small>{{ e }}</small>
-        </div>
-    </body>
-</html>
+{% extends "main/base.html" %}
+
+{% block title %}Alles is kapot{% endblock %}
+
+{% block extra_headers %}
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favs/error.ico') }}">
+{% endblock %}
+
+{% block content %}
+
+    <div class="error-page">
+        <h1 class="error-title">500</h1>
+        <p class="error-message">Geen Somtoday maar gewoon de schuld.</p>
+
+        <small>{{ e }}</small>
+    </div>
+
+{% endblock %}
