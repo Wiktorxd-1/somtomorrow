@@ -55,6 +55,10 @@ def excluded(endpoint):
     endpoint.is_excluded = True
     return endpoint
 
+def logged_in():
+    if "token" in session and datetime.now(timezone.utc).timestamp() - session.get("login_time", 0) < 3600:
+        return True
+    return False
 
 @app.before_request
 def check_login():
@@ -69,7 +73,7 @@ def check_login():
     if "static" in request.endpoint or "favicon" in request.endpoint:
         return  # Static files are also excluded
 
-    if "token" not in session or datetime.now(timezone.utc).timestamp() - session.get("login_time", 0) > 3600:
+    if not logged_in():
         return redirect(url_for("logout"))
 
 
@@ -81,7 +85,7 @@ def use_session_data(f):
         return f(*args, **kwargs)
 
     return wrapper
-
+    
 
 @app.route("/login")
 @excluded
@@ -425,13 +429,13 @@ def identicon(username):
 @app.errorhandler(404)
 @excluded
 def not_found(e):
-    return render_template("other/404.html", e=e), 404
+    return render_template("other/404.html", e=e, login=logged_in()), 404
 
 
 @app.errorhandler(500)
 @excluded
 def internal_server_error(e):
-    return render_template('other/500.html', e=e), 500
+    return render_template('other/500.html', e=e, login=logged_in()), 500
 
 if __name__ == "__main__":
     app.run(debug=True)

@@ -182,3 +182,7 @@ main {
     font-size: 1.2em;
     margin-bottom: 2em;
 }
+
+body:has(main .error-page.False) #sidebar, body:has(main .error-page) #profile {
+    display: none;
+}
