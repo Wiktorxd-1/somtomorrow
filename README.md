@@ -1,29 +1,26 @@
 # Somtomorrow
 
+A next-gen Somtoday webapp that works how students want it to work.  
+Built in Flask and Jinja.
+
+It's currently very much a prototype
+
 ## To-do
+
+Yeah it's a lot...
 
 ### Auth
 
 - [ ] Finish auth with school/username/password (with Vik)
 - [ ] Add long term login with refresh tokens
+- [ ] Maybe look into using the Somtoday login with a kind of redirect?
 
 ### Features
 
 - [ ] Add notification system for grades (easy) and schedules (certainly impossible) (with Firebase???)
-- [ ] Add avatars (identicon?)
+- [x] Add avatars (identicon?)
 
 ### Pages
-
-- [ ] Add dashboard
-- [ ] Add schedule
-- [ ] Add planner (homework and test)
-- [ ] Add grades
-- [ ] Add materials (+ digital stuff)
-- [ ] Add abscense (this is the page we can really be better than Som because som does this quite badly)
-- [ ] Add classes
-- [ ] Add schoolinfo
-- [ ] Add messages
-- [ ] Add settings (o.a. dark theme)
 
 #### Dashboard
 
