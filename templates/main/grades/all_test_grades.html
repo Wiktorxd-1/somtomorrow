@@ -30,7 +30,7 @@
                 <div class="subject-name">{{ grade.subject_nice }}</div>
                 <div class="test-name">{{ grade.test_nice }}</div>
                 <div class="secondary-info"><i class="fa-solid fa-calendar-day"></i> {{ grade.datetime_nice }} • <i class="fa-solid fa-scale-unbalanced"></i> {{ grade.weging }}{% if grade.examenWeging and grade.examenWeging != 0 %} • <i class="fa-solid fa-scale-unbalanced-flip"></i> {{ grade.examenWeging }} (examen){% endif %}</div>
-                <div class="grade-result">{{ grade.result }}</div>
+                <div class="grade-result{% if grade.is_fail %} fail{% endif %}">{{ grade.result }}</div>
 
                 <div class="extrainfo">
                     <div class="date"><i class="fa-solid fa-calendar-day"></i> Ingevoerd op {{ grade.datetime_nice_extended }}</div>
@@ -47,7 +47,11 @@
         document.addEventListener("click", function (event) {
             document.querySelectorAll(".gradeitem").forEach(div => {
                 if (div.contains(event.target)) {
-                    div.classList.add("open");
+                    if (div.classList.contains("open")) {
+                        div.classList.remove("open");
+                    } else {
+                        div.classList.add("open");
+                    }   
                 } else {
                     div.classList.remove("open");
                 }

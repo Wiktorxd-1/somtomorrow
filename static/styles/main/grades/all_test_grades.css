@@ -58,6 +58,9 @@ img.icon {
     padding: 10px;
 }
 
+.grade-result.fail {
+    color: var(--red);
+}
 
 #gradelist_container {
     display: flex;
@@ -68,9 +71,18 @@ img.icon {
     gap: 20px;
 }
 
-
 .gradeitem.ignore div {
     color: #687784;
+}
+
+.gradeitem.open, .gradeitem:hover {
+    border-color: #666;
+}
+
+.gradeitem.open .test-name {
+    overflow: unset;
+    text-overflow: unset;
+    white-space: unset;
 }
 
 .extrainfo {
@@ -79,7 +91,14 @@ img.icon {
 
 .gradeitem.open .extrainfo {
     grid-area: 3 / 1 / 4 / 4;
-    display: unset;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin: 15px 0 5px 10px;
+}
+
+.extrainfo i {
+    margin-inline-end: 5px;
 }
 
 .gradeitem.open .secondary-info {
@@ -93,4 +112,3 @@ img.icon {
 .gradeitem.open .grade-result {
     grid-area: 1 / 3 / 3 / 4;
 }
-

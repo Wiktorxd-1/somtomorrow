@@ -104,7 +104,7 @@ def get_token():
         "password": password
     }
 
-    response = requests.post("???", json=reqdata)
+    response = requests.post("https://vik.dupunkto.org/api/authtoday", json=reqdata)
 
     response.raise_for_status()
 
@@ -373,6 +373,19 @@ def grades_all():
                 formatted = dt_entered.strftime("%a %d %b om %H:%M:%S")
             else:
                 formatted = dt_entered.strftime("%a %d %b %Y om %H:%M:%S")
+
+        try:
+            result_float = float(grade.get("geldendResultaat").replace(",", "."))
+            if result_float < 5.5:
+                grade["is_fail"] = True
+            else:
+                grade["is_fail"] = False
+        except (TypeError, AttributeError):
+            if grade.get("resultaatLabelAfkorting", "?") == "O":
+                grade["is_fail"] = True
+            else:
+                grade["is_fail"] = False
+            
         
         grade_subject_name = grade["vak"]["naam"]
         grade_test_name = grade["omschrijving"]
