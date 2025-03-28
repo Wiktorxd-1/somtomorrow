@@ -1,5 +1,6 @@
 img.icon {
     height: 1em;
+    font-size: unset;
 }
 
 .gradeitem {
@@ -14,9 +15,7 @@ img.icon {
     grid-template-rows: repeat(3, 1fr);
     grid-column-gap: 0px;
     grid-row-gap: 0px;
-    justify-items: center;
     align-items: center;
-    text-align: center;
 }
 
 .grade-result {
@@ -25,18 +24,25 @@ img.icon {
 
 .secondary-info {
     grid-area: 3 / 2 / 4 / 4;
+    font-size: .8em;
+    color: #aaa;
 }
 
-.subect-name {
+.subject-name {
     grid-area: 1 / 2 / 2 / 3;
+    font-size: 1.1em;
+    font-weight: 700;
 }
 
 .test-name {
     grid-area: 2 / 2 / 3 / 3;
+    font-size: .9em;
 }
 
 .icon {
     grid-area: 1 / 1 / 4 / 2;
+    justify-self: center;
+    font-size: 1.2em;
 }
 
 
