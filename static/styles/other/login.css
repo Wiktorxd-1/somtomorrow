@@ -76,7 +76,7 @@ form #loginbutton {
     color: black;
     background: white;
     padding: 7.5px;
-    margin-top: 20px;
+    margin-top: 10px;
     font-size: 1.2em;
     font-weight: bold;
     outline: none;
@@ -125,4 +125,21 @@ form #loginbutton:hover,
 
 #imgcredit a {
     color: inherit;
+}
+
+#messages {
+    margin-top: 23px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.message {
+    border-radius: 8px;
+    padding: 7px;
+    width: fit-content;
+}
+
+.message.error {
+    background: var(--red);
 }

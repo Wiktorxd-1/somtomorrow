@@ -110,8 +110,16 @@ def get_token():
 
     response = requests.post("https://vik.dupunkto.org/api/authtoday", json=reqdata)
 
-    response.raise_for_status()
+    if str(response.status_code) == "503":
+        responsedata = response.json()
+        errormessage = responsedata['error']
+        errormessage_formatted = errormessage + "." if not errormessage.endswith(".") else errormessage
 
+        flash(f"Fout: {errormessage_formatted}", "error")
+        return redirect(url_for("login"))
+    else:
+        response.raise_for_status()
+    
     authdata = response.json()
 
     access_token = authdata["access_token"]
