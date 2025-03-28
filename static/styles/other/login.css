@@ -8,8 +8,9 @@
 body {
     font-family: sans-serif;
     padding: 40px;
-    background: black;
-    background-image: url("/static/images/camel.jpg");
+    background: #6722cb;
+    background: #6822cb url("/static/images/camel.jpg");
+    background-blend-mode: luminosity;
     color: white;
     background-size: cover;
     height: 100vh;
