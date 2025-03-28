@@ -420,6 +420,8 @@ def grades_all():
 @app.route('/identicon/<username>')
 @excluded
 def identicon(username):
+    if username == "Robin Boers":
+        return send_from_directory("static/images/robin.png", mimetype="image/png")
     image_bytes = render_identicon(username)
     image_io = io.BytesIO(image_bytes)
     return send_file(image_io, mimetype='image/png')
