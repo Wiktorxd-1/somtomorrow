@@ -8,7 +8,7 @@
 body {
     font-family: sans-serif;
     padding: 40px;
-    background: #6722cb;
+    background: #6822cb;
     background: #6822cb url("/static/images/camel.jpg");
     background-blend-mode: luminosity;
     color: white;
@@ -71,7 +71,7 @@ form #loginbutton {
 
 form #loginbutton:hover,
 .otherloginmethod:hover {
-    background: #0066b2;
+    background: #6822cb;
     color: white;
 }
 

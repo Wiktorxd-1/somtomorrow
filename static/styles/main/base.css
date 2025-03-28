@@ -7,6 +7,9 @@
     --yellow: #ffa630;
     --red: #e65039;
     --green: #06c749;
+    --purple: #6822cb;
+    --light-purple: #823ce5;
+    --dark-purple: #511b9e;
 }
 
 :root {
@@ -42,7 +45,7 @@ main {
 #sidebar {
     display: flex;
     flex-direction: column;
-    background: #6822cb;
+    background: var(--purple);
     position: fixed;
     width: 60px;
     height: 100%;
@@ -81,11 +84,11 @@ main {
 }
 
 .menu-item.active {
-    background: #511b9e;
+    background: var(--dark-purple);
 }
 
 .menu-item:not(.active):hover {
-    background: #823ce5;
+    background: var(--light-purple);
 }
 
 #logout {
@@ -154,5 +157,9 @@ main {
 }
 
 .subpagemenu-item.active, .subpagemenu-item:hover {
-    border: 2px solid #823ce5;
+    border: 2px solid var(--light-purple);
+}
+
+#logo {
+    padding: 5px;
 }

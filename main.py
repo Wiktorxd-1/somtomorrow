@@ -27,7 +27,7 @@ locale.setlocale(locale.LC_TIME, "nl_NL")
 @app.route('/favicon.ico')
 @app.route('/favicon')
 def favicon():
-    return send_from_directory('static', "favs/tempfav.ico", mimetype='image/vnd.microsoft.icon')
+    return send_from_directory('static', "favs/fav.ico", mimetype='image/vnd.microsoft.icon')
 
 
 @app.route("/.well-known/security.txt")
@@ -403,11 +403,6 @@ def grades_all():
 
     api_data = sorted(api_data, key=lambda x: x["datetime_sort"], reverse=True)
 
-    import json
-    with open("temp.json", "w") as jsonfile:
-        json.dump(api_data, jsonfile, indent=4)
-
-    
 
     return render_template("main/grades/all_test_grades.html", gradelist = api_data)
 
