@@ -172,7 +172,7 @@ def set_token_and_info(token):
 
     session["student_id"] = student_id
     session["first_name"] = first_name
-    session["last_name"] = last_name
+    session["last_name"] = last_name.replace("Ten Berg", "ten Berg")
     session["school_name"] = schooldata_data["huidigeVestiging"]["naam"]
     session["main_class"] = schooldata_data["stamgroepnaam"]
     session["token"] = token
