@@ -29,8 +29,6 @@ body {
     display: grid;
     margin: 0;
     height: 100vh;
-    grid-template-areas: "sidebar main";
-    grid-template-columns: 60px 1fr;
     background-color: var(--back);
     color: var(--front);
     font-family: Inter, sans-serif;
@@ -38,12 +36,16 @@ body {
 
 main {
     padding: 20px;
+    margin-left: 60px;
 }
 
 #sidebar {
     display: flex;
     flex-direction: column;
     background: #6822cb;
+    position: fixed;
+    width: 60px;
+    height: 100%;
 }
 
 #menu {
