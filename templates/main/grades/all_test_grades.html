@@ -16,13 +16,11 @@
     <div id="gradelist_container">
         {% for grade in gradelist %}
             <div class="gradeitem">
-                <span>{{ grade.icon | safe }}</span>
-                <span>{{ grade.vak.naam }}</span>
-                <span>{{ grade.datumiice }}</span>
-                <span>{{ grade.weging }}</span>
-                <span>{{ grade.examenWeging }}</span>
-                <span>{{ grade.periode }}</span>
-                <span>{{ grade.geldendResultaat }}</span>
+                <div class="icon">{{ grade.icon | safe }}</div>
+                <div class="subject-name">{{ grade.subject_nice }}</div>
+                <div class="test-name">{{ grade.test_nice }}</div>
+                <div class="secondary-info">{{ grade.datetime_nice }}</div>
+                <div class="grade-result">{{ grade.geldendResultaat }}</div>
             </div>
         {% endfor %}
     </div>

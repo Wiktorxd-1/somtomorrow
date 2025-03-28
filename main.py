@@ -287,7 +287,8 @@ def grades_all():
             "kunst": '<i class="fa-solid fa-palette"></i>',
             "beeldende vorming": '<i class="fa-solid fa-palette"></i>',
             "muziek": '<i class="fa-solid fa-music"></i>',
-            "natuur, leven en technologie": '<i class="fa-solid fa-microscope"></i>',
+            "natuur": '<i class="fa-solid fa-microscope"></i>',
+            "technologie": '<i class="fa-solid fa-microscope"></i>',
             "drama": '<i class="fa-solid fa-masks-theater"></i>',
             "geschiedenis": '<i class="fa-solid fa-landmark"></i>',
             "lichamelijke opvoeding": '<i class="fa-solid fa-futbol"></i>',
@@ -300,7 +301,7 @@ def grades_all():
             "informatica": '<i class="fa-solid fa-code"></i>',
             "wiskunde": '<i class="fa-solid fa-calculator"></i>',
             "bedrijfseconomie": '<i class="fa-solid fa-building"></i>',
-            "management & organisatie": '<i class="fa-solid fa-building"></i>',
+            "management": '<i class="fa-solid fa-building"></i>',
             "filosofie": '<i class="fa-solid fa-brain"></i>',
             "natuurkunde": '<i class="fa-solid fa-atom"></i>'
         }
@@ -323,10 +324,12 @@ def grades_all():
         else:
             formatted = dt_entered.strftime("%a %d %B om %H:%M:%S")
 
-
+        grade["subject_nice"] = grade["vak"]["naam"][:1].upper() + grade["vak"]["naam"][1:]
         grade["datetime_sort"] = dt_entered.isoformat()
-        grade["datuminvoer_nice"] = formatted
+        grade["datetime_nice"] = formatted
         grade["icon"] = get_icon(grade["vak"]["naam"])
+        grade["test_nice"] = grade["omschrijving"][:37] + "..." if len(grade["omschrijving"]) > 40 else grade["omschrijving"]
+
 
 
     api_data = sorted(api_data, key=lambda x: x["datetime_sort"], reverse=True)

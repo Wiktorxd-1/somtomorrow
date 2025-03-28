@@ -87,7 +87,10 @@ header {
 #menu {
     display: flex;
     flex-direction: row;
-    gap: 20px;
+    gap: 15px;
+    
+    /* Temporary, until I find a way to put secondary menu items under a other submenu-like thingy */
+    flex-wrap: wrap;
 }
 
 .menu-item, #logout {
@@ -101,10 +104,10 @@ header {
     border-width: 2px 0px;
     border-color: transparent;
     border-style: solid;
+    padding: 5px 0;
 }
 
 .menu-item.active, .menu-item:hover, #logout:hover {
-    padding: 10px 0;
     border-bottom: 2px solid white;
 }
 
@@ -116,4 +119,9 @@ footer {
 
 footer a {
     color: inherit;
+}
+
+#page_title {
+    text-align: center;
+    margin-bottom: 30px;
 }
