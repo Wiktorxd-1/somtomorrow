@@ -19,8 +19,6 @@ app.permanent_session_lifetime = timedelta(hours=1)
 locale.setlocale(locale.LC_TIME, "nl_NL")
 
 
-
-
 # Basics and files
 
 
@@ -329,6 +327,7 @@ def grades_all():
         grade["datetime_nice"] = formatted
         grade["icon"] = get_icon(grade["vak"]["naam"])
         grade["test_nice"] = grade["omschrijving"][:37] + "..." if len(grade["omschrijving"]) > 40 else grade["omschrijving"]
+        grade["result"] = grade.get("geldendResultaat", grade.get("resultaatLabelAfkorting", "?"))
 
 
 

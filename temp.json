@@ -96,7 +96,8 @@
         "datetime_sort": "2025-03-26T14:45:21+01:00",
         "datetime_nice": "wo 26 maart om 14:45:21",
         "icon": "<img class=\"icon uk\" src=\"/static/images/flags/uk.svg\">",
-        "test_nice": "Presentatie"
+        "test_nice": "Presentatie",
+        "result": "10,0"
     },
     {
         "$type": "resultaten.RResultaat",
@@ -195,7 +196,8 @@
         "datetime_sort": "2025-03-26T07:15:22+01:00",
         "datetime_nice": "wo 26 maart om 07:15:22",
         "icon": "<i class=\"fa-solid fa-calculator\"></i>",
-        "test_nice": "H5 Machten, exponenten en logaritmen"
+        "test_nice": "H5 Machten, exponenten en logaritmen",
+        "result": "9,0"
     },
     {
         "$type": "resultaten.RResultaat",
@@ -294,7 +296,8 @@
         "datetime_sort": "2025-03-20T23:02:38+01:00",
         "datetime_nice": "do 20 maart om 23:02:38",
         "icon": "<i class=\"fa-solid fa-seedling\"></i>",
-        "test_nice": "H6 Soorten en populaties"
+        "test_nice": "H6 Soorten en populaties",
+        "result": "8,3"
     },
     {
         "$type": "resultaten.RResultaat",
@@ -393,7 +396,8 @@
         "datetime_sort": "2025-03-19T09:18:36+01:00",
         "datetime_nice": "wo 19 maart om 09:18:36",
         "icon": "<i class=\"fa-solid fa-futbol\"></i>",
-        "test_nice": "prestatie: bewegingsvaardigheden gedu..."
+        "test_nice": "prestatie: bewegingsvaardigheden gedu...",
+        "result": "G"
     },
     {
         "$type": "resultaten.RResultaat",
@@ -492,7 +496,8 @@
         "datetime_sort": "2025-03-18T14:37:22+01:00",
         "datetime_nice": "di 18 maart om 14:37:22",
         "icon": "<i class=\"fa-solid fa-calculator\"></i>",
-        "test_nice": "H4 Vergelijkingen en herledingen"
+        "test_nice": "H4 Vergelijkingen en herledingen",
+        "result": "9,1"
     },
     {
         "$type": "resultaten.RResultaat",
@@ -591,7 +596,8 @@
         "datetime_sort": "2025-03-13T15:49:10+01:00",
         "datetime_nice": "do 13 maart om 15:49:10",
         "icon": "<img class=\"icon fr\" src=\"/static/images/flags/fr.svg\">",
-        "test_nice": "CITO Kijk- en luistertoets"
+        "test_nice": "CITO Kijk- en luistertoets",
+        "result": "6,5"
     },
     {
         "$type": "resultaten.RResultaat",
@@ -690,7 +696,8 @@
         "datetime_sort": "2025-03-13T14:58:02+01:00",
         "datetime_nice": "do 13 maart om 14:58:02",
         "icon": "<i class=\"fa-solid fa-palette\"></i>",
-        "test_nice": "Puntenlijst"
+        "test_nice": "Puntenlijst",
+        "result": "8,7"
     },
     {
         "$type": "resultaten.RResultaat",
@@ -789,7 +796,8 @@
         "datetime_sort": "2025-03-13T14:52:12+01:00",
         "datetime_nice": "do 13 maart om 14:52:12",
         "icon": "<i class=\"fa-solid fa-palette\"></i>",
-        "test_nice": "Dossier"
+        "test_nice": "Dossier",
+        "result": "8,5"
     },
     {
         "$type": "resultaten.RResultaat",
@@ -888,7 +896,8 @@
         "datetime_sort": "2025-03-12T15:56:13+01:00",
         "datetime_nice": "wo 12 maart om 15:56:13",
         "icon": "<i class=\"fa-solid fa-seedling\"></i>",
-        "test_nice": "H5 Erfelijkheid"
+        "test_nice": "H5 Erfelijkheid",
+        "result": "9,4"
     },
     {
         "$type": "resultaten.RResultaat",
@@ -1080,7 +1089,8 @@
         "datetime_sort": "2025-02-10T13:29:45+01:00",
         "datetime_nice": "ma 10 februari om 13:29:45",
         "icon": "<i class=\"fa-solid fa-microscope\"></i>",
-        "test_nice": "Module Hersenen en leren"
+        "test_nice": "Module Hersenen en leren",
+        "result": "7,7"
     },
     {
         "$type": "resultaten.RResultaat",
@@ -1179,7 +1189,8 @@
         "datetime_sort": "2025-02-03T23:05:47+01:00",
         "datetime_nice": "ma 03 februari om 23:05:47",
         "icon": "<i class=\"fa-solid fa-seedling\"></i>",
-        "test_nice": "H4 Voortplanting"
+        "test_nice": "H4 Voortplanting",
+        "result": "8,8"
     },
     {
         "$type": "resultaten.RResultaat",
@@ -1278,7 +1289,8 @@
         "datetime_sort": "2025-02-03T14:44:54+01:00",
         "datetime_nice": "ma 03 februari om 14:44:54",
         "icon": "<i class=\"fa-solid fa-palette\"></i>",
-        "test_nice": "Puntenlijst"
+        "test_nice": "Puntenlijst",
+        "result": "8,0"
     },
     {
         "$type": "resultaten.RResultaat",
@@ -1377,7 +1389,8 @@
         "datetime_sort": "2025-02-03T08:33:03+01:00",
         "datetime_nice": "ma 03 februari om 08:33:03",
         "icon": "<i class=\"fa-solid fa-calculator\"></i>",
-        "test_nice": "H1 en H2 en H3"
+        "test_nice": "H1 en H2 en H3",
+        "result": "8,5"
     },
     {
         "$type": "resultaten.RResultaat",
@@ -1476,7 +1489,8 @@
         "datetime_sort": "2025-02-02T21:40:44+01:00",
         "datetime_nice": "zo 02 februari om 21:40:44",
         "icon": "<i class=\"fa-solid fa-microscope\"></i>",
-        "test_nice": "Toets module Hersenen en leren"
+        "test_nice": "Toets module Hersenen en leren",
+        "result": "6,8"
     },
     {
         "$type": "resultaten.RResultaat",
@@ -1575,7 +1589,8 @@
         "datetime_sort": "2025-01-31T08:29:59+01:00",
         "datetime_nice": "vr 31 januari om 08:29:59",
         "icon": "<i class=\"fa-solid fa-palette\"></i>",
-        "test_nice": "Dossier"
+        "test_nice": "Dossier",
+        "result": "8,5"
     },
     {
         "$type": "resultaten.RResultaat",
@@ -1674,7 +1689,8 @@
         "datetime_sort": "2025-01-28T11:37:13+01:00",
         "datetime_nice": "di 28 januari om 11:37:13",
         "icon": "<img class=\"icon fr\" src=\"/static/images/flags/fr.svg\">",
-        "test_nice": "Grandes Lignes chap.2"
+        "test_nice": "Grandes Lignes chap.2",
+        "result": "8,6"
     },
     {
         "$type": "resultaten.RResultaat",
@@ -1773,7 +1789,8 @@
         "datetime_sort": "2025-01-24T17:54:20+01:00",
         "datetime_nice": "vr 24 januari om 17:54:20",
         "icon": "<i class=\"fa-solid fa-microscope\"></i>",
-        "test_nice": "H2 Bewegingen"
+        "test_nice": "H2 Bewegingen",
+        "result": "9,4"
     },
     {
         "$type": "resultaten.RResultaat",
@@ -1872,7 +1889,8 @@
         "datetime_sort": "2025-01-24T08:37:42+01:00",
         "datetime_nice": "vr 24 januari om 08:37:42",
         "icon": "<i class=\"fa-solid fa-people-group\"></i>",
-        "test_nice": "Rechtsstaat + Hoofdstuk 1"
+        "test_nice": "Rechtsstaat + Hoofdstuk 1",
+        "result": "9,5"
     },
     {
         "$type": "resultaten.RResultaat",
@@ -1971,7 +1989,8 @@
         "datetime_sort": "2025-01-22T14:51:45+01:00",
         "datetime_nice": "wo 22 januari om 14:51:45",
         "icon": "<img class=\"icon uk\" src=\"/static/images/flags/uk.svg\">",
-        "test_nice": "Toets over Of Course unit 3 + grammat..."
+        "test_nice": "Toets over Of Course unit 3 + grammat...",
+        "result": "9,3"
     },
     {
         "$type": "resultaten.RResultaat",
@@ -2070,7 +2089,8 @@
         "datetime_sort": "2025-01-22T09:15:05+01:00",
         "datetime_nice": "wo 22 januari om 09:15:05",
         "icon": "<img class=\"icon nl\" src=\"/static/images/flags/nl.svg\">",
-        "test_nice": "Lezen, Meer dan lezen"
+        "test_nice": "Lezen, Meer dan lezen",
+        "result": "7,1"
     },
     {
         "$type": "resultaten.RResultaat",
@@ -2169,7 +2189,8 @@
         "datetime_sort": "2025-01-20T20:20:19+01:00",
         "datetime_nice": "ma 20 januari om 20:20:19",
         "icon": "<i class=\"fa-solid fa-vial\"></i>",
-        "test_nice": "Chemisch Rekenen (Hoofdstuk 3)"
+        "test_nice": "Chemisch Rekenen (Hoofdstuk 3)",
+        "result": "9,2"
     },
     {
         "$type": "resultaten.RResultaat",
@@ -2268,7 +2289,8 @@
         "datetime_sort": "2025-01-17T09:06:48+01:00",
         "datetime_nice": "vr 17 januari om 09:06:48",
         "icon": "<i class=\"fa-solid fa-futbol\"></i>",
-        "test_nice": "prestatie: bewegingsvaardigheden gedu..."
+        "test_nice": "prestatie: bewegingsvaardigheden gedu...",
+        "result": "G"
     },
     {
         "$type": "resultaten.RResultaat",
@@ -2367,7 +2389,8 @@
         "datetime_sort": "2025-01-15T09:26:27+01:00",
         "datetime_nice": "wo 15 januari om 09:26:27",
         "icon": "<i class=\"fa-solid fa-futbol\"></i>",
-        "test_nice": "prestatie: bewegingsvaardigheden gedu..."
+        "test_nice": "prestatie: bewegingsvaardigheden gedu...",
+        "result": "G"
     },
     {
         "$type": "resultaten.RResultaat",
@@ -2466,7 +2489,8 @@
         "datetime_sort": "2025-01-13T20:00:35+01:00",
         "datetime_nice": "ma 13 januari om 20:00:35",
         "icon": "<i class=\"fa-solid fa-seedling\"></i>",
-        "test_nice": "H3 Wetenschappelijk onderzoek"
+        "test_nice": "H3 Wetenschappelijk onderzoek",
+        "result": "7,7"
     },
     {
         "$type": "resultaten.RResultaat",
@@ -2565,7 +2589,8 @@
         "datetime_sort": "2025-01-07T10:52:49+01:00",
         "datetime_nice": "di 07 januari om 10:52:49",
         "icon": "<i class=\"fa-solid fa-calculator\"></i>",
-        "test_nice": "H3 Meetkunde"
+        "test_nice": "H3 Meetkunde",
+        "result": "9,6"
     },
     {
         "$type": "resultaten.RResultaat",
@@ -2664,7 +2689,8 @@
         "datetime_sort": "2024-12-20T15:14:32+01:00",
         "datetime_nice": "vr 20 december om 15:14:32",
         "icon": "<img class=\"icon fr\" src=\"/static/images/flags/fr.svg\">",
-        "test_nice": "Spreekvaardigheid"
+        "test_nice": "Spreekvaardigheid",
+        "result": "9,0"
     },
     {
         "$type": "resultaten.RResultaat",
@@ -2763,7 +2789,8 @@
         "datetime_sort": "2024-12-16T14:52:02+01:00",
         "datetime_nice": "ma 16 december om 14:52:02",
         "icon": "<i class=\"fa-solid fa-vial\"></i>",
-        "test_nice": "Chemisch Rekenen (deel 1) (Hoofdstuk ..."
+        "test_nice": "Chemisch Rekenen (deel 1) (Hoofdstuk ...",
+        "result": "9,7"
     },
     {
         "$type": "resultaten.RResultaat",
@@ -2862,7 +2889,8 @@
         "datetime_sort": "2024-12-13T09:57:42+01:00",
         "datetime_nice": "vr 13 december om 09:57:42",
         "icon": "<img class=\"icon nl\" src=\"/static/images/flags/nl.svg\">",
-        "test_nice": "Recensie"
+        "test_nice": "Recensie",
+        "result": "9,3"
     },
     {
         "$type": "resultaten.RResultaat",
@@ -2961,7 +2989,8 @@
         "datetime_sort": "2024-12-06T10:48:26+01:00",
         "datetime_nice": "vr 06 december om 10:48:26",
         "icon": "<img class=\"icon uk\" src=\"/static/images/flags/uk.svg\">",
-        "test_nice": "Toets over Of Course unit 4 + grammat..."
+        "test_nice": "Toets over Of Course unit 4 + grammat...",
+        "result": "7,9"
     },
     {
         "$type": "resultaten.RResultaat",
@@ -3060,7 +3089,8 @@
         "datetime_sort": "2024-11-11T14:01:06+01:00",
         "datetime_nice": "ma 11 november om 14:01:06",
         "icon": "<i class=\"fa-solid fa-microscope\"></i>",
-        "test_nice": "Module Forensisch onderzoek"
+        "test_nice": "Module Forensisch onderzoek",
+        "result": "8,8"
     },
     {
         "$type": "resultaten.RResultaat",
@@ -3159,7 +3189,8 @@
         "datetime_sort": "2024-11-11T07:04:49+01:00",
         "datetime_nice": "ma 11 november om 07:04:49",
         "icon": "<i class=\"fa-solid fa-calculator\"></i>",
-        "test_nice": "H2 De afgeleide functie"
+        "test_nice": "H2 De afgeleide functie",
+        "result": "9,6"
     },
     {
         "$type": "resultaten.RResultaat",
@@ -3258,7 +3289,8 @@
         "datetime_sort": "2024-11-10T22:52:45+01:00",
         "datetime_nice": "zo 10 november om 22:52:45",
         "icon": "<i class=\"fa-solid fa-seedling\"></i>",
-        "test_nice": "H2 Cel en leven"
+        "test_nice": "H2 Cel en leven",
+        "result": "9,4"
     },
     {
         "$type": "resultaten.RResultaat",
@@ -3357,7 +3389,8 @@
         "datetime_sort": "2024-11-08T19:12:14+01:00",
         "datetime_nice": "vr 08 november om 19:12:14",
         "icon": "<i class=\"fa-solid fa-people-group\"></i>",
-        "test_nice": "Rechtsstaat + Hoofdstuk 1"
+        "test_nice": "Rechtsstaat + Hoofdstuk 1",
+        "result": "9,5"
     },
     {
         "$type": "resultaten.RResultaat",
@@ -3456,7 +3489,8 @@
         "datetime_sort": "2024-11-08T15:56:28+01:00",
         "datetime_nice": "vr 08 november om 15:56:28",
         "icon": "<i class=\"fa-solid fa-microscope\"></i>",
-        "test_nice": "Toets bij Forensisch onderzoek.\r\nNIET..."
+        "test_nice": "Toets bij Forensisch onderzoek.\r\nNIET...",
+        "result": "9,3"
     },
     {
         "$type": "resultaten.RResultaat",
@@ -3555,7 +3589,8 @@
         "datetime_sort": "2024-11-06T14:41:33+01:00",
         "datetime_nice": "wo 06 november om 14:41:33",
         "icon": "<i class=\"fa-solid fa-microscope\"></i>",
-        "test_nice": "H1 Elektriciteit"
+        "test_nice": "H1 Elektriciteit",
+        "result": "9,0"
     },
     {
         "$type": "resultaten.RResultaat",
@@ -3654,7 +3689,8 @@
         "datetime_sort": "2024-11-06T14:41:12+01:00",
         "datetime_nice": "wo 06 november om 14:41:12",
         "icon": "<i class=\"fa-solid fa-microscope\"></i>",
-        "test_nice": "H6.1 Rekenvaardigheden en 6.2 Onderzo..."
+        "test_nice": "H6.1 Rekenvaardigheden en 6.2 Onderzo...",
+        "result": "9,0"
     },
     {
         "$type": "resultaten.RResultaat",
@@ -3846,7 +3882,8 @@
         "datetime_sort": "2024-11-05T11:52:06+01:00",
         "datetime_nice": "di 05 november om 11:52:06",
         "icon": "<img class=\"icon nl\" src=\"/static/images/flags/nl.svg\">",
-        "test_nice": "Verhaalanalyse"
+        "test_nice": "Verhaalanalyse",
+        "result": "7,3"
     },
     {
         "$type": "resultaten.RResultaat",
@@ -3945,7 +3982,8 @@
         "datetime_sort": "2024-10-31T15:46:13+01:00",
         "datetime_nice": "do 31 oktober om 15:46:13",
         "icon": "<i class=\"fa-solid fa-seedling\"></i>",
-        "test_nice": "Ethologisch onderzoek"
+        "test_nice": "Ethologisch onderzoek",
+        "result": "8,0"
     },
     {
         "$type": "resultaten.RResultaat",
@@ -4044,7 +4082,8 @@
         "datetime_sort": "2024-10-31T14:34:52+01:00",
         "datetime_nice": "do 31 oktober om 14:34:52",
         "icon": "<i class=\"fa-solid fa-seedling\"></i>",
-        "test_nice": "H1 Gedrag"
+        "test_nice": "H1 Gedrag",
+        "result": "9,1"
     },
     {
         "$type": "resultaten.RResultaat",
@@ -4143,7 +4182,8 @@
         "datetime_sort": "2024-10-29T09:11:58+01:00",
         "datetime_nice": "di 29 oktober om 09:11:58",
         "icon": "<i class=\"fa-solid fa-palette\"></i>",
-        "test_nice": "Dossier"
+        "test_nice": "Dossier",
+        "result": "8,9"
     },
     {
         "$type": "resultaten.RResultaat",
@@ -4242,7 +4282,8 @@
         "datetime_sort": "2024-10-25T13:41:50+02:00",
         "datetime_nice": "vr 25 oktober om 13:41:50",
         "icon": "<img class=\"icon fr\" src=\"/static/images/flags/fr.svg\">",
-        "test_nice": "Grandes Lignes chap.1"
+        "test_nice": "Grandes Lignes chap.1",
+        "result": "9,0"
     },
     {
         "$type": "resultaten.RResultaat",
@@ -4341,7 +4382,8 @@
         "datetime_sort": "2024-10-25T10:17:51+02:00",
         "datetime_nice": "vr 25 oktober om 10:17:51",
         "icon": "<img class=\"icon uk\" src=\"/static/images/flags/uk.svg\">",
-        "test_nice": "Toets luistervaardigheid"
+        "test_nice": "Toets luistervaardigheid",
+        "result": "8,3"
     },
     {
         "$type": "resultaten.RResultaat",
@@ -4440,7 +4482,8 @@
         "datetime_sort": "2024-10-21T20:28:04+02:00",
         "datetime_nice": "ma 21 oktober om 20:28:04",
         "icon": "<i class=\"fa-solid fa-vial\"></i>",
-        "test_nice": "Koolstofchemie (Hoofdstuk 2)"
+        "test_nice": "Koolstofchemie (Hoofdstuk 2)",
+        "result": "9,1"
     },
     {
         "$type": "resultaten.RResultaat",
@@ -4539,7 +4582,8 @@
         "datetime_sort": "2024-10-17T16:23:32+02:00",
         "datetime_nice": "do 17 oktober om 16:23:32",
         "icon": "<img class=\"icon nl\" src=\"/static/images/flags/nl.svg\">",
-        "test_nice": "Betoog"
+        "test_nice": "Betoog",
+        "result": "7,4"
     },
     {
         "$type": "resultaten.RResultaat",
@@ -4638,7 +4682,8 @@
         "datetime_sort": "2024-10-11T10:40:08+02:00",
         "datetime_nice": "vr 11 oktober om 10:40:08",
         "icon": "<img class=\"icon uk\" src=\"/static/images/flags/uk.svg\">",
-        "test_nice": "Toets over Of Course unit 1 + grammat..."
+        "test_nice": "Toets over Of Course unit 1 + grammat...",
+        "result": "7,7"
     },
     {
         "$type": "resultaten.RResultaat",
@@ -4737,7 +4782,8 @@
         "datetime_sort": "2024-10-10T16:09:28+02:00",
         "datetime_nice": "do 10 oktober om 16:09:28",
         "icon": "<img class=\"icon fr\" src=\"/static/images/flags/fr.svg\">",
-        "test_nice": "Kleine toets Leids Stencil"
+        "test_nice": "Kleine toets Leids Stencil",
+        "result": "9,3"
     },
     {
         "$type": "resultaten.RResultaat",
@@ -4836,7 +4882,8 @@
         "datetime_sort": "2024-10-02T09:59:09+02:00",
         "datetime_nice": "wo 02 oktober om 09:59:09",
         "icon": "<i class=\"fa-solid fa-vial\"></i>",
-        "test_nice": "Basis Scheikunde & Atoombouw (Hoofdst..."
+        "test_nice": "Basis Scheikunde & Atoombouw (Hoofdst...",
+        "result": "8,2"
     },
     {
         "$type": "resultaten.RResultaat",
@@ -4935,7 +4982,8 @@
         "datetime_sort": "2024-09-30T13:19:32+02:00",
         "datetime_nice": "ma 30 september om 13:19:32",
         "icon": "<i class=\"fa-solid fa-calculator\"></i>",
-        "test_nice": "H1 Functies en grafieken"
+        "test_nice": "H1 Functies en grafieken",
+        "result": "8,8"
     },
     {
         "$type": "resultaten.RResultaat",
@@ -5034,6 +5082,7 @@
         "datetime_sort": "2024-09-24T16:23:39+02:00",
         "datetime_nice": "di 24 september om 16:23:39",
         "icon": "<i class=\"fa-solid fa-seedling\"></i>",
-        "test_nice": "4A-BI-T01\r\nToets H1 'Gedrag'"
+        "test_nice": "4A-BI-T01\r\nToets H1 'Gedrag'",
+        "result": "9,1"
     }
 ]
