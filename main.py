@@ -288,6 +288,7 @@ def grades_all():
             "natuur": '<i class="fa-solid fa-microscope"></i>',
             "technologie": '<i class="fa-solid fa-microscope"></i>',
             "drama": '<i class="fa-solid fa-masks-theater"></i>',
+            "theater": '<i class="fa-solid fa-masks-theater"></i>',
             "geschiedenis": '<i class="fa-solid fa-landmark"></i>',
             "lichamelijke opvoeding": '<i class="fa-solid fa-futbol"></i>',
             "beweging": '<i class="fa-solid fa-futbol"></i>',

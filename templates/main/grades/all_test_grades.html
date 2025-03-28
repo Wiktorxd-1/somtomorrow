@@ -11,7 +11,17 @@
 
 
 {% block content %}
-    <h1 id="page_title">Alle toetscijfers</h1>
+    <h1 id="page_title">Cijfers</h1>
+
+    <div id="subpagemenu">
+        <a class="subpagemenu-item active">
+            Alle toetscijfers
+        </a>
+        <a class="subpagemenu-item" href="/cijfers/rapport">
+            Rapportcijfers
+        </a>
+        <!-- Other subpages such as stats and stuff things -->
+    </div>
     
     <div id="gradelist_container">
         {% for grade in gradelist %}
