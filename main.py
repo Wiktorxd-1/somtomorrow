@@ -421,7 +421,7 @@ def grades_all():
 @excluded
 def identicon(username):
     if username == "Robin Boers":
-        return send_from_directory("static/images/robin.png", mimetype="image/png")
+        return send_from_directory("static", "images/robin.png", mimetype="image/png")
     image_bytes = render_identicon(username)
     image_io = io.BytesIO(image_bytes)
     return send_file(image_io, mimetype='image/png')

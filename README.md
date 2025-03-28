@@ -5,6 +5,14 @@ Built in Flask and Jinja.
 
 It's currently very much a prototype
 
+## Run yourself
+
+clone the repo  
+cd into the repo  
+run `pip install -r requirements.txt` to install stuff  
+run `py main.py` (or `python3 main.py` or `python main.py` you know!)  
+visit `localhost:5000` and there it is!
+
 ## To-do
 
 Yeah it's a lot...
