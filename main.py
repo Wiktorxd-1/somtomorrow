@@ -303,7 +303,7 @@ def grades_all():
     student_id = session["student_id"]
     token = session["token"]
 
-    api_url = f"https://api.somtoday.nl/rest/v1/resultaten/huidigVoorLeerling/{student_id}??additional=vaknaam&additional=resultaatkolom&additional=heeftalternatiefniveau&additional=naamalternatiefniveau&additional=naamstandaardniveau&additional=leerjaar&additional=periodeAfkorting&type=Toetskolom&type=SamengesteldeToetsKolom&type=Werkstukcijferkolom&type=Advieskolom&type=PeriodeGemiddeldeKolom&type=RapportGemiddeldeKolom&type=RapportCijferKolom&type=RapportToetskolom&type=SEGemiddeldeKolom&type=ToetssoortGemiddeldeKolom"
+    api_url = f"https://api.somtoday.nl/rest/v1/resultaten/huidigVoorLeerling/{student_id}?additional=vaknaam&additional=resultaatkolom&additional=heeftalternatiefniveau&additional=naamalternatiefniveau&additional=naamstandaardniveau&additional=leerjaar&additional=periodeAfkorting&type=Toetskolom&type=SamengesteldeToetsKolom&type=Werkstukcijferkolom&type=Advieskolom&type=PeriodeGemiddeldeKolom&type=RapportGemiddeldeKolom&type=RapportCijferKolom&type=RapportToetskolom&type=SEGemiddeldeKolom&type=ToetssoortGemiddeldeKolom"
 
     headers_list = [
         {
