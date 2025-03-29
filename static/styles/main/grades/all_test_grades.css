@@ -67,6 +67,10 @@ img.icon {
 .grade-result i {
     font-size: .5em;
     align-content: center;
+    color: var(--gray);
+}
+
+.grade-result i.purple {
     color: var(--light-purple);
 }
 
@@ -88,7 +92,7 @@ img.icon {
 }
 
 .gradeitem.open, .gradeitem:hover {
-    border-color: #666;
+    border-color: var(--light-purple);
 }
 
 .gradeitem.open .test-name {

@@ -30,7 +30,7 @@
                 <div class="subject-name">{{ grade.subject_nice }}</div>
                 <div class="test-name">{{ grade.test_nice }}</div>
                 <div class="secondary-info"><i class="fa-solid fa-calendar-day"></i> {{ grade.datetime_nice }} • <i class="fa-solid fa-scale-unbalanced"></i> {{ grade.weging }}{% if grade.examenWeging and grade.examenWeging != 0 %} • <i class="fa-solid fa-scale-unbalanced-flip"></i> {{ grade.examenWeging }} (examen){% endif %}</div>
-                <div class="grade-result{% if grade.is_fail %} grade-fail{% endif %}">{% if grade.retake_is_effective_result %}<i class="fa-solid fa-repeat"></i> {% endif %}{{ grade.result }}</div>
+                <div class="grade-result{% if grade.is_fail %} grade-fail{% endif %}">{% if grade.retake_is_effective_result %}<i class="fa-solid fa-repeat purple"></i> {% elif grade.retake %}<i class="fa-solid fa-repeat"></i> {% endif %}{{ grade.result }}</div>
 
                 <div class="extrainfo">
                     <div class="date"><i class="fa-solid fa-calendar-day"></i> Ingevoerd op {{ grade.datetime_nice_extended }}</div>
