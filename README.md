@@ -19,14 +19,15 @@ Yeah it's a lot...
 
 ### Other
 
-- [ ] Add better error handling at login (from Vik)
+- [x] Add better error handling at login (from Vik)
+- [ ] Add some caching and async stuff so users do not have to wait for the paige to load they just have to wait for the content to load 
 
 ### Auth
 
 - [x] Finish auth with school/username/password (with Vik)
 - [ ] Add long term login with refresh tokens
 - [ ] Maybe look into using the Somtoday login after all with a kind of redirect?
-- [ ] Add some kind of loading screen when getting the tokens from Vik
+- [ ] Add some kind of loading screen when getting the tokens from Vik!
 
 ### Features
 
@@ -43,11 +44,12 @@ Yeah it's a lot...
 
 #### Grades
 
-- [ ] Finish current grade page
+- [x] Finish current grade page
   - [x] Extra info on click
   - [x] Finish styles
 - [ ] Add reports
-- [ ] Add herkansingen
+- [x] Add herkansingen
+  - [ ] Clean up the herkansing data and make it a list?
 - [ ] Add future tests (empty test columns)
 - [ ] Add grade page for each subject
 - [ ] Add *deeltoetsen*
