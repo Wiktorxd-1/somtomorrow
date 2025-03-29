@@ -44,6 +44,14 @@ Yeah it's a lot...
 
 #### Grades
 
+- [ ] Use new Som API for grades  
+    ```
+    api_urls = [
+        f"https://api.somtoday.nl/rest/v1/geldendexamendossierresultaten/leerling/{staticmethod}?type=Toetskolom&type=DeeltoetsKolom&type=Werkstukcijferkolom&type=Advieskolom&additional=vaknaam&additional=resultaatkolom&additional=naamalternatiefniveau&additional=vakuuid&additional=lichtinguuid&sort=desc-geldendResultaatCijferInvoer",
+        "https://api.somtoday.nl/rest/v1/geldendvoortgangsdossierresultaten/leerling/{student_id}?type=Toetskolom&type=DeeltoetsKolom&type=Werkstukcijferkolom&type=Advieskolom&additional=vaknaam&additional=resultaatkolom&additional=naamalternatiefniveau&additional=vakuuid&additional=lichtinguuid&sort=desc-geldendResultaatCijferInvoer"
+    ]
+    ```
+    - [ ] Add new data that the this API provides
 - [x] Finish current grade page
   - [x] Extra info on click
   - [x] Finish styles
