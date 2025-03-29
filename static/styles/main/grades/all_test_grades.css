@@ -5,6 +5,7 @@ img.icon {
 
 .gradeitem {
     display: flex;
+    flex-direction: row;
     width: 100%;
     justify-content: space-between;
 }
@@ -25,6 +26,7 @@ img.icon {
     grid-area: 1 / 1 / 4 / 2;
     font-size: 1.2em;
     display: flex;
+    flex-direction: row;
     align-items: center;
     justify-content: center;
 }
@@ -57,6 +59,7 @@ img.icon {
     font-weight: 700;
     padding: 10px;
     display: flex;
+    flex-direction: row;
     gap: 10px;
     align-items: center;
 }
@@ -67,7 +70,7 @@ img.icon {
     color: var(--light-purple);
 }
 
-.grade-result.fail {
+.grade-fail {
     color: var(--red);
 }
 
@@ -159,17 +162,19 @@ img.icon {
 .retake-effective-result {
     background: var(--purple);
     width: fit-content;
-    padding: 7px;
+    padding: 5px 10px;
     border-radius: 15px;
     color: white;
     font-weight: bolder;
     flex-grow: 1;
     max-width: fit-content;
     align-content: center;
+    height: fit-content;
 }
 
 .retake-infocontainer {
     display: flex;
     flex-direction: row;
     gap: 10px;
+    align-items: center;
 }

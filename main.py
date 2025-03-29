@@ -428,6 +428,23 @@ def grades_all():
             else:
                 formatted = dt_entered.strftime("%a %d %b %Y om %H:%M:%S")
         return formatted
+    
+    def grade_is_fail(number_grade, letter_grade):
+        try:
+            result_float = float(number_grade.replace(",", "."))
+
+            print(f"ng {number_grade} rf {result_float}")
+            
+            if result_float < 5.5:
+                is_fail = True
+            else:
+                is_fail = False
+        except (TypeError, AttributeError):
+            if letter_grade == "O":
+                is_fail = True
+            else:
+                is_fail = False
+        return is_fail
 
 
     for grade in api_data:
@@ -446,20 +463,6 @@ def grades_all():
         
         formatted_dt_entered = format_date(dt_entered)
             
-
-        try:
-            result_float = float(grade.get("geldendResultaat").replace(",", "."))
-            if result_float < 5.5:
-                grade["is_fail"] = True
-            else:
-                grade["is_fail"] = False
-        except (TypeError, AttributeError):
-            if grade.get("resultaatLabelAfkorting", "?") == "O":
-                grade["is_fail"] = True
-            else:
-                grade["is_fail"] = False
-            
-        
         grade_subject_name = grade["vak"]["naam"]
         grade_test_name = grade["omschrijving"]
 
@@ -472,17 +475,21 @@ def grades_all():
         grade["result"] = result
         grade["max_weight"] = max(grade["weging"], grade.get("examenWeging", 0))
 
+        grade["is_fail"] = grade_is_fail(grade.get("geldendResultaat"), grade.get("resultaatLabelAfkorting"))
+
         if grade.get("herkansing"):
             grade["retake"] = {
-                "first_attempt": {
-                    "date": format_date(datetime.strptime(grade["datumInvoer"], "%Y-%m-%dT%H:%M:%S.%f%z")),
-                    "result": grade["resultaat"],
-                    "effective_result": True if grade["resultaat"] == grade["geldendResultaat"] else False,
-                },
                 "first_retake": {
                     "date": format_date(datetime.strptime(grade["herkansing"]["datumInvoer"], "%Y-%m-%dT%H:%M:%S.%f%z")),
                     "result": grade["herkansing"]["resultaat"],
+                    "result_is_fail": grade_is_fail(grade["herkansing"]["resultaat"], ""),
                     "effective_result": True if grade["geldendResultaat"] == grade["herkansing"]["resultaat"] else False,
+                },
+                "first_attempt": {
+                    "date": format_date(datetime.strptime(grade["datumInvoer"], "%Y-%m-%dT%H:%M:%S.%f%z")),
+                    "result": grade["resultaat"],
+                    "result_is_fail": grade_is_fail(grade.get("resultaat"), grade.get("resultaatLabelAfkorting")),
+                    "effective_result": True if grade["resultaat"] == grade["geldendResultaat"] else False,
                 }
             }
             grade["retake_is_effective_result"] = False if grade["resultaat"] == grade["geldendResultaat"] else True

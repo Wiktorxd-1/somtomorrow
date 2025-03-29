@@ -30,7 +30,7 @@
                 <div class="subject-name">{{ grade.subject_nice }}</div>
                 <div class="test-name">{{ grade.test_nice }}</div>
                 <div class="secondary-info"><i class="fa-solid fa-calendar-day"></i> {{ grade.datetime_nice }} • <i class="fa-solid fa-scale-unbalanced"></i> {{ grade.weging }}{% if grade.examenWeging and grade.examenWeging != 0 %} • <i class="fa-solid fa-scale-unbalanced-flip"></i> {{ grade.examenWeging }} (examen){% endif %}</div>
-                <div class="grade-result{% if grade.is_fail %} fail{% endif %}">{% if grade.retake_is_effective_result %}<i class="fa-solid fa-repeat"></i> {% endif %}{{ grade.result }}</div>
+                <div class="grade-result{% if grade.is_fail %} grade-fail{% endif %}">{% if grade.retake_is_effective_result %}<i class="fa-solid fa-repeat"></i> {% endif %}{{ grade.result }}</div>
 
                 <div class="extrainfo">
                     <div class="date"><i class="fa-solid fa-calendar-day"></i> Ingevoerd op {{ grade.datetime_nice_extended }}</div>
@@ -54,7 +54,7 @@
                                     </span>
                                     <span class="retake-effective-result">Geldend cijfer{% endif %}</span>
                                 </div>
-                                <span class="retake-result">{{ grade.retake.first_retake.result }}</span>
+                                <span class="retake-result{% if grade.retake.first_retake.result_is_fail %} grade-fail{% endif %}">{{ grade.retake.first_retake.result }}</span>
                             </div>
                             <div class="retake-attempt">
                                 <div class="retake-infocontainer">
@@ -65,7 +65,7 @@
                                     </span>
                                     <span class="retake-effective-result">Geldend cijfer{% endif %}</span>
                                 </div>
-                                <span class="retake-result">{{ grade.retake.first_attempt.result }}</span>
+                                <span class="retake-result{% if grade.retake.first_attempt.result_is_fail %} grade-fail{% endif %}">{{ grade.retake.first_attempt.result }}</span>
                             </div>
                         </div>
 
