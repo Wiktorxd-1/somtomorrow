@@ -416,12 +416,8 @@ def grades_all():
         return '<i class="fa-solid fa-book"></i>'
     
     
-
-    now = datetime.now(pytz.timezone("Europe/Amsterdam"))
-
-    for grade in api_data:
-        dt_entered = datetime.strptime(grade["datumInvoer"], "%Y-%m-%dT%H:%M:%S.%f%z")
-
+    def format_date(dt_entered):
+        now = datetime.now(pytz.timezone("Europe/Amsterdam"))
         if dt_entered.date() == now.date():
             formatted = f"Vandaag om {dt_entered.strftime('%H:%M:%S')}"
         elif dt_entered.date() == (now.date() - timedelta(days=1)):
@@ -431,6 +427,25 @@ def grades_all():
                 formatted = dt_entered.strftime("%a %d %b om %H:%M:%S")
             else:
                 formatted = dt_entered.strftime("%a %d %b %Y om %H:%M:%S")
+        return formatted
+
+
+    for grade in api_data:
+        if grade.get("resultaatLabelAfkorting"):
+            result = grade["resultaatLabelAfkorting"]
+            dt_entered = datetime.strptime(grade["datumInvoer"], "%Y-%m-%dT%H:%M:%S.%f%z")
+        else:
+            result = grade["resultaat"]
+            real_result = grade["geldendResultaat"]
+
+            if result == real_result:
+                dt_entered = datetime.strptime(grade["datumInvoer"], "%Y-%m-%dT%H:%M:%S.%f%z")
+            else:
+                result = real_result
+                dt_entered = datetime.strptime(grade["herkansing"]["datumInvoer"], "%Y-%m-%dT%H:%M:%S.%f%z")
+        
+        formatted_dt_entered = format_date(dt_entered)
+            
 
         try:
             result_float = float(grade.get("geldendResultaat").replace(",", "."))
@@ -450,16 +465,35 @@ def grades_all():
 
         grade["subject_nice"] = grade_subject_name[:1].upper() + grade_subject_name[1:]
         grade["datetime_sort"] = dt_entered.isoformat()
-        grade["datetime_nice"] = formatted
+        grade["datetime_nice"] = formatted_dt_entered
         grade["datetime_nice_extended"] = dt_entered.strftime("%A %d %B %Y om %H:%M:%S")
         grade["icon"] = get_icon(grade["vak"]["naam"])
         grade["test_nice"] = grade_test_name[:1].upper() + grade_test_name[1:]
-        grade["result"] = grade.get("geldendResultaat", grade.get("resultaatLabelAfkorting", "?"))
+        grade["result"] = result
         grade["max_weight"] = max(grade["weging"], grade.get("examenWeging", 0))
 
+        if grade.get("herkansing"):
+            grade["retake"] = {
+                "first_attempt": {
+                    "date": format_date(datetime.strptime(grade["datumInvoer"], "%Y-%m-%dT%H:%M:%S.%f%z")),
+                    "result": grade["resultaat"],
+                    "effective_result": True if grade["resultaat"] == grade["geldendResultaat"] else False,
+                },
+                "first_retake": {
+                    "date": format_date(datetime.strptime(grade["herkansing"]["datumInvoer"], "%Y-%m-%dT%H:%M:%S.%f%z")),
+                    "result": grade["herkansing"]["resultaat"],
+                    "effective_result": True if grade["geldendResultaat"] == grade["herkansing"]["resultaat"] else False,
+                }
+            }
+            grade["retake_is_effective_result"] = False if grade["resultaat"] == grade["geldendResultaat"] else True
 
 
     api_data = sorted(api_data, key=lambda x: x["datetime_sort"], reverse=True)
+
+    import json
+    
+    with open("temp.json", "w") as jsonfile:
+        json.dump(api_data, jsonfile, indent=4)
 
 
     return render_template("main/grades/all_test_grades.html", gradelist = api_data)

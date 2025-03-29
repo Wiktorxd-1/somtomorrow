@@ -30,14 +30,47 @@
                 <div class="subject-name">{{ grade.subject_nice }}</div>
                 <div class="test-name">{{ grade.test_nice }}</div>
                 <div class="secondary-info"><i class="fa-solid fa-calendar-day"></i> {{ grade.datetime_nice }} • <i class="fa-solid fa-scale-unbalanced"></i> {{ grade.weging }}{% if grade.examenWeging and grade.examenWeging != 0 %} • <i class="fa-solid fa-scale-unbalanced-flip"></i> {{ grade.examenWeging }} (examen){% endif %}</div>
-                <div class="grade-result{% if grade.is_fail %} fail{% endif %}">{{ grade.result }}</div>
+                <div class="grade-result{% if grade.is_fail %} fail{% endif %}">{% if grade.retake_is_effective_result %}<i class="fa-solid fa-repeat"></i> {% endif %}{{ grade.result }}</div>
 
                 <div class="extrainfo">
                     <div class="date"><i class="fa-solid fa-calendar-day"></i> Ingevoerd op {{ grade.datetime_nice_extended }}</div>
                     <div class="weight-regular"><i class="fa-solid fa-scale-unbalanced"></i> Rapportweging: {{ grade.weging }}</div>
                     <div class="weight-exams"><i class="fa-solid fa-scale-unbalanced-flip"></i> Examenweging: {{ grade.examenWeging if grade.examenWeging else 0 }}</div>
-                    <div class="retake"><i class="fa-solid fa-repeat"></i> {% if grade.herkansingstype %}Wel herkansbaar{% else %}Niet herkansbaar{% endif %}</div>
+                    <div class="retake-ability"><i class="fa-solid fa-repeat"></i> {% if grade.herkansingstype != "Geen" %}Wel herkansbaar{% else %}Niet herkansbaar{% endif %}</div>
                     <div class="year-period"><i class="fa-solid fa-clock"></i> Jaar {{ grade.leerjaar }}, periode {{ grade.periode }}</div>
+
+                    {% if grade.retake %}
+
+                        <div class="retake-container">
+                            <span class="retake-title">
+                                Herkansingen
+                            </span>
+                            <div class="retake-attempt">
+                                <div class="retake-infocontainer">
+                                    <span class="retake-info">
+                                        <span class="retake-number">Eerste herkansing</span>
+                                        <span class="retake-date"><i class="fa-solid fa-calendar-day"></i> {{ grade.retake.first_retake.date }}</span>
+                                        {% if grade.retake.first_retake.effective_result %}
+                                    </span>
+                                    <span class="retake-effective-result">Geldend cijfer{% endif %}</span>
+                                </div>
+                                <span class="retake-result">{{ grade.retake.first_retake.result }}</span>
+                            </div>
+                            <div class="retake-attempt">
+                                <div class="retake-infocontainer">
+                                    <span class="retake-info">
+                                        <span class="retake-number">Eerste poging</span>
+                                        <span class="retake-date"><i class="fa-solid fa-calendar-day"></i> {{ grade.retake.first_attempt.date }}</span>
+                                        {% if grade.retake.first_attempt.effective_result %}
+                                    </span>
+                                    <span class="retake-effective-result">Geldend cijfer{% endif %}</span>
+                                </div>
+                                <span class="retake-result">{{ grade.retake.first_attempt.result }}</span>
+                            </div>
+                        </div>
+
+                    {% endif %}
+
                 </div>
             </div>
         {% endfor %}
