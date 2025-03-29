@@ -508,6 +508,16 @@ def schedule_main():
 
     weeknum = request.args.get('w')
     year = request.args.get('y')
+
+    if not weeknum or not year:
+        today = datetime.today()
+        if today.weekday() in [5, 6]:
+            next_week = today + timedelta(days=7 - today.weekday())
+        else:
+            next_week = today
+        weeknum = next_week.isocalendar()[1]
+        year = next_week.year
+
     api_url = f"https://api.somtoday.nl/rest/v1/afspraakitems/2366141886835/jaar/{year}/week/{weeknum}"
 
     api_headers = {
