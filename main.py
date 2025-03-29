@@ -303,22 +303,59 @@ def grades_all():
     student_id = session["student_id"]
     token = session["token"]
 
-    api_url = f"https://api.somtoday.nl/rest/v1/resultaten/huidigVoorLeerling/{student_id}"
+    api_url = f"https://api.somtoday.nl/rest/v1/resultaten/huidigVoorLeerling/{student_id}??additional=vaknaam&additional=resultaatkolom&additional=heeftalternatiefniveau&additional=naamalternatiefniveau&additional=naamstandaardniveau&additional=leerjaar&additional=periodeAfkorting&type=Toetskolom&type=SamengesteldeToetsKolom&type=Werkstukcijferkolom&type=Advieskolom&type=PeriodeGemiddeldeKolom&type=RapportGemiddeldeKolom&type=RapportCijferKolom&type=RapportToetskolom&type=SEGemiddeldeKolom&type=ToetssoortGemiddeldeKolom"
 
-    api_headers = {
-        "Authorization": f"Bearer {token}",
-        "Accept": "application/json",
-        "Origin": "https://somtoday.nl",
-        "Range": "items=0-1000"
-    }
+    headers_list = [
+        {
+            "Authorization": f"Bearer {token}",
+            "Accept": "application/json",
+            "Origin": "https://somtoday.nl",
+            "Range": "items=0-99"
+        },
+        {
+            "Authorization": f"Bearer {token}",
+            "Accept": "application/json",
+            "Origin": "https://somtoday.nl",
+            "Range": "items=100-199"
+        },
+        {
+            "Authorization": f"Bearer {token}",
+            "Accept": "application/json",
+            "Origin": "https://somtoday.nl",
+            "Range": "items=200-299"
+        },
+        {
+            "Authorization": f"Bearer {token}",
+            "Accept": "application/json",
+            "Origin": "https://somtoday.nl",
+            "Range": "items=300-399"
+        },
+        {
+            "Authorization": f"Bearer {token}",
+            "Accept": "application/json",
+            "Origin": "https://somtoday.nl",
+            "Range": "items=400-499"
+        },
+        {
+            "Authorization": f"Bearer {token}",
+            "Accept": "application/json",
+            "Origin": "https://somtoday.nl",
+            "Range": "items=500-599"
+        }
+    ]
 
-    response = requests.get(api_url, headers=api_headers)
-    response_data = response.json()
-    api_data = response_data["items"]
+    api_data = []
+
+    for headers in headers_list:
+        response = requests.get(api_url, headers = headers)
+        responseData = response.json()
+        for item in responseData["items"]:
+            api_data.append(item)
 
 
-    types_to_remove = ["PeriodeGemiddeldeKolom", "RapportGemiddeldeKolom", "SEGemiddeldeKolom", "DeeltoetsKolom"]
-    api_data = [item for item in api_data if item["type"] not in types_to_remove and ("geldendResultaat" in item or "resultaatLabelAfkorting" in item)] # Filter unwanted grade types
+    types_to_include = ["Toetskolom", "Werkstukcijferkolom", "Advieskolom"]
+    api_data = [item for item in api_data if item["type"] in types_to_include and ("geldendResultaat" in item or "resultaatLabelAfkorting" in item)] # Filter unwanted grade types
+
 
     def get_icon(subject):
         subjects_icons = {
