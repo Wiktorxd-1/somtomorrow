@@ -21,31 +21,6 @@ app.permanent_session_lifetime = timedelta(hours=1)
 locale.setlocale(locale.LC_TIME, "nl_NL")
 
 
-# Basics and files
-
-
-@app.route('/favicon.ico')
-@app.route('/favicon')
-def favicon():
-    return send_from_directory('static', "favs/fav.ico", mimetype='image/vnd.microsoft.icon')
-
-
-@app.route("/.well-known/security.txt")
-def securitytxt():
-    return send_from_directory('static', "txts/security.txt", mimetype="text/plain")
-
-@app.route("/security.txt")
-def securitytxtredirect():
-    return redirect(url_for('securitytxt')), 301
-
-
-@app.route("/robots")
-@app.route("/robots.txt")
-def robots():
-    return send_from_directory("static", "txts/robots.txt", mimetype="text/plain")
-
-
-
 
 # Things with logging in and getting the tokens
 
@@ -70,7 +45,7 @@ def check_login():
     if view_func and getattr(view_func, "is_excluded", False):
         return  # Skip token check if endpoint is excluded
 
-    if "static" in request.endpoint or "favicon" in request.endpoint:
+    if any(keyword in request.endpoint for keyword in ["static", "favicon", "security", "robots"]):
         return  # Static files are also excluded
 
     if not logged_in():
@@ -281,6 +256,39 @@ def index():
         # If user is already logged in and the token is valid, redirect to dashboard
         return redirect(url_for("dashboard"))
     return redirect(url_for("login"))
+
+
+
+
+# Basic files
+
+@app.route('/favicon.ico')
+@app.route('/favicon')
+@excluded
+def favicon():
+    return send_from_directory('static', "favs/fav.ico", mimetype='image/vnd.microsoft.icon')
+
+
+@app.route("/.well-known/security.txt")
+@excluded
+def securitytxt():
+    return send_from_directory('static', "txts/security.txt", mimetype="text/plain")
+
+@app.route("/security.txt")
+@excluded
+def securitytxtredirect():
+    return redirect(url_for('securitytxt')), 301
+
+
+@app.route("/robots")
+@app.route("/robots.txt")
+@excluded
+def robots():
+    return send_from_directory("static", "txts/robots.txt", mimetype="text/plain")
+
+
+
+
 
 
 # Main pages
