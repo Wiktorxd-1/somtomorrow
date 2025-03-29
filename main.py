@@ -498,14 +498,29 @@ def grades_all():
 
     api_data = sorted(api_data, key=lambda x: x["datetime_sort"], reverse=True)
 
-    import json
-    
-    with open("temp.json", "w") as jsonfile:
-        json.dump(api_data, jsonfile, indent=4)
-
-
     return render_template("main/grades/all_test_grades.html", gradelist = api_data)
 
+
+@app.route("/rooster")
+@use_session_data
+def schedule_main():
+    token = session["token"]
+
+    weeknum = request.args.get('w')
+    year = request.args.get('y')
+    api_url = f"https://api.somtoday.nl/rest/v1/afspraakitems/2366141886835/jaar/{year}/week/{weeknum}"
+
+    api_headers = {
+        "Authorization": f"Bearer {token}",
+        "Accept": "application/json",
+        "Origin": "https://somtoday.nl",
+        "Range": "items=0-99"
+    }
+
+    response = requests.get(api_url, headers = api_headers)
+    api_data = response.json()
+
+    return render_template("main/schedule.html", schedule_data = api_data)
 
 
 
