@@ -70,17 +70,17 @@ main {
 
 .menu-item span {
     display: none;
-    font-size: 0.6em;
+    font-size: 0.55em;
     position: absolute;
-    background: black;
+    background: var(--dark-purple);
     color: white;
-    padding: 5px 20px;
-    right: -125px;
-    width: 120px;
+    padding: 7px 10px;
+    left: 120%;
+    border-radius: 5px;
 }
 
 .menu-item:hover span {
-    display: block;
+    display: unset;
 }
 
 .menu-item.active {
@@ -105,11 +105,10 @@ main {
 
 #profile {
     display: flex;
-    flex-direction: row;
+    flex-direction: row-reverse;
     gap: 10px;
     align-items: center;
-    justify-content: flex-end;
-    margin-right: 30px;
+    margin-right: 10px;
 }
 
 #userinfocontainer {
@@ -117,6 +116,7 @@ main {
     flex-direction: column;
     width: max-content;
     max-width: 175px;
+    align-items: flex-end;
 }
 
 #userinfoname {
