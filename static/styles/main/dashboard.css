@@ -5,3 +5,14 @@
     align-items: center;
     gap: 20px;
 }
+
+.tile-title {
+    color: inherit;
+    text-decoration: none;
+    font-size: 1.5em;
+    font-weight: 700;
+}
+
+.tile-title:hover {
+    color: var(--light-purple);
+}
