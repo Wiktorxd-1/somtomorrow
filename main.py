@@ -508,6 +508,10 @@ def testgrades_island():
 
     api_data = sorted(api_data, key=lambda x: x["datetime_sort"], reverse=True)
 
+    max_amount = request.args.get("max")
+    if max_amount:
+        api_data = api_data[:int(max_amount)]
+
     return render_template("islands/grades/testgrades-island.html", gradelist = api_data)
 
 

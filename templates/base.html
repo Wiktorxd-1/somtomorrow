@@ -68,7 +68,7 @@
                 const island_url = island.getAttribute("island-url");
                 if (!island_url) return;
 
-                island.innerHTML = '<div id="island-loading"><span id="island-loading-txtbig">Data ophalen...</span><span>De laatste data wordt opgehaald bij Somtoday...</span><img src="/static/images/loading.gif"></div>';
+                island.innerHTML = '<div id="island-loading"><span>Data ophalen...</span><img src="/static/images/loading.gif"></div>';
 
                 fetch(`/api/islands/${island_url}`)
                     .then(response => {

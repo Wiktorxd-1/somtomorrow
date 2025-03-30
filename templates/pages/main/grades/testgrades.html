@@ -12,5 +12,17 @@
 
 
 {% block content %}
+    <h1 id="page-title">Cijfers</h1>
+
+    <div id="subpagemenu">
+        <a class="subpagemenu-item active">
+            Alle toetscijfers
+        </a>
+        <a class="subpagemenu-item" href="/cijfers/rapport">
+            Rapportcijfers
+        </a>
+        <!-- Other subpages such as stats and stuff things -->
+    </div>
+
     <div class="island" island-url="grades/testgrades"></div> 
 {% endblock %}

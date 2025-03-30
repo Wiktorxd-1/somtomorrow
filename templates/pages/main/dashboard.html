@@ -4,14 +4,24 @@
 
 {% block title %}Dashboard{% endblock %}
 
-<!--
+
 {% block extra_headers %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles/public/home.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/main/dashboard.css') }}">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/main/grades/all_test_grades.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
 {% endblock %}
--->
+
 
 {% block content %}
-    <h1 id="page_title">Welkom, {{ g.first_name }}!</h1>
+    <h1 id="page-title">Welkom, {{ g.first_name }}!</h1>
+
+    <div id="dashboard-tiles">
+        <div class="tile">
+            <h2 class="tile-title">Laatste cijfers</h2>
+            <div class="island" island-url="grades/testgrades?max=5"></div> 
+        </div>
+    </div>
 
     <style>
         .calendar {

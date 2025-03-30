@@ -82,7 +82,7 @@ img.icon {
     color: var(--red);
 }
 
-#gradelist_container {
+#gradelist-container {
     display: flex;
     flex-direction: column;
     align-items: stretch;
