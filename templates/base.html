@@ -64,8 +64,7 @@
         </main>
 
         <script>
-            document.querySelectorAll(".island").forEach(island => {
-                const island_url = island.getAttribute("island-url");
+            function islandParser(island, island_url) {
                 if (!island_url) return;
 
                 island.innerHTML = '<div id="island-loading"><span>Data ophalen...</span><img src="/loading.gif"></div>';
@@ -109,6 +108,11 @@
                         console.error("Error fetching data:", error);
                         island.innerHTML = `Error fetching data! ${error}`;
                     });
+            };
+
+            document.querySelectorAll(".island").forEach(island => {
+                let island_url = island.getAttribute("island-url");
+                islandParser(island, island_url)
             });
         </script>
     </body>

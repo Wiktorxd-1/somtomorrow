@@ -1,0 +1,13 @@
+#current-week-container {
+    margin-inline: 10px;
+}
+
+.pagemenu-item {
+    padding: 10px;
+    display: inline-block;
+    border-radius: 10px;
+}
+
+.pagemenu-item:hover {
+    background: var(--dark-purple)
+}

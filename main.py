@@ -526,6 +526,20 @@ def testgrades_island():
 @app.route("/rooster")
 @use_session_data
 def schedule_main():
+    today = datetime.today()
+    if today.weekday() in [5, 6]:
+        next_week = today + timedelta(days=7 - today.weekday())
+    else:
+        next_week = today
+    year = next_week.year
+    weeknum = next_week.isocalendar()[1]
+    return render_template("pages/main/schedule.html", current_weeknum = weeknum, current_year = year)
+
+
+
+@app.route("/api/islands/schedule")
+@use_session_data
+def schedule_island():
     token = session["token"]
     student_id = session["student_id"]
 
@@ -553,7 +567,9 @@ def schedule_main():
     
     api_data = clean_somdata(api_data)
 
-    return render_template("pages/main/schedule.html", schedule_data = api_data)
+    return render_template("islands/schedule-island.html", schedule_data = api_data)
+
+
 
 
 
