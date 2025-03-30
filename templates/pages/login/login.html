@@ -7,12 +7,12 @@
         <link rel="stylesheet" href="{{ url_for('static', filename='styles/other/login.css') }}">
     </head>
     <body>
-        <div id="mainlogin">
+        <div id="mainlogin" class="hide-on-load">
             <h1>Inloggen bij Somtomorrow</h1>
 
             <h2>Inloggen met je Somtoday-account</h2>
 
-            <form method="post" action="/login/get_token">
+            <form method="post" id="loginform">
                 <div class="schoolcontainer">
                     <label for="school">Schoolnaam</label>
                     <input type="text" id="schoolinput" name="school" required>
@@ -32,17 +32,23 @@
             </form>
 
             {% with messages = get_flashed_messages(with_categories=True) %}
-                {% if messages %}
-                    <div id="messages">
+                <div id="messages">
+                    {% if messages %}
                         {% for category, message in messages %}
                             <div class="message {{ category }}">{{ message }}</div>
                         {% endfor %}
-                    </div>
-                {% endif %}
+                    {% endif %}
+                </div>    
             {% endwith %}
         </div>
 
-        <div id="secondarylogin">
+        <div id="loading-container">
+            <h1>Data ophalen bij Somtoday...</h1>
+            <img src="/static/images/loading.gif">
+            <h2>Dit kan eventjes duren. Sorry!</h2>
+        </div>
+
+        <div id="secondarylogin" class="hide-on-load">
             <h2>Andere inlogmethodes</h2>
 
             <div class="otherloginmethodscontainer">
@@ -55,5 +61,85 @@
         <span id="imgcredit">
             <p>A <a href="https://dupunkto.org">{du}punkto</a> project. Made with <a href="https://github.com/pallets/flask" target="_blank">Flask</a> and <a href="https://github.com/pallets/jinja" target="_blank">Jinja</a>, hosted at <a href="https://eu.pythonanywhere.com/" target="_blank">PythonAnwyhere</a>.</p>
         </span>
+
+        <script>
+            const loginForm = document.getElementById("loginform");
+            const messages = document.getElementById("messages");
+            const loadingContainer = document.getElementById("loading-container");
+
+            const hideOnLoad = document.querySelectorAll(".hide-on-load");
+
+            function addMessage(text, type) {
+                let message = document.createElement("div");
+                message.innerHTML = text;
+                message.classList.add("message", type);
+
+                if (messages.children.length >= 5) {
+                    messages.removeChild(messages.firstChild);
+                }
+
+                messages.appendChild(message);
+            }
+
+            loginForm.addEventListener("submit", function(event) {
+                event.preventDefault();
+                
+                setTimeout(() => {
+                    loadingContainer.style.display = "unset";
+                    loadingContainer.style.animation = "fadeIn 400ms forwards";
+                }, 600);
+                
+                hideOnLoad.forEach(element => {
+                    element.style.animation = "fadeOut 400ms forwards";
+                    setTimeout(() => {
+                        element.style.display = "none";
+                    }, 400);
+                });
+        
+                let formData = new FormData(this);
+                
+                fetch("/login/get_token", {
+                    method: "POST",
+                    body: formData
+                })
+                    .then(response => response.json())
+
+                    .then(data => {
+                        if (data.status === "success") {
+                            window.location.href = "/dashboard";
+                        } else {
+                            addMessage(`Error! ${data.message}`, "error");
+
+                            setTimeout(() => {
+                                hideOnLoad.forEach(element => {
+                                    element.style.display = "unset";
+                                    element.style.animation = "fadeIn 200ms forwards";
+                                });
+                            }, 400);
+                            
+                            loadingContainer.style.animation = "fadeOut 200ms forwards";
+                            setTimeout(() => {
+                                loadingContainer.style.display = "none";
+                            }, 200);
+                        }
+                    })
+                    
+                    .catch(error => {
+                        addMessage(`Error! ${error}`, "error");
+
+                        setTimeout(() => {
+                            hideOnLoad.forEach(element => {
+                                element.style.display = "unset";
+                                element.style.animation = "fadeIn 200ms forwards";
+                            });
+                        }, 400);
+                        
+                        loadingContainer.style.animation = "fadeOut 200ms forwards";
+                        setTimeout(() => {
+                            loadingContainer.style.display = "none";
+                        }, 200);
+                    });
+            });
+        </script>
     </body>
 </html>

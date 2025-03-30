@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, session, flash, send_from_directory, g, send_file
+from flask import Flask, render_template, request, redirect, url_for, session, flash, send_from_directory, g, send_file, jsonify
 from datetime import timedelta, datetime, timezone
 from functools import wraps
 from identicon import render_identicon
@@ -85,22 +85,18 @@ def get_token():
         errormessage = responsedata['error']
         errormessage_formatted = errormessage + "." if not errormessage.endswith(".") else errormessage
 
-        flash(f"Fout: {errormessage_formatted}", "error")
-        return redirect(url_for("login"))
+        return jsonify({"status": "error", "message": errormessage_formatted}), 503
+
     else:
         response.raise_for_status()
-    
-    authdata = response.json()
+        authdata = response.json()
+        access_token = authdata["access_token"]
+        success = set_token_and_info(access_token)
 
-    access_token = authdata["access_token"]
+        if not success:
+            return jsonify({"status": "error", "message": "Invalid token!"}), 400
 
-    success = set_token_and_info(access_token)
-
-    if not success:
-        flash("Dat is geen geldige token!", "error")
-        return render_template("pages/login/login.html")
-
-    return redirect(url_for("dashboard"))
+        return jsonify({"status": "success"})
 
 
 @app.route("/login/own_token", methods=["GET", "POST"])

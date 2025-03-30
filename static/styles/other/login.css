@@ -143,3 +143,38 @@ form #loginbutton:hover,
 .message.error {
     background: var(--red);
 }
+
+#loading-container {
+    display: none;
+    opacity: 0;
+    font-size: .7em;
+}
+
+#loading-container img {
+    height: 150px;
+    width: 150px;
+    margin: 20px 0;
+}
+
+#loading-container h2 {
+    font-size: 1.5em;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
