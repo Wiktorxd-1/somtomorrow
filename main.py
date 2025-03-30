@@ -1,8 +1,11 @@
-from flask import Flask, render_template, request, redirect, url_for, session, flash, send_from_directory, g, send_file, jsonify
+from flask import Flask, render_template, request, redirect, url_for, session, flash, send_from_directory, g, send_file, jsonify, Response
+from PIL import Image
 from datetime import timedelta, datetime, timezone
 from functools import wraps
 from identicon import render_identicon
 import os
+import string
+import random
 import io
 import requests
 import pytz
@@ -568,6 +571,20 @@ def identicon(username):
     image_bytes = render_identicon(username)
     image_io = io.BytesIO(image_bytes)
     return send_file(image_io, mimetype='image/png')
+
+
+# Loading icon API
+
+@app.route('/loading.gif')
+@excluded
+def generate_gif():
+    images = [Image.open(io.BytesIO(render_identicon(''.join(random.choices(string.ascii_letters + string.digits, k=random.randint(5, 20))), (0, 0, 0, 0)))) for _ in range(50)]
+    
+    gif_bytes = io.BytesIO()
+    images[0].save(gif_bytes, format='GIF', save_all=True, append_images=images[1:], duration=700, loop=0, disposal=2)
+    gif_bytes.seek(0)
+    
+    return Response(gif_bytes.read(), mimetype='image/gif')
 
 
 # Error pages

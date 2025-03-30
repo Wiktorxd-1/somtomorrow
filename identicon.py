@@ -25,9 +25,7 @@ import io
 import hashlib
 from PIL import Image, ImageDraw
 
-BACKGROUND_COLOR = (8, 17, 23)
-
-def render_identicon(code):
+def render_identicon(code, background=(8, 17, 23, 1)):
     hash = hashlib.md5(code.encode('utf8'))
     hex_list = hash.hexdigest()
 
@@ -39,7 +37,7 @@ def render_identicon(code):
     
     pixels = set_pixels(flatten_grid)
 
-    identicon_im = draw_identicon(color, flatten_grid, pixels)
+    identicon_im = draw_identicon(color, flatten_grid, pixels, background)
 
     identicon_byte_arr = io.BytesIO()
     identicon_im.save(identicon_byte_arr, format='PNG')
@@ -67,8 +65,8 @@ def build_grid(hex_list):
 def set_pixels(flatten_grid):
     pixels = []
     for i, val in enumerate(flatten_grid):
-        x = int(i%5 * 50) + 20
-        y = int(i//5 * 50) + 20
+        x = int(i%5 * 50)
+        y = int(i//5 * 50)
         
         top_left = (x, y)
         bottom_right = (x + 50, y + 50)
@@ -83,11 +81,12 @@ def mirror_row(half_grid):
 
     return grid
 
-def draw_identicon(color, grid_list, pixels):
-    identicon_im = Image.new('RGB', (50*5+20*2, 50*5+20*2), BACKGROUND_COLOR)
+def draw_identicon(color, grid_list, pixels, background):
+    identicon_im = Image.new('RGBA', (50*5, 50*5), background)
     draw = ImageDraw.Draw(identicon_im)
+    
     for grid, pixel in zip(grid_list, pixels):
         if grid != 0:
             draw.rectangle(pixel, fill=color)
-
+    
     return identicon_im
