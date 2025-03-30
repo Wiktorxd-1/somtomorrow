@@ -77,7 +77,11 @@
                             return Promise.reject(new Error("Unauthorized"));
                         }
                         if (!response.ok) {
-                            throw new Error(`HTTP error! Status: ${response.status}`);
+                            if (response.status === 404 ) {
+                                throw new Error("That is not a island you idiot! HTTP 404 of course");
+                            } else { 
+                                throw new Error(`HTTP error! Status: ${response.status}`);
+                            }
                         }
                         return response.text();
                     })
@@ -103,7 +107,7 @@
 
                     .catch(error => {
                         console.error("Error fetching data:", error);
-                        island.innerHTML = "Error fetching data :(. View console for more info.";
+                        island.innerHTML = `Error fetching data! ${error}`;
                     });
             });
         </script>

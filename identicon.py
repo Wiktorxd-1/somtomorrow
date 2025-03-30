@@ -26,7 +26,7 @@ import hashlib
 from PIL import Image, ImageDraw
 
 def render_identicon(code, background=(8, 17, 23, 1)):
-    hash = hashlib.md5(code.encode('utf8'))
+    hash = hashlib.md5(code.encode("utf8"))
     hex_list = hash.hexdigest()
 
     color = extract_color(hex_list)
@@ -40,14 +40,14 @@ def render_identicon(code, background=(8, 17, 23, 1)):
     identicon_im = draw_identicon(color, flatten_grid, pixels, background)
 
     identicon_byte_arr = io.BytesIO()
-    identicon_im.save(identicon_byte_arr, format='PNG')
+    identicon_im.save(identicon_byte_arr, format="PNG")
     identicon_byte_arr = identicon_byte_arr.getvalue()
 
     return identicon_byte_arr
 
 def extract_color(hex_list):
     r,g,b = tuple(hex_list[i:i+2] for i in range(0, 2*3, 2))
-    return f'#{r}{g}{b}'
+    return f"#{r}{g}{b}"
 
 def build_grid(hex_list):
     hex_list_tail = hex_list[2:]
@@ -82,7 +82,7 @@ def mirror_row(half_grid):
     return grid
 
 def draw_identicon(color, grid_list, pixels, background):
-    identicon_im = Image.new('RGBA', (50*5, 50*5), background)
+    identicon_im = Image.new("RGBA", (50*5, 50*5), background)
     draw = ImageDraw.Draw(identicon_im)
     
     for grid, pixel in zip(grid_list, pixels):

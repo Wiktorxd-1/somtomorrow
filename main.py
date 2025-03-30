@@ -85,7 +85,7 @@ def get_token():
 
     if str(response.status_code) == "503":
         responsedata = response.json()
-        errormessage = responsedata['error']
+        errormessage = responsedata["error"]
         errormessage_formatted = errormessage + "." if not errormessage.endswith(".") else errormessage
 
         return jsonify({"status": "error", "message": errormessage_formatted}), 503
@@ -105,7 +105,7 @@ def get_token():
 @app.route("/login/own_token", methods=["GET", "POST"])
 @excluded
 def login_own_token():
-    if request.method == 'POST':
+    if request.method == "POST":
         access_token_input = request.form.get("token")
 
         success = set_token_and_info(access_token_input)
@@ -137,7 +137,7 @@ def set_token_and_info(token):
     student_id = response_data["items"][0]["links"][0]["id"]
     first_name = response_data["items"][0]["roepnaam"]
 
-    last_name = f"{middle_name} {response_data['items'][0]['achternaam']}" if (middle_name := response_data["items"][0].get("voorvoegsel")) else response_data['items'][0]['achternaam']
+    last_name = f"{middle_name} {response_data["items"][0]["achternaam"]}" if (middle_name := response_data["items"][0].get("voorvoegsel")) else response_data["items"][0]["achternaam"]
 
     url = f"https://api.somtoday.nl/rest/v1/leerlingen/{student_id}/schoolgegevens"
 
@@ -158,7 +158,7 @@ def set_token_and_info(token):
     session["school_name"] = schooldata_data["huidigeVestiging"]["naam"]
     session["main_class"] = schooldata_data["stamgroepnaam"]
     session["token"] = token
-    session['login_time'] = datetime.now(timezone.utc).timestamp()
+    session["login_time"] = datetime.now(timezone.utc).timestamp()
 
     
     return True
@@ -246,7 +246,7 @@ def logindevtester():
 @app.route("/")
 @excluded
 def index():
-    if 'token' in session and datetime.now(timezone.utc).timestamp() - session.get("login_time", 10000) <= 3600:
+    if "token" in session and datetime.now(timezone.utc).timestamp() - session.get("login_time", 10000) <= 3600:
         # If user is already logged in and the token is valid, redirect to dashboard
         return redirect(url_for("dashboard"))
     return redirect(url_for("login"))
@@ -256,22 +256,22 @@ def index():
 
 # Basic files
 
-@app.route('/favicon.ico')
-@app.route('/favicon')
+@app.route("/favicon.ico")
+@app.route("/favicon")
 @excluded
 def favicon():
-    return send_from_directory('static', "favs/fav.ico", mimetype='image/vnd.microsoft.icon')
+    return send_from_directory("static", "favs/fav.ico", mimetype="image/vnd.microsoft.icon")
 
 
 @app.route("/.well-known/security.txt")
 @excluded
 def securitytxt():
-    return send_from_directory('static', "txts/security.txt", mimetype="text/plain")
+    return send_from_directory("static", "txts/security.txt", mimetype="text/plain")
 
 @app.route("/security.txt")
 @excluded
 def securitytxtredirect():
-    return redirect(url_for('securitytxt')), 301
+    return redirect(url_for("securitytxt")), 301
 
 
 @app.route("/robots")
@@ -433,9 +433,9 @@ def testgrades_island():
     def format_date(dt_entered):
         now = datetime.now(pytz.timezone("Europe/Amsterdam"))
         if dt_entered.date() == now.date():
-            formatted = f"Vandaag om {dt_entered.strftime('%H:%M:%S')}"
+            formatted = f"Vandaag om {dt_entered.strftime("%H:%M:%S")}"
         elif dt_entered.date() == (now.date() - timedelta(days=1)):
-            formatted = f"Gisteren om {dt_entered.strftime('%H:%M:%S')}"
+            formatted = f"Gisteren om {dt_entered.strftime("%H:%M:%S")}"
         else:
             if dt_entered.year == now.year:
                 formatted = dt_entered.strftime("%a %d %b om %H:%M:%S")
@@ -529,8 +529,8 @@ def schedule_main():
     token = session["token"]
     student_id = session["student_id"]
 
-    weeknum = request.args.get('w')
-    year = request.args.get('y')
+    weeknum = request.args.get("w")
+    year = request.args.get("y")
 
     if not weeknum or not year:
         today = datetime.today()
@@ -563,28 +563,28 @@ def schedule_main():
 
 # Identicons API
 
-@app.route('/identicon/<username>')
+@app.route("/identicon/<username>")
 @excluded
 def identicon(username):
     if username == "robinboers":
         return send_from_directory("static", "images/robin.png", mimetype="image/png")
     image_bytes = render_identicon(username)
     image_io = io.BytesIO(image_bytes)
-    return send_file(image_io, mimetype='image/png')
+    return send_file(image_io, mimetype="image/png")
 
 
 # Loading icon API
 
-@app.route('/loading.gif')
+@app.route("/loading.gif")
 @excluded
 def generate_gif():
-    images = [Image.open(io.BytesIO(render_identicon(''.join(random.choices(string.ascii_letters + string.digits, k=random.randint(5, 20))), (0, 0, 0, 0)))) for _ in range(50)]
+    images = [Image.open(io.BytesIO(render_identicon("".join(random.choices(string.ascii_letters + string.digits, k=random.randint(5, 20))), (0, 0, 0, 0)))) for _ in range(20)]
     
     gif_bytes = io.BytesIO()
-    images[0].save(gif_bytes, format='GIF', save_all=True, append_images=images[1:], duration=700, loop=0, disposal=2)
+    images[0].save(gif_bytes, format="GIF", save_all=True, append_images=images[1:], duration=700, loop=0, disposal=2)
     gif_bytes.seek(0)
     
-    return Response(gif_bytes.read(), mimetype='image/gif')
+    return Response(gif_bytes.read(), mimetype="image/gif")
 
 
 # Error pages
@@ -598,7 +598,7 @@ def not_found(e):
 @app.errorhandler(500)
 @excluded
 def internal_server_error(e):
-    return render_template('pages/other/500.html', e=e, login=logged_in()), 500
+    return render_template("pages/other/500.html", e=e, login=logged_in()), 500
 
 
 if __name__ == "__main__":
