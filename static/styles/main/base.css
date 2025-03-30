@@ -185,3 +185,18 @@ main {
 body:has(main .error-page.False) #sidebar, body:has(main .error-page) #profile {
     display: none;
 }
+
+#island-loading {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    font-size: 1.5em;
+    font-weight: 700;
+}
+
+#island-loading img {
+    height: 2.5em;
+    width: 2.5em;
+}

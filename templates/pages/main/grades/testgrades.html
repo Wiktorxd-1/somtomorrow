@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% set active_page = "grades" %}
+
+{% block title %}Toetscijfers{% endblock %}
+
+
+{% block extra_headers %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/main/grades/all_test_grades.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+{% endblock %}
+
+
+{% block content %}
+    <div class="island" id="island-testgrades">
+        <div id="island-loading">
+            Data ophalen...
+            <img src="/static/images/loading.gif">
+        </div>
+    </div>
+
+    <script>
+        fetch("/api/islands/grades/testgrades")
+            .then(response => {
+                if (response.status === 401) {
+                    window.location.href = "/logout";
+                    return;
+                }
+                return response.text();
+            })
+            .then(data => {
+                if (data) {
+                    document.getElementById("island-testgrades").innerHTML = data;
+                }
+            })
+            .catch(error => console.error("Error fetching data:", error));
+    </script>    
+{% endblock %}

@@ -49,6 +49,8 @@ def check_login():
         return  # Static files are also excluded
 
     if not logged_in():
+        if "island" in request.endpoint:
+            return "Token not valid", 401
         return redirect(url_for("logout"))
 
 
@@ -64,7 +66,7 @@ def use_session_data(f):
 @app.route("/login")
 @excluded
 def login():
-    return render_template("login/login.html")
+    return render_template("pages/login/login.html")
 
 
 @app.route("/login/get_token", methods=["POST"])
@@ -102,7 +104,7 @@ def get_token():
 
     if not success:
         flash("Dat is geen geldige token!", "error")
-        return render_template("login/login.html")
+        return render_template("pages/login/login.html")
 
     return redirect(url_for("dashboard"))
 
@@ -117,11 +119,11 @@ def login_own_token():
 
         if not success:
             flash("Dat is geen geldige token!", "error")
-            return render_template("login/login_own_token.html")
+            return render_template("pages/login/login_own_token.html")
 
         return redirect(url_for("dashboard"))
 
-    return render_template("login/login_own_token.html")
+    return render_template("pages/login/login_own_token.html")
 
 
 def set_token_and_info(token):
@@ -292,21 +294,28 @@ def robots():
 
 # Main pages
 
-
 @app.route("/dashboard")
 @use_session_data
 def dashboard():
-    return render_template("main/dashboard.html")
+    return render_template("pages/main/dashboard.html")
+
 
 
 @app.route("/cijfers")
 @use_session_data
 def grades_main():
-    return redirect(url_for("grades_all"))
+    return redirect(url_for("testgrades"))
 
 @app.route("/cijfers/toetscijfers")
 @use_session_data
-def grades_all():
+def testgrades():
+    return render_template("pages/main/grades/testgrades.html")
+
+
+
+@app.route("/api/islands/grades/testgrades")
+@use_session_data
+def testgrades_island():
     student_id = session["student_id"]
     token = session["token"]
 
@@ -499,7 +508,9 @@ def grades_all():
 
     api_data = sorted(api_data, key=lambda x: x["datetime_sort"], reverse=True)
 
-    return render_template("main/grades/all_test_grades.html", gradelist = api_data)
+    return render_template("islands/grades/testgrades-island.html", gradelist = api_data)
+
+
 
 
 @app.route("/rooster")
@@ -530,12 +541,15 @@ def schedule_main():
     response = requests.get(api_url, headers = api_headers)
     api_data = response.json()
 
-    return render_template("main/schedule.html", schedule_data = api_data)
+    return render_template("pages/main/schedule.html", schedule_data = api_data)
 
 
 
 
-# Profile pictures
+
+
+
+# Identicons API
 
 @app.route('/identicon/<username>')
 @excluded
@@ -547,16 +561,19 @@ def identicon(username):
     return send_file(image_io, mimetype='image/png')
 
 
+# Error pages
+
 @app.errorhandler(404)
 @excluded
 def not_found(e):
-    return render_template("other/404.html", e=e, login=logged_in()), 404
+    return render_template("pages/other/404.html", e=e, login=logged_in()), 404
 
 
 @app.errorhandler(500)
 @excluded
 def internal_server_error(e):
-    return render_template('other/500.html', e=e, login=logged_in()), 500
+    return render_template('pages/other/500.html', e=e, login=logged_in()), 500
+
 
 if __name__ == "__main__":
     app.run(debug=True)

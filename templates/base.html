@@ -33,12 +33,14 @@
                 <a href="/vakken" class="menu-item{% if active_page == 'classes' %} active{% endif %} secondary">
                     <i class="fa-solid fa-book-open"></i> <span>Vakken</span>
                 </a>
-                <!--<a href="/schoolinformatie" class="menu-item{% if active_page == 'schoolinfo' %} active{% endif %} secondary">
+                <!--
+                <a href="/schoolinformatie" class="menu-item{% if active_page == 'schoolinfo' %} active{% endif %} secondary">
                     <i class="fa-solid fa-school"></i> <span>Schoolinformatie</span>
                 </a>
                 <a href="/instellingen" class="menu-item{% if active_page == 'settings' %} active{% endif %} secondary">
                     <i class="fa-solid fa-gears"></i> <span>Instellingen</span>
-                </a>-->
+                </a>
+                -->
             </div>
             <div id="logout">
                 <a href="/logout" class="menu-item">
@@ -56,7 +58,9 @@
                     <span id="userinfoclass">{{ g.main_class }}</span>
                 </div>
             </div>
-            {% block content %}{% endblock %}
+            <div id="content">
+                {% block content %}{% endblock %}
+            </div>
         </main>
     </body>
 </html>
