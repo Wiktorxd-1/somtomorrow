@@ -58,7 +58,6 @@ def use_session_data(f):
         for key in session.keys():
             setattr(g, key, session[key])
         return f(*args, **kwargs)
-
     return wrapper
     
 
@@ -505,6 +504,7 @@ def grades_all():
 @use_session_data
 def schedule_main():
     token = session["token"]
+    student_id = session["student_id"]
 
     weeknum = request.args.get('w')
     year = request.args.get('y')
@@ -518,13 +518,11 @@ def schedule_main():
         weeknum = next_week.isocalendar()[1]
         year = next_week.year
 
-    api_url = f"https://api.somtoday.nl/rest/v1/afspraakitems/2366141886835/jaar/{year}/week/{weeknum}"
+    api_url = f"https://api.somtoday.nl/rest/v1/afspraakitems/{student_id}/jaar/{year}/week/{weeknum}"
 
     api_headers = {
         "Authorization": f"Bearer {token}",
-        "Accept": "application/json",
-        "Origin": "https://somtoday.nl",
-        "Range": "items=0-99"
+        "Accept": "application/json"
     }
 
     response = requests.get(api_url, headers = api_headers)

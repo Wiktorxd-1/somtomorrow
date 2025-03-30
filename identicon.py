@@ -1,4 +1,5 @@
-# This library is derived from https://github.com/flavono123/identicon, wich is avaiable under the MIT License:
+# This library is derived from https://github.com/flavono123/identicon, which is
+# avaiable under the MIT License:
 # 
 # Copyright (c) 2018 Hansuk Hong
 # 
