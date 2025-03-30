@@ -12,27 +12,5 @@
 
 
 {% block content %}
-    <div class="island" id="island-testgrades">
-        <div id="island-loading">
-            Data ophalen...
-            <img src="/static/images/loading.gif">
-        </div>
-    </div>
-
-    <script>
-        fetch("/api/islands/grades/testgrades")
-            .then(response => {
-                if (response.status === 401) {
-                    window.location.href = "/logout";
-                    return;
-                }
-                return response.text();
-            })
-            .then(data => {
-                if (data) {
-                    document.getElementById("island-testgrades").innerHTML = data;
-                }
-            })
-            .catch(error => console.error("Error fetching data:", error));
-    </script>    
+    <div class="island" island-url="grades/testgrades"></div> 
 {% endblock %}

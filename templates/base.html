@@ -62,5 +62,35 @@
                 {% block content %}{% endblock %}
             </div>
         </main>
+
+        <script>
+            document.querySelectorAll(".island").forEach(island => {
+                const island_url = island.getAttribute("island-url");
+                if (!island_url) return;
+
+                island.innerHTML = '<div id="island-loading">Data ophalen...<img src="/static/images/loading.gif"></div>';
+    
+                fetch(`/api/islands/${island_url}`)
+                    .then(response => {
+                        if (response.status === 401) {
+                            window.location.href = "/logout";
+                            return Promise.reject(new Error("Unauthorized"));
+                        }
+                        if (!response.ok) {
+                            throw new Error(`HTTP error! Status: ${response.status}`);
+                        }
+                        return response.text();
+                    })
+                    .then(data => {
+                        if (data) {
+                            island.innerHTML = data;
+                        }
+                    })
+                    .catch(error => {
+                        console.error("Error fetching data:", error);
+                        island.innerHTML = "Error fetching data :(. View console for more info.";
+                    });
+            });
+        </script>
     </body>
 </html>
