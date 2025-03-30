@@ -20,7 +20,8 @@ Yeah it's a lot...
 ### Other
 
 - [x] Add better error handling at login (from Vik)
-- [ ] Add some caching and async stuff so users do not have to wait for the paige to load they just have to wait for the content to load 
+- [x] Add some async stuff so users do not have to wait for the paige to load they just have to wait for the content to load
+- [ ] Add caching, probs backend-database caching with Flask-Sessions?
 
 ### Auth
 
@@ -38,7 +39,7 @@ Yeah it's a lot...
 
 #### Dashboard
 
-- [ ] Latest grades
+- [x] Latest grades
 - [ ] Future homework
 - [ ] Schedule of current day
 
