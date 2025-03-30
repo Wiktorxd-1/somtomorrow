@@ -74,6 +74,10 @@ img.icon {
     color: var(--light-purple);
 }
 
+.gradeitem.confetti .grade-result {
+    color: var(--light-purple);
+}
+
 .grade-fail {
     color: var(--red);
 }

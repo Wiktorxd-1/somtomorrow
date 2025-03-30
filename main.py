@@ -416,7 +416,6 @@ def grades_all():
                 return subjects_icons[key]
         return '<i class="fa-solid fa-book"></i>'
     
-    
     def format_date(dt_entered):
         now = datetime.now(pytz.timezone("Europe/Amsterdam"))
         if dt_entered.date() == now.date():
@@ -433,8 +432,6 @@ def grades_all():
     def grade_is_fail(number_grade, letter_grade):
         try:
             result_float = float(number_grade.replace(",", "."))
-
-            print(f"ng {number_grade} rf {result_float}")
             
             if result_float < 5.5:
                 is_fail = True
@@ -477,6 +474,9 @@ def grades_all():
         grade["max_weight"] = max(grade["weging"], grade.get("examenWeging", 0))
 
         grade["is_fail"] = grade_is_fail(grade.get("geldendResultaat"), grade.get("resultaatLabelAfkorting"))
+
+        grade["confetti"] = True if float(grade.get("geldendResultaat", "0.0").replace(",", ".")) >= 10 else False
+        
 
         if grade.get("herkansing"):
             grade["retake"] = {

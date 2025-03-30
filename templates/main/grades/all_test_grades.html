@@ -7,6 +7,7 @@
 
 {% block extra_headers %}
     <link rel="stylesheet" href="{{ url_for('static', filename='styles/main/grades/all_test_grades.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
 {% endblock %}
 
 
@@ -25,7 +26,7 @@
     
     <div id="gradelist_container">
         {% for grade in gradelist %}
-            <div class="gradeitem{% if grade.max_weight == 0 %} ignore{% endif %}">
+            <div class="gradeitem{% if grade.max_weight == 0 %} ignore{% endif %}{% if grade.confetti %} confetti{% endif %}">
                 <div class="icon">{{ grade.icon | safe }}</div>
                 <div class="subject-name">{{ grade.subject_nice }}</div>
                 <div class="test-name">{{ grade.test_nice }}</div>
@@ -78,15 +79,19 @@
 
     <script>
         document.addEventListener("click", function (event) {
-            document.querySelectorAll(".gradeitem").forEach(div => {
-                if (div.contains(event.target)) {
-                    if (div.classList.contains("open")) {
-                        div.classList.remove("open");
+            document.querySelectorAll(".gradeitem").forEach(grade => {
+                if (grade.contains(event.target)) {
+                    if (grade.classList.contains("open")) {
+                        grade.classList.remove("open");
                     } else {
-                        div.classList.add("open");
+                        grade.classList.add("open");
+                        if (grade.classList.contains("confetti")) {
+                            console.log("Launch!");
+                            confetti();
+                        }
                     }   
                 } else {
-                    div.classList.remove("open");
+                    grade.classList.remove("open");
                 }
             });
         });
