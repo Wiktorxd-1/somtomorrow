@@ -483,12 +483,14 @@ def grades_all():
                     "date": format_date(datetime.strptime(grade["herkansing"]["datumInvoer"], "%Y-%m-%dT%H:%M:%S.%f%z")),
                     "result": grade["herkansing"]["resultaat"],
                     "result_is_fail": grade_is_fail(grade["herkansing"]["resultaat"], ""),
+                    "result_is_confetti": True if float(grade["herkansing"]["resultaat"].replace(",", ".")) >= 10 else False,
                     "effective_result": True if grade["geldendResultaat"] == grade["herkansing"]["resultaat"] else False,
                 },
                 "first_attempt": {
                     "date": format_date(datetime.strptime(grade["datumInvoer"], "%Y-%m-%dT%H:%M:%S.%f%z")),
                     "result": grade["resultaat"],
                     "result_is_fail": grade_is_fail(grade.get("resultaat"), grade.get("resultaatLabelAfkorting")),
+                    "result_is_confetti": True if float(grade.get("resultaat", grade.get("resultaatLabelAfkorting")).replace(",", ".")) >= 10 else False,
                     "effective_result": True if grade["resultaat"] == grade["geldendResultaat"] else False,
                 }
             }

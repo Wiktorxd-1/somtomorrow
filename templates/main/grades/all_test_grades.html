@@ -55,7 +55,7 @@
                                     </span>
                                     <span class="retake-effective-result">Geldend cijfer{% endif %}</span>
                                 </div>
-                                <span class="retake-result{% if grade.retake.first_retake.result_is_fail %} grade-fail{% endif %}">{{ grade.retake.first_retake.result }}</span>
+                                <span class="retake-result{% if grade.retake.first_retake.result_is_fail %} grade-fail{% endif %}{% if grade.retake.first_retake.result_is_confetti %} grade-confetti{% endif %}">{{ grade.retake.first_retake.result }}</span>
                             </div>
                             <div class="retake-attempt">
                                 <div class="retake-infocontainer">
@@ -66,7 +66,7 @@
                                     </span>
                                     <span class="retake-effective-result">Geldend cijfer{% endif %}</span>
                                 </div>
-                                <span class="retake-result{% if grade.retake.first_attempt.result_is_fail %} grade-fail{% endif %}">{{ grade.retake.first_attempt.result }}</span>
+                                <span class="retake-result{% if grade.retake.first_attempt.result_is_fail %} grade-fail{% endif %}{% if grade.retake.first_attempt.result_is_confetti %} grade-confetti{% endif %}">{{ grade.retake.first_attempt.result }}</span>
                             </div>
                         </div>
 
