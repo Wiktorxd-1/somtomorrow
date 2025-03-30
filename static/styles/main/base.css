@@ -192,11 +192,15 @@ body:has(main .error-page.False) #sidebar, body:has(main .error-page) #profile {
     flex-direction: column;
     align-items: center;
     gap: 15px;
-    font-size: 1.5em;
+    font-size: 1.25em;
     font-weight: 700;
 }
 
 #island-loading img {
-    height: 2.5em;
-    width: 2.5em;
+    height: 4.5em;
+    aspect-ratio: 1/1;
+}
+
+#island-loading-txtbig {
+    font-size: 1.5em;
 }

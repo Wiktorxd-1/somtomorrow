@@ -21,7 +21,7 @@
                 <a href="/planner" class="menu-item{% if active_page == 'planner' %} active{% endif %} primary">
                     <i class="fa-solid fa-clipboard-list"></i> <span>Planner</span>
                 </a>
-                <a href="/cijfers" class="menu-item{% if active_page == 'grades' %} active{% endif %} primary">
+                <a href="/cijfers/toetscijfers" class="menu-item{% if active_page == 'grades' %} active{% endif %} primary">
                     <i class="fa-solid fa-square-poll-vertical"></i> <span>Cijfers</span>
                 </a>
                 <a href="/materialen" class="menu-item{% if active_page == 'materials' %} active{% endif %} primary">
@@ -68,8 +68,8 @@
                 const island_url = island.getAttribute("island-url");
                 if (!island_url) return;
 
-                island.innerHTML = '<div id="island-loading">Data ophalen...<img src="/static/images/loading.gif"></div>';
-    
+                island.innerHTML = '<div id="island-loading"><span id="island-loading-txtbig">Data ophalen...</span><span>De laatste data wordt opgehaald bij Somtoday...</span><img src="/static/images/loading.gif"></div>';
+
                 fetch(`/api/islands/${island_url}`)
                     .then(response => {
                         if (response.status === 401) {
@@ -81,11 +81,26 @@
                         }
                         return response.text();
                     })
+                    
                     .then(data => {
                         if (data) {
                             island.innerHTML = data;
+                            
+                            // Find scripts, and make them actualy excecutable by just appending them to the body
+                            island.querySelectorAll("script").forEach(oldScript => {
+                                const newScript = document.createElement("script");
+                                newScript.textContent = oldScript.textContent; // Inline scripts, so just JS inside the HTML
+                                
+                                if (oldScript.src) newScript.src = oldScript.src; // Scripts with a src
+
+                                if (oldScript.async) newScript.async = oldScript.async; // Scripts with a async
+
+                                document.body.appendChild(newScript);
+                                oldScript.remove(); // Remove the old script to prevent duplication
+                            });
                         }
                     })
+
                     .catch(error => {
                         console.error("Error fetching data:", error);
                         island.innerHTML = "Error fetching data :(. View console for more info.";
