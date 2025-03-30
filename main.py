@@ -1,7 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, session, flash, send_from_directory, g, send_file
 from datetime import timedelta, datetime, timezone
 from functools import wraps
-from dotenv import load_dotenv
 from identicon import render_identicon
 import os
 import io
@@ -9,13 +8,8 @@ import requests
 import pytz
 import locale
 
-
-load_dotenv()
-
-key = os.getenv("key")
-
 app = Flask(__name__)
-app.secret_key = key
+app.secret_key = os.urandom(24)
 app.permanent_session_lifetime = timedelta(hours=1)
 
 locale.setlocale(locale.LC_TIME, "nl_NL")
@@ -290,6 +284,17 @@ def robots():
 
 
 
+def clean_somdata(data):
+    if isinstance(data, list):
+        return [clean_somdata(item) for item in data]
+    elif isinstance(data, dict):
+        return {
+            key: clean_somdata(value) for key, value in data.items() if key not in ["links", "permissions", "additionalObjects", "UUID"]
+        }
+    else:
+        return data
+
+
 
 
 # Main pages
@@ -367,6 +372,8 @@ def testgrades_island():
         responseData = response.json()
         for item in responseData["items"]:
             api_data.append(item)
+
+    api_data = clean_somdata(api_data)
 
 
     types_to_include = ["Toetskolom", "Werkstukcijferkolom", "Advieskolom"]
@@ -544,6 +551,8 @@ def schedule_main():
 
     response = requests.get(api_url, headers = api_headers)
     api_data = response.json()
+    
+    api_data = clean_somdata(api_data)
 
     return render_template("pages/main/schedule.html", schedule_data = api_data)
 
