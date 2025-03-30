@@ -92,7 +92,7 @@ img.icon {
 }
 
 .gradeitem.ignore div {
-    color: #687784;
+    color: var(--gray);
 }
 
 .gradeitem.open, .gradeitem:hover {

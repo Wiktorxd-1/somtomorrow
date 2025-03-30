@@ -3,12 +3,12 @@
 :root {
     --black: #0f212e;
     --white: #eaf2ef;
-    --gray: #6b6d76;
+    --gray: #687784;
     --yellow: #ffa630;
     --red: #e65039;
     --green: #06c749;
     --purple: #6822cb;
-    --light-purple: #823ce5;
+    --light-purple: #9759ee;
     --dark-purple: #511b9e;
 }
 
@@ -20,6 +20,10 @@
 [data-theme="light"] {
     --front: black;
     --back: white;
+}
+
+a {
+    color: var(--light-purple);
 }
 
 * {
@@ -164,17 +168,22 @@ main {
     border: 2px solid var(--light-purple);
 }
 
+#content:has(.error-page) {
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
 .error-page {
     text-align: center;
     max-width: 400px;
-    margin: 0 auto;
+    margin: auto;
 }
 
 .error-title {
     color: var(--purple);
     font-family: monospace;
     font-size: 6em;
-    margin-top: 2em;
 }
 
 .error-message {

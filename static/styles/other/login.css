@@ -8,7 +8,7 @@
     --red: #e65039;
     --green: #06c749;
     --purple: #6822cb;
-    --light-purple: #823ce5;
+    --light-purple: #9759ee;
     --dark-purple: #511b9e;
 }
 
@@ -68,7 +68,7 @@ form input {
 }
 
 form input:focus {
-    outline: 2px solid #002244;
+    outline: 2px solid var(--dark-purple);
 }
 
 
@@ -85,7 +85,7 @@ form #loginbutton {
 
 form #loginbutton:hover,
 .otherloginmethod:hover {
-    background: #6822cb;
+    background: var(--purple);
     color: white;
 }
 
