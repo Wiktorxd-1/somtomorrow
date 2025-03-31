@@ -58,3 +58,9 @@ Yeah it's a lot...
   - [ ] Timeline for each grade
   - [ ] Histograph for all grades
   - [ ] Median, average and stuff
+
+#### Planner
+
+- [ ] Add homework made or not
+- [ ] Add popup with more info
+- [ ] Add tests and *inleveropdrachten*

@@ -175,7 +175,8 @@ def logout():
     return redirect(url_for("login"))
 
 
-# TEMPORARY
+# start devb
+
 @app.route("/login/devauto")
 @excluded
 def logindevauto():
@@ -243,7 +244,7 @@ def logindevtester():
         </form>
     '''
 
-
+# end devb
 
 
 
