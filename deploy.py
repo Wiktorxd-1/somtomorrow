@@ -3,7 +3,9 @@ import re
 import subprocess
 
 subprocess.run(["git", "fetch"], check=True)
+print("Fetched")
 subprocess.run(["git", "reset", "--hard", "origin/trunk"], check=True)
+print("Updated files")
 
 
 def get_comment_syntax(filename):
@@ -29,12 +31,14 @@ def remove_dev_blocks(file_path, start_comment, end_comment):
     with open(file_path, "w", encoding="utf-8") as f:
         f.write(updated_content)
 
-
+print("Start looking at files")
 for file in os.listdir("."):
     if os.path.isfile(file):
         start_comment, end_comment = get_comment_syntax(file)
         if start_comment and end_comment:
+            print(f"Removing stuff from {file}")
             remove_dev_blocks(file, start_comment, end_comment)
 
 
 subprocess.run(["touch", "/var/www/som_dupunkto_org_wsgi.py"], check=True)
+print("Redeployed page")
