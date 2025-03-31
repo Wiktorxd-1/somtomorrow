@@ -568,7 +568,13 @@ def schedule_island():
     
     api_data = clean_somdata(api_data)
 
-    return render_template("islands/schedule-island.html", schedule_data = api_data)
+    schedule_data = [[], [], [], [], []]
+
+    for appointment in api_data["items"]:
+        dt = datetime.strptime(appointment["beginDatumTijd"], "%Y-%m-%dT%H:%M:%S")
+        schedule_data[dt.weekday()].append(appointment)
+
+    return render_template("islands/schedule-island.html", schedule_data = schedule_data)
 
 
 
