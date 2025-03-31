@@ -11,7 +11,8 @@
           <div class="appointment" style="
             grid-row-start: {{ appointment.rowStart }};
             grid-row-end: {{ appointment.rowEnd }};
-          ">
+            margin-left: {{ appointment.position }}%;
+            width: {{ appointment.width }}%">
             {{ g.capit(appointment.vak.naam) if appointment.vak else g.capit(appointment.titel) }}
           </div>
         {% endfor %}

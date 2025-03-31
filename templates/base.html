@@ -50,12 +50,13 @@
         </header>
 
         <main>
-            <div id="profile">
-                <img id="avatar" src="/identicon/{{ g.identicon_name }}">
-                <div id="userinfocontainer">
-                    <span id="userinfoname">{{ g.first_name }} {{ g.last_name }}</span>
-                    <span id="userinfoschool">{{ g.school_name }}</span>
-                    <span id="userinfoclass">{{ g.main_class }}</span>
+            <div id="topbar">
+                <div id="profilecontainer">
+                    <img id="avatar" src="/identicon/{{ g.identicon_name }}">
+                    <div id="userinfocontainer">
+                        <span id="userinfoname">{{ g.first_name }} {{ g.last_name }}</span>
+                        <span id="userinfoschoolclass">{{ g.school_name }} • {{ g.main_class }}</span>
+                    </div>
                 </div>
             </div>
             <div id="content">

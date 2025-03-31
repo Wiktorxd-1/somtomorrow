@@ -57,4 +57,5 @@
     background: var(--back);
     padding: 10px;
     z-index: 30;
+    grid-column: 1 / -1;
 }

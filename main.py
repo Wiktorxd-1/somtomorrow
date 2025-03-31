@@ -579,6 +579,10 @@ def schedule_island():
         dt_start = datetime.strptime(appointment["beginDatumTijd"], "%Y-%m-%dT%H:%M:%S")
         dt_end = datetime.strptime(appointment["eindDatumTijd"], "%Y-%m-%dT%H:%M:%S")
 
+        appointment["dt_start"] = dt_start
+        appointment["dt_end"] = dt_end
+        
+
         appointment["rowStart"] = (dt_start.hour - 6) * 12 + round(dt_start.minute / 60 * 12) + 1
         appointment["rowEnd"] = (dt_end.hour - 6) * 12 + round(dt_end.minute / 60 * 12) + 1
 
@@ -600,6 +604,23 @@ def schedule_island():
         thursday.strftime("%d %B"),
         friday.strftime("%d %B")
     ]
+
+    for daydata in schedule_data:
+        daydata = sorted(daydata, key=lambda x: x["dt_start"])
+
+        for appt in daydata:
+            overlapping = [a for a in daydata if not (a['dt_end'] <= appt['dt_start'] or a['dt_start'] >= appt['dt_end'])]
+            count = len(overlapping)
+
+            # Position is the percentage of left-margin that needs to be added
+            
+            if count == 1:
+                appt["position"] = 0
+                appt["width"] = 100
+            else:
+                index = sorted(overlapping, key=lambda x: x['dt_end']).index(appt)
+                appt["position"] = index * (100 / count)
+                appt["width"] = 100 / count
 
     return render_template("islands/schedule-island.html", schedule_data = schedule_data, dayname = dayname)
 
