@@ -1,0 +1,45 @@
+#current-week-container {
+    margin-inline: 10px;
+}
+
+.pagemenu-item {
+    padding: 10px;
+    display: inline-block;
+    border-radius: 10px;
+}
+
+.pagemenu-item:hover {
+    background: var(--dark-purple)
+}
+
+#weekcontainer {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    column-gap: 20px;
+}
+
+.daycontainer {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: stretch;
+}
+
+.homeworkitem {
+    border: 1px solid var(--gray);
+    padding: 10px;
+    border-radius: 10px;
+    font-size: .7em;
+    hyphens: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.subject-name {
+    font-size: 1.3em;
+    font-weight: 800;
+}
+
+.homework-header img {
+    height: 1em;
+}

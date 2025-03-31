@@ -316,6 +316,58 @@ def testgrades():
     return render_template("pages/main/grades/testgrades.html")
 
 
+def get_icon(subject):
+    subjects_icons = {
+        "engels": '<img class="icon uk" src="/static/images/flags/uk.svg">',
+        "nederlands": '<img class="icon nl" src="/static/images/flags/nl.svg">',
+        "latijn": '<img class="icon la" src="/static/images/flags/va.svg">',
+        "grieks": '<img class="icon gr" src="/static/images/flags/gr.svg">',
+        "frans": '<img class="icon fr" src="/static/images/flags/fr.svg">',
+        "spaans": '<img class="icon es" src="/static/images/flags/es.svg">',
+        "duits": '<img class="icon de" src="/static/images/flags/de.svg">',
+        "fries": '<img class="icon frr" src="/static/images/flags/frr.svg">',
+        "italiaans": '<img class="icon it" src="/static/images/flags/it.svg">',
+        "russisch": '<img class="icon it" src="/static/images/flags/ru.svg">',
+        "arabisch": '<img class="icon ar" src="/static/images/flags/ar.svg">',
+        "turks": '<img class="icon tr" src="/static/images/flags/tr.svg">',
+        "chinees": '<img class="icon cn" src="/static/images/flags/cn.svg">',
+        "scheikunde": '<i class="fa-solid fa-vial"></i>',
+        "natuurkunde": '<i class="fa-solid fa-atom"></i>',
+        "biologie": '<i class="fa-solid fa-seedling"></i>',
+        "techniek": '<i class="fa-solid fa-screwdriver-wrench"></i>',
+        "rekenen": '<i class="fa-solid fa-plus-minus"></i>',
+        "dans": '<i class="fa-solid fa-person-rays"></i>',
+        "maatschappijleer": '<i class="fa-solid fa-people-group"></i>',
+        "burgerschap": '<i class="fa-solid fa-people-group"></i>',
+        "onderzoek": '<i class="fa-solid fa-pen-ruler"></i>',
+        "ontwerpen": 'i class="fa-solid fa-microscope"></i>',
+        "kunst": '<i class="fa-solid fa-palette"></i>',
+        "beeldende vorming": '<i class="fa-solid fa-palette"></i>',
+        "muziek": '<i class="fa-solid fa-music"></i>',
+        "natuur": '<i class="fa-solid fa-microscope"></i>',
+        "technologie": '<i class="fa-solid fa-microscope"></i>',
+        "drama": '<i class="fa-solid fa-masks-theater"></i>',
+        "theater": '<i class="fa-solid fa-masks-theater"></i>',
+        "geschiedenis": '<i class="fa-solid fa-landmark"></i>',
+        "lichamelijke opvoeding": '<i class="fa-solid fa-futbol"></i>',
+        "beweging": '<i class="fa-solid fa-futbol"></i>',
+        "economie": '<i class="fa-solid fa-euro-sign"></i>',
+        "aardrijkskunde": '<i class="fa-solid fa-earth-europe"></i>',
+        "godsdienst": '<i class="fa-solid fa-dove"></i>',
+        "levensbeschouwing": '<i class="fa-solid fa-dove"></i>',
+        "digitale geletterdheid": '<i class="fa-solid fa-computer"></i>',
+        "informatica": '<i class="fa-solid fa-code"></i>',
+        "wiskunde": '<i class="fa-solid fa-calculator"></i>',
+        "bedrijfseconomie": '<i class="fa-solid fa-building"></i>',
+        "management": '<i class="fa-solid fa-building"></i>',
+        "filosofie": '<i class="fa-solid fa-brain"></i>'
+    }
+    for key in subjects_icons:
+        if key.lower() in subject.lower():
+            return subjects_icons[key]
+    return '<i class="fa-solid fa-book"></i>'
+    
+
 
 @app.route("/api/islands/grades/testgrades")
 @use_session_data
@@ -379,57 +431,6 @@ def testgrades_island():
     api_data = [item for item in api_data if item["type"] in types_to_include and ("geldendResultaat" in item or "resultaatLabelAfkorting" in item)] # Filter unwanted grade types
 
 
-    def get_icon(subject):
-        subjects_icons = {
-            "engels": '<img class="icon uk" src="/static/images/flags/uk.svg">',
-            "nederlands": '<img class="icon nl" src="/static/images/flags/nl.svg">',
-            "latijn": '<img class="icon la" src="/static/images/flags/va.svg">',
-            "grieks": '<img class="icon gr" src="/static/images/flags/gr.svg">',
-            "frans": '<img class="icon fr" src="/static/images/flags/fr.svg">',
-            "spaans": '<img class="icon es" src="/static/images/flags/es.svg">',
-            "duits": '<img class="icon de" src="/static/images/flags/de.svg">',
-            "fries": '<img class="icon frr" src="/static/images/flags/frr.svg">',
-            "italiaans": '<img class="icon it" src="/static/images/flags/it.svg">',
-            "russisch": '<img class="icon it" src="/static/images/flags/ru.svg">',
-            "arabisch": '<img class="icon ar" src="/static/images/flags/ar.svg">',
-            "turks": '<img class="icon tr" src="/static/images/flags/tr.svg">',
-            "chinees": '<img class="icon cn" src="/static/images/flags/cn.svg">',
-            "scheikunde": '<i class="fa-solid fa-vial"></i>',
-            "natuurkunde": '<i class="fa-solid fa-atom"></i>',
-            "biologie": '<i class="fa-solid fa-seedling"></i>',
-            "techniek": '<i class="fa-solid fa-screwdriver-wrench"></i>',
-            "rekenen": '<i class="fa-solid fa-plus-minus"></i>',
-            "dans": '<i class="fa-solid fa-person-rays"></i>',
-            "maatschappijleer": '<i class="fa-solid fa-people-group"></i>',
-            "burgerschap": '<i class="fa-solid fa-people-group"></i>',
-            "onderzoek": '<i class="fa-solid fa-pen-ruler"></i>',
-            "ontwerpen": 'i class="fa-solid fa-microscope"></i>',
-            "kunst": '<i class="fa-solid fa-palette"></i>',
-            "beeldende vorming": '<i class="fa-solid fa-palette"></i>',
-            "muziek": '<i class="fa-solid fa-music"></i>',
-            "natuur": '<i class="fa-solid fa-microscope"></i>',
-            "technologie": '<i class="fa-solid fa-microscope"></i>',
-            "drama": '<i class="fa-solid fa-masks-theater"></i>',
-            "theater": '<i class="fa-solid fa-masks-theater"></i>',
-            "geschiedenis": '<i class="fa-solid fa-landmark"></i>',
-            "lichamelijke opvoeding": '<i class="fa-solid fa-futbol"></i>',
-            "beweging": '<i class="fa-solid fa-futbol"></i>',
-            "economie": '<i class="fa-solid fa-euro-sign"></i>',
-            "aardrijkskunde": '<i class="fa-solid fa-earth-europe"></i>',
-            "godsdienst": '<i class="fa-solid fa-dove"></i>',
-            "levensbeschouwing": '<i class="fa-solid fa-dove"></i>',
-            "digitale geletterdheid": '<i class="fa-solid fa-computer"></i>',
-            "informatica": '<i class="fa-solid fa-code"></i>',
-            "wiskunde": '<i class="fa-solid fa-calculator"></i>',
-            "bedrijfseconomie": '<i class="fa-solid fa-building"></i>',
-            "management": '<i class="fa-solid fa-building"></i>',
-            "filosofie": '<i class="fa-solid fa-brain"></i>'
-        }
-        for key in subjects_icons:
-            if key.lower() in subject.lower():
-                return subjects_icons[key]
-        return '<i class="fa-solid fa-book"></i>'
-    
     def format_date(dt_entered):
         now = datetime.now(pytz.timezone("Europe/Amsterdam"))
         if dt_entered.date() == now.date():
@@ -569,6 +570,73 @@ def schedule_island():
 
     return render_template("islands/schedule-island.html", schedule_data = api_data)
 
+
+
+@app.route("/planner")
+@use_session_data
+def planner_main():
+    today = datetime.today()
+    if today.weekday() in [5, 6]:
+        next_week = today + timedelta(days=7 - today.weekday())
+    else:
+        next_week = today
+    year = next_week.year
+    weeknum = next_week.isocalendar()[1]
+    return render_template("pages/main/planner.html", current_weeknum = weeknum, current_year = year)
+
+
+
+@app.route("/api/islands/planner")
+@use_session_data
+def planner_island():
+    token = session["token"]
+    student_id = session["student_id"]
+
+    weeknum = request.args.get("w")
+    year = request.args.get("y")
+
+    if not weeknum or not year:
+        today = datetime.today()
+        if today.weekday() in [5, 6]:
+            next_week = today + timedelta(days=7 - today.weekday())
+        else:
+            next_week = today
+        weeknum = next_week.isocalendar()[1]
+        year = next_week.year
+
+    api_url = f"https://api.somtoday.nl/rest/v1/studiewijzeritemafspraaktoekenningen?geenDifferentiatieOfGedifferentieerdVoorLeerling={student_id}&jaarWeek={year}~{weeknum}&additional=leerlingen&additional=swigemaaktVinkjes&additional=lesgroep&additional=leerlingenMetInleveringStatus&additional=leerlingProjectgroep&additional=studiewijzerId"
+
+    api_headers = {
+        "Authorization": f"Bearer {token}",
+        "Accept": "application/json"
+    }
+
+    response = requests.get(api_url, headers = api_headers)
+    api_data = response.json()
+    
+    api_data = clean_somdata(api_data)
+
+    planner_data = [
+        [],
+        [],
+        [],
+        [],
+        []
+    ]
+
+    for homework in api_data["items"]:
+        dt = datetime.strptime(homework["datumTijd"], "%Y-%m-%dT%H:%M:%S.%f%z")
+        subject_name = homework["lesgroep"]["vak"]["naam"]
+        homework["subject"] = subject_name[:1].upper() + subject_name[1:]
+        if homework["studiewijzerItem"].get("onderwerp"):
+            homework["title"] = homework["studiewijzerItem"]["onderwerp"] if len(homework["studiewijzerItem"]["onderwerp"]) <= 50 else homework["studiewijzerItem"]["onderwerp"][:47] + "..."
+        else:
+            homework["title"] = homework["studiewijzerItem"]["omschrijving"]
+            homework["is_long_title"] = True
+        homework["icon"] = get_icon(subject_name)
+        planner_data[dt.weekday()].append(homework)
+
+    return render_template("islands/planner-island.html", planner_data = planner_data)
 
 
 

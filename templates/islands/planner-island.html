@@ -1,0 +1,18 @@
+<div id="weekcontainer">
+    {% for day in planner_data %}
+        <div class="daycontainer">
+            {% for homework in day %}
+                <div class="homeworkitem">
+                    <span class="homework-header">
+                        <span class="subect-icon">{{ homework.icon | safe }}</span>
+                        <span class="subject-name">{{ homework.subject }}</span>
+                    </span>
+                    {% if homework.studiewijzerItem.onderwerp %}<span class="homework-title">{{ homework.studiewijzerItem.onderwerp | safe}}</span>{% endif %}
+                    <!--
+                    <span class="homework-description">{{ homework.studiewijzerItem.omschrijving | safe }}</span>
+                    -->
+                </div>
+            {% endfor %}
+        </div>
+    {% endfor %}
+</div>
