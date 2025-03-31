@@ -22,6 +22,20 @@
     --back: white;
 }
 
+@media (prefers-color-scheme: dark) {
+    [data-theme="system"] {
+        --front: white;
+        --back: #081117;
+    }
+}
+
+@media (prefers-color-scheme: light) {
+    [data-theme="system"] {
+        --front: black;
+        --back: white;
+    }
+}
+
 a {
     color: var(--light-purple);
 }
