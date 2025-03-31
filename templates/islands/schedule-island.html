@@ -1,1 +1,18 @@
-{{ schedule_data }}
+<div id="weekcontainer">
+  {% for day in schedule_data %}
+    <div class="daycontainer">
+      {% for i in range(18) %}
+        <div class="line"></div>
+      {% endfor %}
+
+      <!--
+          from: (8-6) * 12 + round(30/60 * 12) + 1 = 31
+          to: (10-6) * 12 + round(10/60 * 12) + 1 = 51
+      -->
+      <div class="appointment" style="grid-row-start: 31; grid-row-end: 51">
+          Wiskunde C
+          8:30-10:10
+      </div>
+    </div>
+  {% endfor %}
+</div>
