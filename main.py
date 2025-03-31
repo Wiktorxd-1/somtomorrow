@@ -32,6 +32,9 @@ def logged_in():
         return True
     return False
 
+def capit(string):
+    return string[:1].upper() + string[1:]
+
 @app.before_request
 def check_login():
     if request.endpoint is None:
@@ -56,6 +59,7 @@ def use_session_data(f):
     def wrapper(*args, **kwargs):
         for key in session.keys():
             setattr(g, key, session[key])
+            g.capit = capit
         return f(*args, **kwargs)
     return wrapper
 
@@ -479,12 +483,12 @@ def testgrades_island():
         grade_subject_name = grade["vak"]["naam"]
         grade_test_name = grade["omschrijving"]
 
-        grade["subject_nice"] = grade_subject_name[:1].upper() + grade_subject_name[1:]
+        grade["subject_nice"] = capit(grade_subject_name)
         grade["datetime_sort"] = dt_entered.isoformat()
         grade["datetime_nice"] = formatted_dt_entered
         grade["datetime_nice_extended"] = dt_entered.strftime("%A %d %B %Y om %H:%M:%S")
         grade["icon"] = get_icon(grade["vak"]["naam"])
-        grade["test_nice"] = grade_test_name[:1].upper() + grade_test_name[1:]
+        grade["test_nice"] = capit(grade_test_name)
         grade["result"] = result
         grade["max_weight"] = max(grade["weging"], grade.get("examenWeging", 0))
 
@@ -654,7 +658,7 @@ def planner_island():
     for homework in api_data["items"]:
         dt = datetime.strptime(homework["datumTijd"], "%Y-%m-%dT%H:%M:%S.%f%z")
         subject_name = homework["lesgroep"]["vak"]["naam"]
-        homework["subject"] = subject_name[:1].upper() + subject_name[1:]
+        homework["subject"] = capit(subject_name)
         if homework["studiewijzerItem"].get("onderwerp"):
             homework["title"] = homework["studiewijzerItem"]["onderwerp"] if len(homework["studiewijzerItem"]["onderwerp"]) <= 50 else homework["studiewijzerItem"]["onderwerp"][:47] + "..."
         else:
