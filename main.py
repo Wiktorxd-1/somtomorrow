@@ -571,8 +571,13 @@ def schedule_island():
     schedule_data = [[], [], [], [], []]
 
     for appointment in api_data["items"]:
-        dt = datetime.strptime(appointment["beginDatumTijd"], "%Y-%m-%dT%H:%M:%S")
-        schedule_data[dt.weekday()].append(appointment)
+        dt_start = datetime.strptime(appointment["beginDatumTijd"], "%Y-%m-%dT%H:%M:%S")
+        dt_end = datetime.strptime(appointment["eindDatumTijd"], "%Y-%m-%dT%H:%M:%S")
+
+        appointment["rowStart"] = (dt_start.hour - 6) * 12 + round(dt_start.minute / 60 * 12) + 1
+        appointment["rowEnd"] = (dt_end.hour - 6) * 12 + round(dt_end.minute / 60 * 12) + 1
+
+        schedule_data[dt_start.weekday()].append(appointment)
 
     return render_template("islands/schedule-island.html", schedule_data = schedule_data)
 
