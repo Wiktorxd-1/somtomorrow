@@ -12,7 +12,7 @@
             grid-row-start: {{ appointment.rowStart }};
             grid-row-end: {{ appointment.rowEnd }};
           ">
-            {{ appointment.titel }}
+            {{ appointment.vak.naam[:1].upper() + appointment.vak.naam[1:] if appointment.vak else appointment.titel }}
           </div>
         {% endfor %}
       </div>
