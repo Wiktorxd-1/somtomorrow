@@ -1,0 +1,77 @@
+<div id="pagemenu">
+    <i class="fa-solid fa-arrow-left pagemenu-item" id="week-back"></i>
+    <span id="current-week-container">
+        Week <span id="current-weeknum">{{ current_weeknum }}</span>
+        (<span id="current-year">{{ current_year }}</span>)
+    </span>
+    <i class="fa-solid fa-arrow-right pagemenu-item" id="week-forward"></i>
+    <span id="go-to-current-week" weeknum="{{ current_weeknum }}" year="{{ current_year }}">
+        Huidige week
+    </span>
+</div>
+
+<script>
+    const dateContainer = document.getElementById("current-week-container");
+    const currentWeeknum = document.getElementById("current-weeknum");
+    const currentYear = document.getElementById("current-year");
+    const weekBack = document.getElementById("week-back");
+    const weekForward = document.getElementById("week-forward");
+    const goCurrentWeek = document.getElementById("go-to-current-week");
+
+    function has53Weeks(year) {
+        const firstDay = new Date(year, 0, 1);
+        const firstDayOfWeek = firstDay.getDay();
+        
+        return (firstDayOfWeek === 4 || (firstDayOfWeek === 3 && new Date(year, 1, 29).getDate() === 29));
+    }
+
+    function updateWeek(change) {
+        let weekNum = parseInt(currentWeeknum.textContent, 10) || 0;
+        let year = parseInt(currentYear.textContent, 10) || 0;
+
+        const maxWeeks = has53Weeks(year) ? 53 : 52;
+        
+        weekNum += change;
+
+        if (weekNum < 1) {
+            weekNum = maxWeeks;
+            year--;
+        } else if (weekNum > maxWeeks) {
+            weekNum = 1;
+            year++;
+        }
+
+        currentWeeknum.textContent = weekNum;
+        currentYear.textContent = year;
+
+        return [weekNum, year]
+    }
+
+    weekBack.addEventListener("click", function () {
+        [weekNum, year] = updateWeek(-1);
+
+        let island = document.querySelector(".island");
+        let island_url = `{{ api_url }}?w=${weekNum}&y=${year}`;
+        islandParser(island, island_url);
+    });
+
+    weekForward.addEventListener("click", function () {
+        [weekNum, year] = updateWeek(1);
+
+        let island = document.querySelector(".island");
+        let island_url = `{{ api_url }}?w=${weekNum}&y=${year}`;
+        islandParser(island, island_url);
+    });
+
+    goCurrentWeek.addEventListener("click", function () {
+        weekNum = goCurrentWeek.getAttribute("weeknum")
+        year = goCurrentWeek.getAttribute("year")
+
+        currentWeeknum.textContent = weekNum;
+        currentYear.textContent = year;
+
+        let island = document.querySelector(".island");
+        let island_url = `{{ api_url }}?w=${weekNum}&y=${year}`;
+        islandParser(island, island_url);
+    });
+</script>

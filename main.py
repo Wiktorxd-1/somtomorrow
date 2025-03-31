@@ -58,7 +58,7 @@ def use_session_data(f):
             setattr(g, key, session[key])
         return f(*args, **kwargs)
     return wrapper
-    
+
 
 @app.route("/login")
 @excluded
@@ -137,7 +137,7 @@ def set_token_and_info(token):
     student_id = response_data["items"][0]["links"][0]["id"]
     first_name = response_data["items"][0]["roepnaam"]
 
-    last_name = f"{middle_name} {response_data["items"][0]["achternaam"]}" if (middle_name := response_data["items"][0].get("voorvoegsel")) else response_data["items"][0]["achternaam"]
+    last_name = f"{middle_name} {response_data['items'][0]['achternaam']}" if (middle_name := response_data["items"][0].get("voorvoegsel")) else response_data["items"][0]["achternaam"]
 
     url = f"https://api.somtoday.nl/rest/v1/leerlingen/{student_id}/schoolgegevens"
 
@@ -160,7 +160,7 @@ def set_token_and_info(token):
     session["token"] = token
     session["login_time"] = datetime.now(timezone.utc).timestamp()
 
-    
+
     return True
 
 
@@ -201,7 +201,7 @@ def logindevauto():
 def logindevtester():
     if request.method == "POST":
         choice = request.form.get("choice")
-        
+
         with open(f"dev/rtoken{choice}.txt", "r") as file:
             rtoken = file.read()
 
@@ -225,16 +225,16 @@ def logindevtester():
     return '''
         <form method="post">
             <label>Choose a token</label><br>
-            
+
             <input type="radio" id="choice-a" name="choice" value="a">
             <label for="choice-a">a</label><br>
-            
+
             <input type="radio" id="choice-b" name="choice" value="b">
             <label for="choice-b">b</label><br>
-            
+
             <input type="radio" id="choice-c" name="choice" value="c">
             <label for="choice-c">c</label><br>
-            
+
             <input type="submit" value="Continue">
         </form>
     '''
@@ -366,7 +366,7 @@ def get_icon(subject):
         if key.lower() in subject.lower():
             return subjects_icons[key]
     return '<i class="fa-solid fa-book"></i>'
-    
+
 
 
 @app.route("/api/islands/grades/testgrades")
@@ -434,20 +434,20 @@ def testgrades_island():
     def format_date(dt_entered):
         now = datetime.now(pytz.timezone("Europe/Amsterdam"))
         if dt_entered.date() == now.date():
-            formatted = f"Vandaag om {dt_entered.strftime("%H:%M:%S")}"
+            formatted = f"Vandaag om {dt_entered.strftime('%H:%M:%S')}"
         elif dt_entered.date() == (now.date() - timedelta(days=1)):
-            formatted = f"Gisteren om {dt_entered.strftime("%H:%M:%S")}"
+            formatted = f"Gisteren om {dt_entered.strftime('%H:%M:%S')}"
         else:
             if dt_entered.year == now.year:
                 formatted = dt_entered.strftime("%a %d %b om %H:%M:%S")
             else:
                 formatted = dt_entered.strftime("%a %d %b %Y om %H:%M:%S")
         return formatted
-    
+
     def grade_is_fail(number_grade, letter_grade):
         try:
             result_float = float(number_grade.replace(",", "."))
-            
+
             if result_float < 5.5:
                 is_fail = True
             else:
@@ -473,9 +473,9 @@ def testgrades_island():
             else:
                 result = real_result
                 dt_entered = datetime.strptime(grade["herkansing"]["datumInvoer"], "%Y-%m-%dT%H:%M:%S.%f%z")
-        
+
         formatted_dt_entered = format_date(dt_entered)
-            
+
         grade_subject_name = grade["vak"]["naam"]
         grade_test_name = grade["omschrijving"]
 
@@ -491,7 +491,7 @@ def testgrades_island():
         grade["is_fail"] = grade_is_fail(grade.get("geldendResultaat"), grade.get("resultaatLabelAfkorting"))
 
         grade["confetti"] = True if float(grade.get("geldendResultaat", "0.0").replace(",", ".")) >= 10 else False
-        
+
 
         if grade.get("herkansing"):
             grade["retake"] = {
@@ -565,7 +565,7 @@ def schedule_island():
 
     response = requests.get(api_url, headers = api_headers)
     api_data = response.json()
-    
+
     api_data = clean_somdata(api_data)
 
     schedule_data = [[], [], [], [], []]
@@ -620,7 +620,7 @@ def planner_island():
 
     response = requests.get(api_url, headers = api_headers)
     api_data = response.json()
-    
+
     api_data = clean_somdata(api_data)
 
     planner_data = [
@@ -651,8 +651,8 @@ def planner_island():
     wednesday = monday + timedelta(days=2)
     thursday = monday + timedelta(days=3)
     friday = monday + timedelta(days=4)
-    
-    
+
+
     dayname = [
         monday.strftime("%d %B"), tuesday.strftime("%d %B"), wednesday.strftime("%d %B"), thursday.strftime("%d %B"), friday.strftime("%d %B")
     ]
@@ -684,11 +684,11 @@ def identicon(username):
 @excluded
 def generate_gif():
     images = [Image.open(io.BytesIO(render_identicon("".join(random.choices(string.ascii_letters + string.digits, k=random.randint(5, 20))), (0, 0, 0, 0)))) for _ in range(20)]
-    
+
     gif_bytes = io.BytesIO()
     images[0].save(gif_bytes, format="GIF", save_all=True, append_images=images[1:], duration=700, loop=0, disposal=2)
     gif_bytes.seek(0)
-    
+
     return Response(gif_bytes.read(), mimetype="image/gif")
 
 

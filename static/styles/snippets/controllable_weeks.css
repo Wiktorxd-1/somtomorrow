@@ -1,0 +1,22 @@
+#current-week-container {
+    margin-inline: 10px;
+}
+
+#pagemenu {
+    margin-bottom: .5em;
+}
+
+.pagemenu-item, #go-to-current-week {
+    padding: 10px;
+    display: inline-block;
+    border-radius: 10px;
+}
+
+#go-to-current-week {
+    border: 1px solid var(--gray);
+}
+
+.pagemenu-item:hover, #go-to-current-week:hover {
+    background: var(--dark-purple);
+    border-color: var(--dark-purple);
+}
