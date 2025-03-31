@@ -122,7 +122,7 @@ main {
     align-items: center;
     height: 60px;
     padding: 10px;
-    background: var(--black);
+    /* background: var(--black); */
 }
 
 #userinfocontainer {
@@ -208,7 +208,7 @@ main {
     margin-bottom: 2em;
 }
 
-body:has(main .error-page.False) #sidebar, body:has(main .error-page) #profile {
+body:has(main .error-page.False) #sidebar, body:has(main .error-page) #topbar {
     display: none;
 }
 

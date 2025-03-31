@@ -3,7 +3,7 @@
 A next-gen Somtoday webapp that works how students want it to work.  
 Built in Flask and Jinja.
 
-It's currently very much a prototype
+It's currently very much a prototype but it works and that's just amazing!
 
 ## Run yourself
 
@@ -64,3 +64,9 @@ Yeah it's a lot...
 - [ ] Add homework made or not
 - [ ] Add popup with more info
 - [ ] Add tests and *inleveropdrachten*
+- [ ] Just better layout
+
+#### Schedule
+
+- [ ] Make clickable
+- [ ] Diffrent types of appointments

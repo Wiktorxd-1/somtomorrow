@@ -293,7 +293,7 @@ def clean_somdata(data):
         return [clean_somdata(item) for item in data]
     elif isinstance(data, dict):
         return {
-            key: clean_somdata(value) for key, value in data.items() if key not in ["links", "permissions", "additionalObjects", "UUID"]
+            key: clean_somdata(value) for key, value in data.items() if key not in ["links", "permissions", "UUID"]
         }
     else:
         return data
