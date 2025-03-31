@@ -1,18 +1,21 @@
 <div id="weekcontainer">
   {% for day in schedule_data %}
     <div class="daycontainer">
-      {% for i in range(18) %}
-        <div class="line"></div>
-      {% endfor %}
+      <div class="dayheader">{{ dayname[loop.index0] }}</div>
+      <div class="dayitems">
+        {% for i in range(18) %}
+          <div class="line"></div>
+        {% endfor %}
 
-      {% for appointment in day %}
-        <div class="appointment" style="
-          grid-row-start: {{ appointment.rowStart }};
-          grid-row-end: {{ appointment.rowEnd }};
-        ">
-          {{ appointment.titel }}
-        </div>
-      {% endfor %}        
+        {% for appointment in day %}
+          <div class="appointment" style="
+            grid-row-start: {{ appointment.rowStart }};
+            grid-row-end: {{ appointment.rowEnd }};
+          ">
+            {{ appointment.titel }}
+          </div>
+        {% endfor %}
+      </div>
     </div>
   {% endfor %}
 </div>

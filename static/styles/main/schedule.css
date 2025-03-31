@@ -5,6 +5,17 @@
 }
 
 .daycontainer {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: stretch;
+}
+
+.dayheader {
+    text-align: center;
+}
+
+.dayitems {
     --line: 1px;
     --gap: 5px;
     display: grid;
@@ -13,32 +24,32 @@
     grid-template-rows: repeat(calc(12*18), var(--line));
 }
 
-.daycontainer .line {
+.dayitems .line {
     position: absolute;
     width: 100%;
     border-bottom: 2px solid #333;
 }
 
-.daycontainer .line:nth-child(1) { top: calc(12 * var(--line) + 1 * 12 * var(--gap) - 3/4 * var(--gap)) }
-.daycontainer .line:nth-child(2) { top: calc(24 * var(--line) + 2 * 12 * var(--gap) - 3/4 * var(--gap)) }
-.daycontainer .line:nth-child(3) { top: calc(36 * var(--line) + 3 * 12 * var(--gap) - 3/4 * var(--gap)) }
-.daycontainer .line:nth-child(4) { top: calc(48 * var(--line) + 4 * 12 * var(--gap) - 3/4 * var(--gap)) }
-.daycontainer .line:nth-child(5) { top: calc(60 * var(--line) + 5 * 12 * var(--gap) - 3/4 * var(--gap)) }
-.daycontainer .line:nth-child(6) { top: calc(72 * var(--line) + 6 * 12 * var(--gap) - 3/4 * var(--gap)) }
-.daycontainer .line:nth-child(7) { top: calc(84 * var(--line) + 7 * 12 * var(--gap) - 3/4 * var(--gap)) }
-.daycontainer .line:nth-child(8) { top: calc(96 * var(--line) + 8 * 12 * var(--gap) - 3/4 * var(--gap)) }
-.daycontainer .line:nth-child(9) { top: calc(108 * var(--line) + 9 * 12 * var(--gap) - 3/4 * var(--gap)) }
-.daycontainer .line:nth-child(10) { top: calc(120 * var(--line) + 10 * 12 * var(--gap) - 3/4 * var(--gap)) }
-.daycontainer .line:nth-child(11) { top: calc(132 * var(--line) + 11 * 12 * var(--gap) - 3/4 * var(--gap)) }
-.daycontainer .line:nth-child(12) { top: calc(144 * var(--line) + 12 * 12 * var(--gap) - 3/4 * var(--gap)) }
-.daycontainer .line:nth-child(13) { top: calc(156 * var(--line) + 13 * 12 * var(--gap) - 3/4 * var(--gap)) }
-.daycontainer .line:nth-child(14) { top: calc(168 * var(--line) + 14 * 12 * var(--gap) - 3/4 * var(--gap)) }
-.daycontainer .line:nth-child(15) { top: calc(180 * var(--line) + 15 * 12 * var(--gap) - 3/4 * var(--gap)) }
-.daycontainer .line:nth-child(16) { top: calc(192 * var(--line) + 16 * 12 * var(--gap) - 3/4 * var(--gap)) }
-.daycontainer .line:nth-child(17) { top: calc(204 * var(--line) + 17 * 12 * var(--gap) - 3/4 * var(--gap)) }
-.daycontainer .line:nth-child(18) { top: calc(216 * var(--line) + 18 * 12 * var(--gap) - 3/4 * var(--gap)) }
+.dayitems .line:nth-child(1) { top: calc(12 * var(--line) + 1 * 12 * var(--gap) - 3/4 * var(--gap)) }
+.dayitems .line:nth-child(2) { top: calc(24 * var(--line) + 2 * 12 * var(--gap) - 3/4 * var(--gap)) }
+.dayitems .line:nth-child(3) { top: calc(36 * var(--line) + 3 * 12 * var(--gap) - 3/4 * var(--gap)) }
+.dayitems .line:nth-child(4) { top: calc(48 * var(--line) + 4 * 12 * var(--gap) - 3/4 * var(--gap)) }
+.dayitems .line:nth-child(5) { top: calc(60 * var(--line) + 5 * 12 * var(--gap) - 3/4 * var(--gap)) }
+.dayitems .line:nth-child(6) { top: calc(72 * var(--line) + 6 * 12 * var(--gap) - 3/4 * var(--gap)) }
+.dayitems .line:nth-child(7) { top: calc(84 * var(--line) + 7 * 12 * var(--gap) - 3/4 * var(--gap)) }
+.dayitems .line:nth-child(8) { top: calc(96 * var(--line) + 8 * 12 * var(--gap) - 3/4 * var(--gap)) }
+.dayitems .line:nth-child(9) { top: calc(108 * var(--line) + 9 * 12 * var(--gap) - 3/4 * var(--gap)) }
+.dayitems .line:nth-child(10) { top: calc(120 * var(--line) + 10 * 12 * var(--gap) - 3/4 * var(--gap)) }
+.dayitems .line:nth-child(11) { top: calc(132 * var(--line) + 11 * 12 * var(--gap) - 3/4 * var(--gap)) }
+.dayitems .line:nth-child(12) { top: calc(144 * var(--line) + 12 * 12 * var(--gap) - 3/4 * var(--gap)) }
+.dayitems .line:nth-child(13) { top: calc(156 * var(--line) + 13 * 12 * var(--gap) - 3/4 * var(--gap)) }
+.dayitems .line:nth-child(14) { top: calc(168 * var(--line) + 14 * 12 * var(--gap) - 3/4 * var(--gap)) }
+.dayitems .line:nth-child(15) { top: calc(180 * var(--line) + 15 * 12 * var(--gap) - 3/4 * var(--gap)) }
+.dayitems .line:nth-child(16) { top: calc(192 * var(--line) + 16 * 12 * var(--gap) - 3/4 * var(--gap)) }
+.dayitems .line:nth-child(17) { top: calc(204 * var(--line) + 17 * 12 * var(--gap) - 3/4 * var(--gap)) }
+.dayitems .line:nth-child(18) { top: calc(216 * var(--line) + 18 * 12 * var(--gap) - 3/4 * var(--gap)) }
 
-.daycontainer .appointment {
+.dayitems .appointment {
     color: white;
     padding: 10px;
     border-radius: 10px;
