@@ -1,6 +1,7 @@
 <div id="weekcontainer">
     {% for day in planner_data %}
         <div class="daycontainer">
+            <div class="dayheader">{{ dayname[loop.index0] }}</div>
             {% for homework in day %}
                 <div class="homeworkitem">
                     <span class="homework-header">

@@ -16,10 +16,13 @@
     <div id="pagemenu">
         <i class="fa-solid fa-arrow-left pagemenu-item" id="week-back"></i>
         <span id="current-week-container">
-            <span id="current-weeknum">{{ current_weeknum }}</span>
+            Week <span id="current-weeknum">{{ current_weeknum }}</span>
             (<span id="current-year">{{ current_year }}</span>)
         </span>
         <i class="fa-solid fa-arrow-right pagemenu-item" id="week-forward"></i>
+        <span id="go-to-current-week" weeknum="{{ current_weeknum }}" year="{{ current_year }}">
+            Huidige week
+        </span>
     </div>
 
     <div class="island" island-url="planner"></div> 
@@ -30,6 +33,7 @@
         const currentYear = document.getElementById("current-year");
         const weekBack = document.getElementById("week-back");
         const weekForward = document.getElementById("week-forward");
+        const goCurrentWeek = document.getElementById("go-to-current-week");
 
         function has53Weeks(year) {
             const firstDay = new Date(year, 0, 1);
@@ -70,6 +74,18 @@
 
         weekForward.addEventListener("click", function () {
             [weekNum, year] = updateWeek(1);
+
+            let island = document.querySelector(".island");
+            let island_url = `planner?w=${weekNum}&y=${year}`;
+            islandParser(island, island_url);
+        });
+
+        goCurrentWeek.addEventListener("click", function () {
+            weekNum = goCurrentWeek.getAttribute("weeknum")
+            year = goCurrentWeek.getAttribute("year")
+
+            currentWeeknum.textContent = weekNum;
+            currentYear.textContent = year;
 
             let island = document.querySelector(".island");
             let island_url = `planner?w=${weekNum}&y=${year}`;

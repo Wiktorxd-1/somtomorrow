@@ -582,6 +582,7 @@ def planner_main():
         next_week = today
     year = next_week.year
     weeknum = next_week.isocalendar()[1]
+
     return render_template("pages/main/planner.html", current_weeknum = weeknum, current_year = year)
 
 
@@ -636,7 +637,21 @@ def planner_island():
         homework["icon"] = get_icon(subject_name)
         planner_data[dt.weekday()].append(homework)
 
-    return render_template("islands/planner-island.html", planner_data = planner_data)
+    year = int(year)
+    weeknum = int(weeknum)
+
+    monday = datetime.strptime(f'{year}-W{weeknum-1}-1', "%Y-W%W-%w").date()
+    tuesday = monday + timedelta(days=1)
+    wednesday = monday + timedelta(days=2)
+    thursday = monday + timedelta(days=3)
+    friday = monday + timedelta(days=4)
+    
+    
+    dayname = [
+        monday.strftime("%d %B"), tuesday.strftime("%d %B"), wednesday.strftime("%d %B"), thursday.strftime("%d %B"), friday.strftime("%d %B")
+    ]
+
+    return render_template("islands/planner-island.html", planner_data = planner_data, dayname = dayname)
 
 
 
