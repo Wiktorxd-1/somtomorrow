@@ -80,7 +80,7 @@ img.icon {
 }
 
 .gradeitem.confetti .grade-result, .grade-confetti {
-    color: var(--light-purple);
+    color: var(--green);
 }
 
 .grade-fail {

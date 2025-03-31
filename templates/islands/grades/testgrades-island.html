@@ -60,9 +60,12 @@
                 } else {
                     grade.classList.add("open");
                     if (grade.classList.contains("confetti")) {
-                        confetti();
+                        const x = event.clientX / window.innerWidth;
+                        const y = event.clientY / window.innerHeight;
+                        
+                        confetti({ origin: { x, y } });
                     }
-                }   
+                }
             } else {
                 grade.classList.remove("open");
             }
