@@ -3,6 +3,7 @@ from PIL import Image
 from datetime import timedelta, datetime, timezone
 from functools import wraps
 from identicon import render_identicon
+import re
 import os
 import string
 import random
@@ -34,6 +35,16 @@ def logged_in():
 
 def capit(string):
     return string[:1].upper() + string[1:]
+
+def remove_html(string):
+    if string:
+        return re.sub(re.compile('<.*?>'), '', string)
+    return string
+
+def max_len(string, max_length):
+    return string if len(string) <= max_length else string[:max_length - 3] + "..."
+    
+
 
 @app.before_request
 def check_login():
@@ -292,9 +303,7 @@ def clean_somdata(data):
     if isinstance(data, list):
         return [clean_somdata(item) for item in data]
     elif isinstance(data, dict):
-        return {
-            key: clean_somdata(value) for key, value in data.items() if key not in ["links", "permissions", "UUID"]
-        }
+        return {key: clean_somdata(value) for key, value in data.items() if key not in ["links", "permissions", "UUID"]}
     else:
         return data
 
@@ -652,37 +661,43 @@ def planner_island():
         weeknum = next_week.isocalendar()[1]
         year = next_week.year
 
-    api_url = f"https://api.somtoday.nl/rest/v1/studiewijzeritemafspraaktoekenningen?geenDifferentiatieOfGedifferentieerdVoorLeerling={student_id}&jaarWeek={year}~{weeknum}&additional=leerlingen&additional=swigemaaktVinkjes&additional=lesgroep&additional=leerlingenMetInleveringStatus&additional=leerlingProjectgroep&additional=studiewijzerId"
-
+    
     api_headers = {
         "Authorization": f"Bearer {token}",
         "Accept": "application/json"
     }
 
-    response = requests.get(api_url, headers = api_headers)
-    api_data = response.json()
+    api_url1 = f"https://api.somtoday.nl/rest/v1/studiewijzeritemafspraaktoekenningen?geenDifferentiatieOfGedifferentieerdVoorLeerling={student_id}&jaarWeek={year}~{weeknum}&additional=leerlingen&additional=swigemaaktVinkjes&additional=lesgroep&additional=leerlingenMetInleveringStatus&additional=leerlingProjectgroep&additional=studiewijzerId"
+
+
+    response1 = requests.get(api_url1, headers = api_headers)
+    api_data1 = response1.json()
+
+    api_url2 = f"https://api.somtoday.nl/rest/v1/studiewijzeritemdagtoekenningen?geenDifferentiatieOfGedifferentieerdVoorLeerling={student_id}&jaarWeek={year}~{weeknum}&additional=leerlingen&additional=swigemaaktVinkjes&additional=lesgroep&additional=leerlingenMetInleveringStatus&additional=leerlingProjectgroep&additional=studiewijzerId"
+    
+    response2 = requests.get(api_url2, headers = api_headers)
+    api_data2 = response2.json()
+
+    api_data = api_data1["items"] + api_data2["items"]
 
     api_data = clean_somdata(api_data)
 
-    planner_data = [
-        [],
-        [],
-        [],
-        [],
-        []
-    ]
+    planner_data = [[], [], [], [], []]
 
-    for homework in api_data["items"]:
+    for homework in api_data:
         dt = datetime.strptime(homework["datumTijd"], "%Y-%m-%dT%H:%M:%S.%f%z")
         subject_name = homework["lesgroep"]["vak"]["naam"]
-        homework["subject"] = capit(subject_name)
+        homework["subject"] = capit(subject_name).replace("e taal en literatuur", "")
+
         if homework["studiewijzerItem"].get("onderwerp"):
-            homework["title"] = homework["studiewijzerItem"]["onderwerp"] if len(homework["studiewijzerItem"]["onderwerp"]) <= 50 else homework["studiewijzerItem"]["onderwerp"][:47] + "..."
+            homework["title"] = max_len(remove_html(homework["studiewijzerItem"]["onderwerp"]), 35)
         else:
-            homework["title"] = homework["studiewijzerItem"]["omschrijving"]
-            homework["is_long_title"] = True
+            homework["title"] = max_len(remove_html(homework["studiewijzerItem"]["omschrijving"]), 35)
         homework["icon"] = get_icon(subject_name)
+        homework["type"] = "inleveropdracht" if homework["studiewijzerItem"]["inleverperiodes"] else homework["studiewijzerItem"].get("huiswerkType", "undefined").lower()
         planner_data[dt.weekday()].append(homework)
+
+        
 
     year = int(year)
     weeknum = int(weeknum)
@@ -702,6 +717,43 @@ def planner_island():
     ]
 
     return render_template("islands/planner-island.html", planner_data = planner_data, dayname = dayname)
+
+
+@app.route("/api/finish_homework/<id>")
+def finish_homework(id):
+    token = session["token"]
+    student_id = session["student_id"]
+
+    finish_status = request.args.get("action")
+
+    api_url = "https://api.somtoday.nl/rest/v1/swigemaakt/cou"
+
+    api_data = {
+        "leerling": {
+                "links": [
+                    {
+                        "id": student_id,
+                        "rel": "self",
+                        "href": f"https://api.somtoday.nl/rest/v1/leerlingen/{student_id}"
+                    }
+                ]
+            },
+            "swiToekenningId": id,
+        "gemaakt": False if "unfinish" in finish_status.lower() else True
+    }
+
+    api_headers = {
+        "Authorization": f"Bearer {token}",
+        "Accept": "application/json"
+    }
+
+    response = requests.put(api_url, headers = api_headers, json = api_data)
+
+    response.raise_for_status()
+
+    return "Succes"
+
+
 
 # Identicons API
 

@@ -3,11 +3,16 @@
         <div class="daycontainer">
             <div class="dayheader">{{ dayname[loop.index0] }}</div>
             {% for homework in day %}
-                <div class="homeworkitem{{ ' finished' if homework.additionalObjects.swigemaaktVinkjes.items and homework.additionalObjects.swigemaaktVinkjes.items else ' not-finished' }}">
+                <div class="homeworkitem{{ ' finished' if homework.additionalObjects.swigemaaktVinkjes.items else ' not-finished' }} {{ homework.type }}">
                     <span class="subject-icon">{{ homework.icon | safe }}</span>
                     <span class="subject-name">{{ homework.subject }}</span>
-                    {% if homework.studiewijzerItem.onderwerp %}<span class="homework-title">{{ homework.studiewijzerItem.onderwerp | safe}}</span>{% endif %}
-                    <div class="homework-finished-container">{% if homework.additionalObjects.swigemaaktVinkjes.items and homework.additionalObjects.swigemaaktVinkjes.items %}<i class="fa-solid fa-check"></i>{% endif %}</div>
+                    <span class="homework-title">{{ homework.title }}</span>
+                    <div class="homework-finished-container" id="{% if homework.additionalObjects.swigemaaktVinkjes and homework.additionalObjects.swigemaaktVinkjes.items %}{{ homework.additionalObjects.swigemaaktVinkjes.items.swiToekenningId }}{% endif %}">
+                        {% if homework.additionalObjects.swigemaaktVinkjes.items %}
+                            <i class="fa-solid fa-check"></i>
+                        {% endif %}
+                    </div>
+
                 </div>
             {% endfor %}
         </div>

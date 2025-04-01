@@ -16,7 +16,8 @@
 }
 
 .homeworkitem {
-    border: 1px solid var(--gray);
+    border-width: 3px 5px;
+    border-style: solid;
     padding: 10px;
     border-radius: 10px;
     font-size: .7em;
@@ -31,8 +32,7 @@
 }
 
 .homeworkitem.finished {
-    border-color: var(--green);
-    background: var(--green);
+    background: var(--green) !important;
 }
 
 .subject-name {
@@ -67,4 +67,24 @@
     height: 30px;
     width: 30px;
     font-size: 15px;
+}
+
+.homeworkitem.huiswerk {
+    border-color: var(--blue);
+    background: var(--blue);
+}
+
+.homeworkitem.toets {
+    border-color: var(--yellow);
+    background: var(--yellow);
+}
+
+.homeworkitem.inleveropdracht {
+    border-color: var(--purple);
+    background: var(--purple);
+}
+
+.homeworkitem.grote_toets  {
+    border-color: var(--red);
+    background: var(--red);
 }
