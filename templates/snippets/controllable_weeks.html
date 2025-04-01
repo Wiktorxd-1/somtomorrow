@@ -1,10 +1,12 @@
 <div id="pagemenu">
+    <div>
     <i class="fa-solid fa-arrow-left pagemenu-item" id="week-back"></i>
     <span id="current-week-container">
         Week <span id="current-weeknum">{{ current_weeknum }}</span>
         (<span id="current-year">{{ current_year }}</span>)
     </span>
     <i class="fa-solid fa-arrow-right pagemenu-item" id="week-forward"></i>
+    </div>
     <span id="go-to-current-week" weeknum="{{ current_weeknum }}" year="{{ current_year }}">
         Huidige week
     </span>

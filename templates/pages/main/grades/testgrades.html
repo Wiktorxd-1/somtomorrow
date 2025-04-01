@@ -6,14 +6,12 @@
 
 
 {% block extra_headers %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles/main/grades/all_test_grades.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/main/grades/testgrades.css') }}">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
 {% endblock %}
 
 
 {% block content %}
-    <h1 id="page-title">Cijfers</h1>
-
     <div id="subpagemenu">
         <a class="subpagemenu-item active">
             Alle toetscijfers

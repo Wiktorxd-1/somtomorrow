@@ -36,6 +36,10 @@
     }
 }
 
+html {
+    scrollbar-gutter: stable;
+}
+
 a {
     color: var(--light-purple);
 }
@@ -117,12 +121,17 @@ main {
 
 #topbar {
     display: flex;
-    flex-direction: row-reverse;
     gap: 10px;
+    justify-content: space-between;
     align-items: center;
     height: 60px;
     padding: 10px;
     /* background: var(--black); */
+}
+
+#topbar h1 {
+    font-size: 1.2em;
+    margin-left: 1em;
 }
 
 #userinfocontainer {

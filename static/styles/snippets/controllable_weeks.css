@@ -3,7 +3,12 @@
 }
 
 #pagemenu {
-    margin-bottom: .5em;
+    margin-bottom: 2em;
+    margin-top: -1em;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 1em;
 }
 
 .pagemenu-item, #go-to-current-week {
