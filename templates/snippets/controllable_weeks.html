@@ -52,17 +52,15 @@
     weekBack.addEventListener("click", function () {
         [weekNum, year] = updateWeek(-1);
 
-        let island = document.querySelector(".island");
-        let island_url = `{{ api_url }}?w=${weekNum}&y=${year}`;
-        islandParser(island, island_url);
+        let island = document.querySelector('st-isl');
+        island.setAttribute("url", `{{ api_url }}?w=${weekNum}&y=${year}`);
     });
 
     weekForward.addEventListener("click", function () {
         [weekNum, year] = updateWeek(1);
 
-        let island = document.querySelector(".island");
-        let island_url = `{{ api_url }}?w=${weekNum}&y=${year}`;
-        islandParser(island, island_url);
+        let island = document.querySelector('st-isl');
+        island.setAttribute("url", `{{ api_url }}?w=${weekNum}&y=${year}`);
     });
 
     goCurrentWeek.addEventListener("click", function () {
@@ -72,8 +70,7 @@
         currentWeeknum.textContent = weekNum;
         currentYear.textContent = year;
 
-        let island = document.querySelector(".island");
-        let island_url = `{{ api_url }}?w=${weekNum}&y=${year}`;
-        islandParser(island, island_url);
+        let island = document.querySelector('st-isl');
+        island.setAttribute("url", `{{ api_url }}?w=${weekNum}&y=${year}`);
     });
 </script>

@@ -526,9 +526,6 @@ def testgrades_island():
 
     return render_template("islands/grades/testgrades-island.html", gradelist = api_data)
 
-
-
-
 @app.route("/rooster")
 @use_session_data
 def schedule_main():
@@ -581,8 +578,6 @@ def schedule_island():
 
         appointment["dt_start"] = dt_start
         appointment["dt_end"] = dt_end
-        
-
         appointment["rowStart"] = (dt_start.hour - 6) * 12 + round(dt_start.minute / 60 * 12) + 1
         appointment["rowEnd"] = (dt_end.hour - 6) * 12 + round(dt_end.minute / 60 * 12) + 1
 

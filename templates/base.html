@@ -6,6 +6,71 @@
         <title>{% block title %}{% endblock %} - Somtomorrow</title>
         <link rel="stylesheet" href="{{ url_for('static', filename='styles/main/base.css') }}">
         <script src="https://kit.fontawesome.com/4a94c21782.js" crossorigin="anonymous"></script>
+        <script>
+            class Island extends HTMLElement {
+                static observedAttributes = ["url"];
+
+                connectedCallback() {
+                    this.reloadData();
+                }
+
+                attributeChangedCallback() {
+                    this.reloadData();
+                }
+                
+                setLoading() {
+                    this.innerHTML =
+                        '<div id="island-loading"><span>Data ophalen...</span><img src="/loading.gif"></div>';
+                }
+
+                setData(data) {
+                    this.innerHTML = data;
+                
+                    // Find scripts, and make them actualy excecutable by just appending them to the body
+                    this.querySelectorAll("script").forEach(oldScript => {
+                        const newScript = document.createElement("script");
+                        newScript.textContent = oldScript.textContent; // Inline scripts, so just JS inside the HTML
+                    
+                        if (oldScript.src) newScript.src = oldScript.src; // Scripts with a src
+
+                        if (oldScript.async) newScript.async = oldScript.async; // Scripts with a async
+
+                        document.body.appendChild(newScript);
+                        oldScript.remove(); // Remove the old script to prevent duplication
+                    });
+                }
+
+                setError(error) {
+                    console.error("Error fetching data:", error);
+                    this.innerHTML = `Error fetching data! ${error}`;
+                }
+
+                async reloadData() {
+                    const url = this.getAttribute("url");
+                    if(!url) return;
+
+                    this.setLoading();
+
+                    const response = await fetch(`/api/islands/${url}`);
+                    
+                    if (response.status === 401) {
+                        window.location.href = "/logout";
+                        return Promise.reject(new Error("Unauthorized"));
+                    }
+                    else if(response.status == 404) {
+                        this.setError("That is not an island you idiot! HTTP 404 of course");
+                    }
+                    else if(!response.ok) {
+                        this.setError(`HTTP error! Status: ${response.status}`);
+                    }
+                    else {
+                        this.setData(await response.text());    
+                    }
+                }
+            }
+
+            customElements.define("st-isl", Island);
+        </script>
         {% block extra_headers %}{% endblock %}
     </head>
     <body>
@@ -64,58 +129,5 @@
                 {% block content %}{% endblock %}
             </div>
         </main>
-
-        <script>
-            function islandParser(island, island_url) {
-                if (!island_url) return;
-
-                island.innerHTML = '<div id="island-loading"><span>Data ophalen...</span><img src="/loading.gif"></div>';
-
-                fetch(`/api/islands/${island_url}`)
-                    .then(response => {
-                        if (response.status === 401) {
-                            window.location.href = "/logout";
-                            return Promise.reject(new Error("Unauthorized"));
-                        }
-                        if (!response.ok) {
-                            if (response.status === 404 ) {
-                                throw new Error("That is not a island you idiot! HTTP 404 of course");
-                            } else { 
-                                throw new Error(`HTTP error! Status: ${response.status}`);
-                            }
-                        }
-                        return response.text();
-                    })
-                    
-                    .then(data => {
-                        if (data) {
-                            island.innerHTML = data;
-                            
-                            // Find scripts, and make them actualy excecutable by just appending them to the body
-                            island.querySelectorAll("script").forEach(oldScript => {
-                                const newScript = document.createElement("script");
-                                newScript.textContent = oldScript.textContent; // Inline scripts, so just JS inside the HTML
-                                
-                                if (oldScript.src) newScript.src = oldScript.src; // Scripts with a src
-
-                                if (oldScript.async) newScript.async = oldScript.async; // Scripts with a async
-
-                                document.body.appendChild(newScript);
-                                oldScript.remove(); // Remove the old script to prevent duplication
-                            });
-                        }
-                    })
-
-                    .catch(error => {
-                        console.error("Error fetching data:", error);
-                        island.innerHTML = `Error fetching data! ${error}`;
-                    });
-            };
-
-            document.querySelectorAll(".island").forEach(island => {
-                let island_url = island.getAttribute("island-url");
-                islandParser(island, island_url)
-            });
-        </script>
     </body>
 </html>
