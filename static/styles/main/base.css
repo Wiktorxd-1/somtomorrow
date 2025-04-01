@@ -70,6 +70,7 @@ main {
     position: fixed;
     width: 60px;
     height: 100%;
+    z-index: 100;
 }
 
 #menu {
@@ -127,6 +128,7 @@ main {
     height: 60px;
     padding: 10px;
     /* background: var(--black); */
+    /* border-bottom: 1px solid #314049; */
 }
 
 #topbar h1 {
