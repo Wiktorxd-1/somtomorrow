@@ -6,7 +6,7 @@
         <title>{% block title %}{% endblock %} - Somtomorrow</title>
         <link rel="stylesheet" href="{{ url_for('static', filename='styles/main/base.css') }}">
         <script src="https://kit.fontawesome.com/4a94c21782.js" crossorigin="anonymous"></script>
-        <script>
+        <script id="island-component">
             class Island extends HTMLElement {
                 static observedAttributes = ["url"];
 
@@ -25,18 +25,21 @@
 
                 setData(data) {
                     this.innerHTML = data;
+
+                    let oldscriptlist = document.querySelectorAll("script:not(#island-component)");
                 
                     // Find scripts, and make them actualy excecutable by just appending them to the body
-                    this.querySelectorAll("script").forEach(oldScript => {
-                        const newScript = document.createElement("script");
+                    oldscriptlist.forEach(oldScript => {
+                        let newScript = document.createElement("script");
                         newScript.textContent = oldScript.textContent; // Inline scripts, so just JS inside the HTML
                     
                         if (oldScript.src) newScript.src = oldScript.src; // Scripts with a src
 
                         if (oldScript.async) newScript.async = oldScript.async; // Scripts with a async
+                        
+                        oldScript.remove();
 
                         document.body.appendChild(newScript);
-                        oldScript.remove(); // Remove the old script to prevent duplication
                     });
                 }
 

@@ -119,7 +119,7 @@ img.icon {
     display: flex;
     flex-direction: column;
     gap: 5px;
-    margin: 15px 0 5px 10px;
+    margin: 5px 10px;
     font-size: .9em;
 }
 

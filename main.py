@@ -687,7 +687,8 @@ def planner_island():
     for homework in api_data:
         dt = datetime.strptime(homework["datumTijd"], "%Y-%m-%dT%H:%M:%S.%f%z")
         subject_name = homework["lesgroep"]["vak"]["naam"]
-        homework["subject"] = capit(subject_name).replace("e taal en literatuur", "")
+        homework["subject_long"] = capit(subject_name).replace("e taal en literatuur", "")
+        homework["subject_short"] = homework["lesgroep"]["vak"]["afkorting"]
 
         if homework["studiewijzerItem"].get("onderwerp"):
             homework["title"] = max_len(remove_html(homework["studiewijzerItem"]["onderwerp"]), 35)
@@ -697,6 +698,14 @@ def planner_island():
         homework["type"] = "inleveropdracht" if homework["studiewijzerItem"]["inleverperiodes"] else homework["studiewijzerItem"].get("huiswerkType", "undefined").lower()
         planner_data[dt.weekday()].append(homework)
 
+        if homework["additionalObjects"].get("swigemaaktVinkjes"):
+            if homework["additionalObjects"]["swigemaaktVinkjes"].get("items"):
+                homework["is_finished"] = homework["additionalObjects"]["swigemaaktVinkjes"]["items"][0]["gemaakt"]
+                homework["id"] = homework["additionalObjects"]["swigemaaktVinkjes"]["items"][0]["swiToekenningId"]
+            else:
+                homework["is_finished"] = False
+        else:
+            homework["is_finished"] = False
         
 
     year = int(year)
