@@ -133,8 +133,8 @@ main {
 }
 
 #topbar h1 {
-    font-size: 1.2em;
-    margin-left: 1em;
+    font-size: 1.7em;
+    margin-left: 10px;
 }
 
 #userinfocontainer {
@@ -253,4 +253,3 @@ du-island[loading] > *:not(#island-loading) {
 #content {
     padding: 20px;
 }
-
