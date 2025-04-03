@@ -40,7 +40,7 @@
             let checkBoxId = checkBox.getAttribute("id");
             let isFinished = checkBox.classList.contains("finished");
 
-            checkBox.innerHTML = '<img src="/api/loading.gif?speed=quick">';
+            checkBox.innerHTML = '<img src="/api/loading.gif?speed=350">';
 
             let success = await updatePlannerItem(checkBoxId, isFinished ? "unfinish" : "finish");
 
