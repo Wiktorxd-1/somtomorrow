@@ -41,36 +41,29 @@
                 setData(data) {
                     this.setFinished();
 
-                    this.querySelectorAll("script").forEach(script => {
-                        script.remove();
-                        console.log("Removed old script:", script);
-                    });
+                    this.querySelectorAll("script").forEach(script => script.remove());
 
                     this.innerHTML = data;
 
-                
-                    let oldscriptlist = this.querySelectorAll("script");
-                    
-                    // Find scripts, and make them actualy excecutable by just appending them to the body
-                    oldscriptlist.forEach(oldScript => {
-                        let newScript = document.createElement("script");
-                        newScript.textContent = oldScript.textContent; // Inline scripts, so just JS inside the HTML
-                    
-                        if (oldScript.src) newScript.src = oldScript.src; // Scripts with a src
-                        if (oldScript.async) newScript.async = oldScript.async; // Scripts with a async
-                        
-                        oldScript.remove();
+                    const scripts = [...this.querySelectorAll("script")];
 
-                        newScript.classList.add("exec");
+                    scripts.forEach((oldScript) => {
+                        let newScript = document.createElement("script");
+
+                        if (oldScript.src) {
+                            // If script has a src, load it dynamically
+                            newScript.src = oldScript.src;
+                            newScript.async = oldScript.async;
+                            newScript.defer = oldScript.defer;
+                        } else {
+                            // Inline script: wrap in a function to avoid redeclaration issues
+                            newScript.textContent = `(function() { ${oldScript.textContent} })();`;
+                        }
+
+                        oldScript.remove();
 
                         this.appendChild(newScript);
                     });
-
-                    this.querySelectorAll("script:not(.exec)").forEach(script => {
-                        script.remove();
-                        console.log("Removed thingy", script);
-                    });
-
                 }
 
                 setError(error) {
