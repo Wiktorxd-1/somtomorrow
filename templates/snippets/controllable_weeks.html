@@ -52,14 +52,14 @@
     weekBack.addEventListener("click", function () {
         [weekNum, year] = updateWeek(-1);
 
-        let island = document.querySelector('d-island');
+        let island = document.querySelector('du-island');
         island.setAttribute("url", `{{ api_url }}?w=${weekNum}&y=${year}`);
     });
 
     weekForward.addEventListener("click", function () {
         [weekNum, year] = updateWeek(1);
 
-        let island = document.querySelector('d-island');
+        let island = document.querySelector('du-island');
         island.setAttribute("url", `{{ api_url }}?w=${weekNum}&y=${year}`);
     });
 
@@ -70,7 +70,7 @@
         currentWeeknum.textContent = weekNum;
         currentYear.textContent = year;
 
-        let island = document.querySelector('d-island');
+        let island = document.querySelector('du-island');
         island.setAttribute("url", `{{ api_url }}?w=${weekNum}&y=${year}`);
     });
 </script>

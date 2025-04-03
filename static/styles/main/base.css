@@ -224,12 +224,12 @@ body:has(main .error-page.False) #sidebar, body:has(main .error-page) #topbar {
     display: none;
 }
 
-d-island {
+du-island {
     position: relative;
     display: block;
 }
 
-d-island[loading] > *:not(#island-loading) {
+du-island[loading] > *:not(#island-loading) {
     opacity: 0.3;
 }
 
