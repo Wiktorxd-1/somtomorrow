@@ -8,12 +8,18 @@
                 {% endfor %}
 
                 {% for appointment in day %}
-                    <div class="appointment" style="
+                    <div class="appointment {{ appointment.type }}" style="
                         grid-row-start: {{ appointment.rowStart }};
                         grid-row-end: {{ appointment.rowEnd }};
                         margin-left: {{ appointment.position }}%;
                         width: {{ appointment.width }}%">
-                        {{ g.capit(appointment.vak.naam) if appointment.vak else g.capit(appointment.titel) }}
+                        <span class="appo-icon">{{ appointment.icon | safe }}</span>
+                        <span class="appo-title">{{ appointment.title }}</span>
+                        <span class="appo-location">{{ appointment.locatie }}</span>
+                        <div class="appo-time-container">
+                            <span class="appo-time">{{ appointment.start_time }} - {{ appointment.end_time }}</span>
+                            <span class="appo-hours">{{ appointment.lesson_hours }}</span>
+                        </div>
                     </div>
                 {% endfor %}
             </div>

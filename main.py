@@ -11,6 +11,7 @@ import io
 import requests
 import pytz
 import locale
+import json
 
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
@@ -44,6 +45,22 @@ def remove_html(string):
 def max_len(string, max_length):
     return string if len(string) <= max_length else string[:max_length - 3] + "..."
     
+def test_save(data):
+    def replace_datetime(inputdata):
+        if isinstance(inputdata, dict):
+            return {key: replace_datetime(value) for key, value in inputdata.items()}
+        elif isinstance(inputdata, list):
+            return [replace_datetime(item) for item in inputdata]
+        elif isinstance(inputdata, tuple):
+            return tuple(replace_datetime(item) for item in inputdata)
+        elif isinstance(inputdata, set):
+            return {replace_datetime(item) for item in inputdata}
+        elif isinstance(inputdata, datetime):
+            return inputdata.timestamp()
+        else:
+            return inputdata
+    with open("temp.json", "w") as jf:
+        json.dump(replace_datetime(data), jf, indent=4)
 
 
 @app.before_request
@@ -567,7 +584,7 @@ def schedule_island():
         weeknum = next_week.isocalendar()[1]
         year = next_week.year
 
-    api_url = f"https://api.somtoday.nl/rest/v1/afspraakitems/{student_id}/jaar/{year}/week/{weeknum}"
+    api_url = f"https://api.somtoday.nl/rest/v1/afspraakitems/{student_id}/jaar/{year}/week/{weeknum}?additional=docentAfkortingen"
 
     api_headers = {
         "Authorization": f"Bearer {token}",
@@ -585,10 +602,23 @@ def schedule_island():
         dt_start = datetime.strptime(appointment["beginDatumTijd"], "%Y-%m-%dT%H:%M:%S")
         dt_end = datetime.strptime(appointment["eindDatumTijd"], "%Y-%m-%dT%H:%M:%S")
 
+        appointment["title"] = (capit(appointment["vak"]["naam"]).replace("e taal en literatuur", "") if len(appointment["vak"]["naam"].replace("e taal en literatuur", "")) < 20 else appointment["vak"]["afkorting"].upper()) if appointment.get("vak", {}).get("naam") else appointment["titel"]
+
+        appointment["icon"] = get_icon(appointment["vak"]["naam"] if appointment.get("vak", {}).get("naam") else appointment["titel"])
+
         appointment["dt_start"] = dt_start
         appointment["dt_end"] = dt_end
         appointment["rowStart"] = (dt_start.hour - 6) * 12 + round(dt_start.minute / 60 * 12) + 1
         appointment["rowEnd"] = (dt_end.hour - 6) * 12 + round(dt_end.minute / 60 * 12) + 1
+
+        if appointment.get("beginLesuur"):
+            if appointment.get("eindLesuur"):
+                appointment["lesson_hours"] = f"{appointment['beginLesuur']}e" if appointment["beginLesuur"] == appointment["eindLesuur"] else f"{appointment['beginLesuur']}e - {appointment['eindLesuur']}e"
+            else:
+                appointment["lesson_hours"] = f"{appointment['beginLesuur']}e"
+        appointment["start_time"] = dt_start.strftime("%H:%M")
+        appointment["end_time"] = dt_end.strftime("%H:%M")
+        appointment["type"] = appointment["afspraakItemType"].lower()
 
 
         schedule_data[dt_start.weekday()].append(appointment)

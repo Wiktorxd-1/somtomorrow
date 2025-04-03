@@ -13,15 +13,20 @@
 
 .dayheader {
     text-align: center;
+    padding: 5px 10px;
 }
 
 .dayheader.today {
-    color: var(--light-purple);
+    background: var(--purple);
+    border-radius: 15px;
+    color: white;
+    width: fit-content;
     font-weight: bolder;
+    align-self: center;
 }
 
 .homeworkitem {
-    border-width: 3px 7px;
+    border-width: 3px 10px;
     border-style: solid;
     padding: 10px;
     border-radius: 10px;
@@ -37,7 +42,7 @@
 }
 
 .homeworkitem:has(.homework-finished-container.finished) {
-    background: var(--green) !important;
+    background: var(--dark-green) !important;
 }
 
 .subject-name {
