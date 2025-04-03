@@ -224,8 +224,19 @@ body:has(main .error-page.False) #sidebar, body:has(main .error-page) #topbar {
     display: none;
 }
 
+d-island {
+    position: relative;
+    display: block;
+}
+
+d-island[loading] > *:not(#island-loading) {
+    opacity: 0.8;
+}
+
 #island-loading {
     display: flex;
+    position: absolute;
+    top: 2em;
     flex-direction: column;
     gap: 10px;
     align-items: center;

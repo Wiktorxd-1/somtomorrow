@@ -10,6 +10,12 @@
             class Island extends HTMLElement {
                 static observedAttributes = ["url"];
 
+                constructor() {
+                    super();
+                    this.loadedBefore = false;
+                    this.loadingNow = false;
+                }
+
                 connectedCallback() {
                     this.reloadData();
                 }
@@ -19,11 +25,21 @@
                 }
                 
                 setLoading() {
-                    this.innerHTML =
-                        '<div id="island-loading"><span>Data ophalen...</span><img src="/loading.gif"></div>';
+                    const loadingIndicator = '<div id="island-loading"><span>Data ophalen...</span><img src="/loading.gif"></div>';
+
+                    this.setAttribute("loading", "");
+                    this.loadingNow = true;
+                    this.innerHTML += loadingIndicator;          
+                }
+
+                setFinished() {
+                    this.removeAttribute("loading");
+                    this.loadingNow = false;
+                    this.loadedBefore = true;
                 }
 
                 setData(data) {
+                    this.setFinished();
                     this.innerHTML = data;
 
                     let oldscriptlist = document.querySelectorAll("script:not(#island-component)");
@@ -34,7 +50,6 @@
                         newScript.textContent = oldScript.textContent; // Inline scripts, so just JS inside the HTML
                     
                         if (oldScript.src) newScript.src = oldScript.src; // Scripts with a src
-
                         if (oldScript.async) newScript.async = oldScript.async; // Scripts with a async
                         
                         oldScript.remove();
@@ -44,13 +59,14 @@
                 }
 
                 setError(error) {
+                    this.setFinished();
                     console.error("Error fetching data:", error);
                     this.innerHTML = `Error fetching data! ${error}`;
                 }
 
                 async reloadData() {
                     const url = this.getAttribute("url");
-                    if(!url) return;
+                    if(this.loadingNow || !url) return;
 
                     this.setLoading();
 
