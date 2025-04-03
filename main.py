@@ -781,7 +781,7 @@ def finish_homework():
 
 # Identicons API
 
-@app.route("/identicon/<username>")
+@app.route("/api/identicon/<username>")
 @excluded
 def identicon(username):
     if username == "robinboers":
@@ -793,13 +793,20 @@ def identicon(username):
 
 # Loading icon API
 
-@app.route("/loading.gif")
+@app.route("/api/loading.gif")
 @excluded
 def generate_gif():
+    speed = request.args.get("speed")
+
+    if speed == "quick":
+        duration = 350
+    else:
+        duration = 670
+
     images = [Image.open(io.BytesIO(render_identicon("".join(random.choices(string.ascii_letters + string.digits, k=random.randint(5, 20))), (0, 0, 0, 0)))) for _ in range(20)]
 
     gif_bytes = io.BytesIO()
-    images[0].save(gif_bytes, format="GIF", save_all=True, append_images=images[1:], duration=700, loop=0, disposal=2)
+    images[0].save(gif_bytes, format="GIF", save_all=True, append_images=images[1:], duration=duration, loop=0, disposal=2)
     gif_bytes.seek(0)
 
     return Response(gif_bytes.read(), mimetype="image/gif")

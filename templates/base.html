@@ -25,7 +25,7 @@
                 }
                 
                 setLoading() {
-                    const loadingIndicator = '<div id="island-loading"><span>Data ophalen...</span><img src="/loading.gif"></div>';
+                    const loadingIndicator = '<div id="island-loading"><span>Data ophalen...</span><img src="/api/loading.gif?speed=quick"></div>';
 
                     this.setAttribute("loading", "");
                     this.loadingNow = true;
@@ -145,7 +145,7 @@
             <div id="topbar">
                 <h1>{{ self.title() }}</h1>
                 <div id="profilecontainer">
-                    <img id="avatar" src="/identicon/{{ g.identicon_name }}">
+                    <img id="avatar" src="/api/identicon/{{ g.identicon_name }}">
                     <div id="userinfocontainer">
                         <span id="userinfoname">{{ g.first_name }} {{ g.last_name }}</span>
                         <span id="userinfoschoolclass">{{ g.school_name }} • {{ g.main_class }}</span>
