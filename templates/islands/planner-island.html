@@ -1,16 +1,17 @@
 <div id="weekcontainer">
-    {% for day in planner_data %}
+    {% for day, day_name, current_day_class in zipped_data %}
         <div class="daycontainer">
-            <div class="dayheader">{{ dayname[loop.index0] }}</div>
+            <div class="dayheader{% if current_day_class %} today{% endif %}">{{ day_name }}</div>
             {% for homework in day %}
                 <div class="homeworkitem {{ homework.type }}">
                     <span class="subject-icon">{{ homework.icon | safe }}</span>
                     <span class="subject-name" data-subject-full="{{ homework.subject_long }}" data-subject-short="{{ homework.subject_short }}">{{ homework.subject_long }}</span>
                     <span class="homework-title">{{ homework.title }}</span>
-                    <div class="homework-finished-container{{ ' true' if homework.is_finished else ' false' }}" id="{{ homework.id }}">
-                        <i class="fa-solid fa-check"></i>
+                    <div class="homework-finished-container{{ ' finished' if homework.is_finished else ' unfinised' }}" id="{{ homework.id }}">
+                        {% if homework.is_finished %} 
+                            <i class="fa-solid fa-check"></i>
+                        {% endif %}
                     </div>
-
                 </div>
             {% endfor %}
         </div>
@@ -19,30 +20,43 @@
 
 <script>
     function updatePlannerItem(id, state) {
-        fetch(`/api/finish_homework/${id}?action=${state}`, {
+        return fetch(`/api/finish_homework?id=${id}&action=${state}`, {
             method: "PUT",
         })
-
-            .then(response => {
-                // Add error things
-                return response.status
-            })
+        .then(response => {
+            if (response.status === 200) return true;
+            else return false;
+        })
+        .catch(error => {
+            console.error("Error updating planner item:", error);
+            return false;
+        });
     }
 
     const checkBoxes = document.querySelectorAll(".homework-finished-container");
     
     checkBoxes.forEach(checkBox => {
-        checkBox.addEventListener("click", function () {  
+        checkBox.addEventListener("click", async function () {
             let checkBoxId = checkBox.getAttribute("id");
-            if (checkBox.classList.contains("true")) {
-                updatePlannerItem(checkBoxId, "unfinish")
-                checkBox.classList.remove("true");
-                checkBox.classList.add("false");
+            let isFinished = checkBox.classList.contains("finished");
+
+            checkBox.innerHTML = '<img src="/api/loading.gif?speed=quick">';
+
+            let success = await updatePlannerItem(checkBoxId, isFinished ? "unfinish" : "finish");
+
+            if (success) {
+                checkBox.classList.toggle("finished");
+                checkBox.classList.toggle("unfinished");
+
+                if (checkBox.classList.contains("finished")) {
+                    checkBox.innerHTML = '<i class="fa-solid fa-check"></i>';
+                } else {
+                    checkBox.innerHTML = "";
+                }
             } else {
-                updatePlannerItem(checkBoxId, "finish")
-                checkBox.classList.remove("false");
-                checkBox.classList.add("true");
+                checkBox.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i>';
+                setTimeout(() => checkBox.innerHTML = "", 1500);
             }
         });
-    })
+    });
 </script>

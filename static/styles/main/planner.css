@@ -15,6 +15,11 @@
     text-align: center;
 }
 
+.dayheader.today {
+    color: var(--light-purple);
+    font-weight: bolder;
+}
+
 .homeworkitem {
     border-width: 3px 7px;
     border-style: solid;
@@ -31,7 +36,7 @@
     justify-content: center;
 }
 
-.homeworkitem:has(.homework-finished-container.true){
+.homeworkitem:has(.homework-finished-container.finished) {
     background: var(--green) !important;
 }
 
@@ -62,7 +67,7 @@
 
 .homework-finished-container {
     grid-area: 1 / 3 / 3 / 4;
-    border: 1px solid;
+    border: 2px solid;
     border-radius: 10px;
     display: flex;
     align-items: center;
@@ -70,6 +75,16 @@
     height: 30px;
     width: 30px;
     font-size: 15px;
+}
+
+.homework-finished-container:hover {
+    background: var(--gray);
+    opacity: .3;
+}
+
+.homework-finished-container img {
+    height: 1em;
+    width: 1em;
 }
 
 .homeworkitem.huiswerk {
@@ -90,8 +105,4 @@
 .homeworkitem.grote_toets  {
     border-color: var(--red);
     background: var(--red);
-}
-
-.homework-finished-container.false i {
-    display: none;
 }

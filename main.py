@@ -726,14 +726,26 @@ def planner_island():
         friday.strftime("%d %B")
     ]
 
-    return render_template("islands/planner-island.html", planner_data = planner_data, dayname = dayname)
+    today = datetime.today().date()
+    current_day_class = []
+
+    for day in [monday, tuesday, wednesday, thursday, friday]:
+        if day == today:
+            current_day_class.append("current-day")
+        else:
+            current_day_class.append("")
+
+    zipped_data = zip(planner_data, dayname, current_day_class)
+
+    return render_template("islands/planner-island.html", zipped_data = zipped_data)
 
 
-@app.route("/api/finish_homework/<id>", methods=["PUT"])
-def finish_homework(id):
+@app.route("/api/finish_homework", methods=["PUT"])
+def finish_homework():
     token = session["token"]
     student_id = session["student_id"]
 
+    id = request.args.get("id")
     finish_status = request.args.get("action")
 
     api_url = "https://api.somtoday.nl/rest/v1/swigemaakt/cou"
@@ -759,9 +771,11 @@ def finish_homework(id):
 
     response = requests.put(api_url, headers = api_headers, json = api_data)
 
-    response.raise_for_status()
 
-    return "Succes"
+    if response.status_code == requests.codes.ok:
+        return "ok", 200
+    else:
+        return "error", 500
 
 
 
