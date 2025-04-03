@@ -593,23 +593,7 @@ def schedule_island():
 
         schedule_data[dt_start.weekday()].append(appointment)
 
-    year = int(year)
-    weeknum = int(weeknum)
-
-    monday = datetime.strptime(f'{year}-W{weeknum-1}-1', "%Y-W%W-%w").date()
-    tuesday = monday + timedelta(days=1)
-    wednesday = monday + timedelta(days=2)
-    thursday = monday + timedelta(days=3)
-    friday = monday + timedelta(days=4)
-
-    dayname = [
-        monday.strftime("%d %B"),
-        tuesday.strftime("%d %B"),
-        wednesday.strftime("%d %B"),
-        thursday.strftime("%d %B"),
-        friday.strftime("%d %B")
-    ]
-
+    
     for daydata in schedule_data:
         daydata = sorted(daydata, key=lambda x: x["dt_start"])
 
@@ -627,7 +611,42 @@ def schedule_island():
                 appt["position"] = index * (100 / count)
                 appt["width"] = 100 / count
 
-    return render_template("islands/schedule-island.html", schedule_data = schedule_data, dayname = dayname)
+    year = int(year)
+    weeknum = int(weeknum)
+
+    monday = datetime.strptime(f'{year}-W{weeknum-1}-1', "%Y-W%W-%w").date()
+    tuesday = monday + timedelta(days=1)
+    wednesday = monday + timedelta(days=2)
+    thursday = monday + timedelta(days=3)
+    friday = monday + timedelta(days=4)
+
+    dayname = [
+        monday.strftime("%d %B"),
+        tuesday.strftime("%d %B"),
+        wednesday.strftime("%d %B"),
+        thursday.strftime("%d %B"),
+        friday.strftime("%d %B")
+    ]
+
+    today = datetime.today().date()
+    current_day_class = []
+
+    for day in [monday, tuesday, wednesday, thursday, friday]:
+        if day == today:
+            current_day_class.append("today")
+        else:
+            current_day_class.append("")
+
+    zipped_data = zip(schedule_data, dayname, current_day_class)
+
+    
+    days_to_include = request.args.get("days")
+
+    if days_to_include == "today":
+        today_index = current_day_class.index("today")
+        zipped_data = [list(zipped_data)[today_index]]
+
+    return render_template("islands/schedule-island.html", zipped_data = zipped_data)
 
 @app.route("/planner")
 @use_session_data
@@ -731,11 +750,19 @@ def planner_island():
 
     for day in [monday, tuesday, wednesday, thursday, friday]:
         if day == today:
-            current_day_class.append("current-day")
+            current_day_class.append("today")
         else:
             current_day_class.append("")
 
     zipped_data = zip(planner_data, dayname, current_day_class)
+
+    
+    days_to_include = request.args.get("days")
+
+    if days_to_include == "today":
+        today_index = current_day_class.index("today")
+        zipped_data = [list(zipped_data)[today_index]]
+
 
     return render_template("islands/planner-island.html", zipped_data = zipped_data)
 

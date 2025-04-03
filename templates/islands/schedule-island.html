@@ -1,22 +1,22 @@
-<div id="weekcontainer">
-  {% for day in schedule_data %}
-    <div class="daycontainer">
-      <div class="dayheader">{{ dayname[loop.index0] }}</div>
-      <div class="dayitems">
-        {% for i in range(18) %}
-          <div class="line"></div>
-        {% endfor %}
+<div class="weekcontainer">
+    {% for day, day_name, current_day_class in zipped_data %}
+        <div class="daycontainer">
+            <div class="dayheader{% if current_day_class %} today{% endif %}">{{ day_name }}</div>
+                <div class="dayitems">
+                {% for i in range(18) %}
+                    <div class="line"></div>
+                {% endfor %}
 
-        {% for appointment in day %}
-          <div class="appointment" style="
-            grid-row-start: {{ appointment.rowStart }};
-            grid-row-end: {{ appointment.rowEnd }};
-            margin-left: {{ appointment.position }}%;
-            width: {{ appointment.width }}%">
-            {{ g.capit(appointment.vak.naam) if appointment.vak else g.capit(appointment.titel) }}
-          </div>
-        {% endfor %}
-      </div>
-    </div>
-  {% endfor %}
+                {% for appointment in day %}
+                    <div class="appointment" style="
+                        grid-row-start: {{ appointment.rowStart }};
+                        grid-row-end: {{ appointment.rowEnd }};
+                        margin-left: {{ appointment.position }}%;
+                        width: {{ appointment.width }}%">
+                        {{ g.capit(appointment.vak.naam) if appointment.vak else g.capit(appointment.titel) }}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    {% endfor %}
 </div>

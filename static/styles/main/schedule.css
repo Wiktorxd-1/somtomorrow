@@ -1,4 +1,4 @@
-#weekcontainer {
+.weekcontainer {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     column-gap: 20px;
@@ -13,6 +13,11 @@
 
 .dayheader {
     text-align: center;
+}
+
+.dayheader.today {
+    color: var(--light-purple);
+    font-weight: bolder;
 }
 
 .dayitems {

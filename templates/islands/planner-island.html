@@ -1,4 +1,4 @@
-<div id="weekcontainer">
+<div class="weekcontainer">
     {% for day, day_name, current_day_class in zipped_data %}
         <div class="daycontainer">
             <div class="dayheader{% if current_day_class %} today{% endif %}">{{ day_name }}</div>

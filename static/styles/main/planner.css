@@ -1,4 +1,4 @@
-#weekcontainer {
+.weekcontainer {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     column-gap: 20px;
@@ -62,7 +62,7 @@
 }
 
 .homework-title {
-     grid-area: 2 / 2 / 3 / 3;
+    grid-area: 2 / 2 / 3 / 3;
 }
 
 .homework-finished-container {
