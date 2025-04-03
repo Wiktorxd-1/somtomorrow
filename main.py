@@ -60,7 +60,7 @@ def check_login():
         return  # Static files are also excluded
 
     if not logged_in():
-        if "island" in request.endpoint:
+        if "api" in request.endpoint:
             return "Token not valid", 401
         return redirect(url_for("logout"))
 
@@ -729,7 +729,7 @@ def planner_island():
     return render_template("islands/planner-island.html", planner_data = planner_data, dayname = dayname)
 
 
-@app.route("/api/finish_homework/<id>")
+@app.route("/api/finish_homework/<id>", methods=["PUT"])
 def finish_homework(id):
     token = session["token"]
     student_id = session["student_id"]

@@ -31,7 +31,7 @@
     justify-content: center;
 }
 
-.homeworkitem.finished {
+.homeworkitem:has(.homework-finished-container.true){
     background: var(--green) !important;
 }
 

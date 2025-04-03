@@ -3,7 +3,7 @@
         <div class="daycontainer">
             <div class="dayheader">{{ dayname[loop.index0] }}</div>
             {% for homework in day %}
-                <div class="homeworkitem{{ ' finished' if homework.is_finished else ' not-finished' }} {{ homework.type }}">
+                <div class="homeworkitem {{ homework.type }}">
                     <span class="subject-icon">{{ homework.icon | safe }}</span>
                     <span class="subject-name" data-subject-full="{{ homework.subject_long }}" data-subject-short="{{ homework.subject_short }}">{{ homework.subject_long }}</span>
                     <span class="homework-title">{{ homework.title }}</span>
@@ -18,18 +18,31 @@
 </div>
 
 <script>
+    function updatePlannerItem(id, state) {
+        fetch(`/api/finish_homework/${id}?action=${state}`, {
+            method: "PUT",
+        })
+
+            .then(response => {
+                // Add error things
+                return response.status
+            })
+    }
+
     const checkBoxes = document.querySelectorAll(".homework-finished-container");
     
     checkBoxes.forEach(checkBox => {
         checkBox.addEventListener("click", function () {  
+            let checkBoxId = checkBox.getAttribute("id");
             if (checkBox.classList.contains("true")) {
+                updatePlannerItem(checkBoxId, "unfinish")
                 checkBox.classList.remove("true");
                 checkBox.classList.add("false");
             } else {
+                updatePlannerItem(checkBoxId, "finish")
                 checkBox.classList.remove("false");
                 checkBox.classList.add("true");
             }
         });
     })
-    
 </script>
