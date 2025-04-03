@@ -590,6 +590,7 @@ def schedule_island():
         appointment["rowStart"] = (dt_start.hour - 6) * 12 + round(dt_start.minute / 60 * 12) + 1
         appointment["rowEnd"] = (dt_end.hour - 6) * 12 + round(dt_end.minute / 60 * 12) + 1
 
+
         schedule_data[dt_start.weekday()].append(appointment)
 
     year = int(year)
