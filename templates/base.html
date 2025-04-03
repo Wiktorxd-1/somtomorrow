@@ -42,7 +42,7 @@
                     this.setFinished();
                     this.innerHTML = data;
 
-                    let oldscriptlist = document.querySelectorAll("script:not(#island-component)");
+                    let oldscriptlist = this.querySelectorAll("script");
                 
                     // Find scripts, and make them actualy excecutable by just appending them to the body
                     oldscriptlist.forEach(oldScript => {
@@ -54,7 +54,7 @@
                         
                         oldScript.remove();
 
-                        document.body.appendChild(newScript);
+                        this.appendChild(newScript);
                     });
                 }
 
