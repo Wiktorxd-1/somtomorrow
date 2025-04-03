@@ -104,6 +104,12 @@
                     method: "POST",
                     body: formData
                 })
+                    .then(response => {
+                        if(response.status > 300) {
+                            throw "Authentication server returned an internal error."
+                        } else return response;
+                    })
+
                     .then(response => response.json())
 
                     .then(data => {
