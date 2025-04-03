@@ -40,10 +40,17 @@
 
                 setData(data) {
                     this.setFinished();
+
+                    this.querySelectorAll("script").forEach(script => {
+                        script.remove();
+                        console.log("Removed old script:", script);
+                    });
+
                     this.innerHTML = data;
 
-                    let oldscriptlist = this.querySelectorAll("script");
                 
+                    let oldscriptlist = this.querySelectorAll("script");
+                    
                     // Find scripts, and make them actualy excecutable by just appending them to the body
                     oldscriptlist.forEach(oldScript => {
                         let newScript = document.createElement("script");
@@ -54,8 +61,16 @@
                         
                         oldScript.remove();
 
+                        newScript.classList.add("exec");
+
                         this.appendChild(newScript);
                     });
+
+                    this.querySelectorAll("script:not(.exec)").forEach(script => {
+                        script.remove();
+                        console.log("Removed thingy", script);
+                    });
+
                 }
 
                 setError(error) {
