@@ -8,6 +8,7 @@
                     <span class="subject-name" data-subject-full="{{ homework.subject_long }}" data-subject-short="{{ homework.subject_short }}">{{ homework.subject_long }}</span>
                     <span class="homework-title">{{ homework.title }}</span>
                     <div class="homework-finished-container{{ ' finished' if homework.is_finished else ' unfinised' }}" id="{{ homework.id }}">
+                        <!-- For homework that is finished on load -->
                         {% if homework.is_finished %} 
                             <i class="fa-solid fa-check"></i>
                         {% endif %}

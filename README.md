@@ -40,8 +40,8 @@ Yeah it's a lot...
 #### Dashboard
 
 - [x] Latest grades
-- [ ] Future homework
-- [ ] Schedule of current day
+- [x] Future homework
+- [x] Schedule of current day
 
 #### Grades
 
@@ -61,10 +61,10 @@ Yeah it's a lot...
 
 #### Planner
 
-- [ ] Add homework made or not
+- [x] Add homework made or not
 - [ ] Add popup with more info
-- [ ] Add tests and *inleveropdrachten*
-- [ ] Just better layout
+- [x] Add tests and *inleveropdrachten*
+- [x] Just better layout
 
 #### Schedule
 

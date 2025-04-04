@@ -27,25 +27,19 @@
     <h1 id="page-title">Welkom, {{ g.first_name }}!</h1>
 
     <div id="tile-container">
-        <div class="dashboard-tile">
-            <div class="tile">
-                <a class="tile-title" href="/cijfers/toetscijfers">Laatste cijfers</a>
-                <du-island url="grades/testgrades?max=5" />
-            </div>
+        <div class="tile">
+            <a class="tile-title" href="/cijfers/toetscijfers">Laatste cijfers</a>
+            <du-island url="grades/testgrades?max=5" />
         </div>
 
-        <div class="dashboard-tile">
-            <div class="tile">
-                <a class="tile-title" href="/planner">Planner</a>
-                <du-island url="planner?days=today" />
-            </div>
+        <div class="tile">
+            <a class="tile-title" href="/planner">Planner</a>
+            <du-island url="planner?days=today" />
         </div>
 
-        <div class="dashboard-tile">
-            <div class="tile">
-                <a class="tile-title" href="/rooster">Rooster</a>
-                <du-island url="schedule?days=today" />
-            </div>
+        <div class="tile">
+            <a class="tile-title" href="/rooster">Rooster</a>
+            <du-island url="schedule?days=today" />
         </div>
     </div>  
 {% endblock %}
