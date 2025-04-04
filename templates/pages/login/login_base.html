@@ -5,10 +5,11 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Somtomorrow</title>
         <link rel="stylesheet" href="{{ url_for('static', filename='styles/other/login.css') }}">
+        <link rel="icon" type="image/x-icon" href="/static/images/favs/fav.ico">     
     </head>
     <body>
         <div id="mainlogin" class="hide-on-load">
-            <h1>Inloggen bij Somtomorrow</h1>
+            <h1>Somtomorrow</h1>
 
             <h2>Inloggen met je Somtoday-account</h2>
 
@@ -41,8 +42,8 @@
 
         <div id="footer">
             <p>A <a href="https://dupunkto.org">{du}punkto</a> project. Made with <a href="https://github.com/pallets/flask" target="_blank">Flask</a> and <a href="https://github.com/pallets/jinja" target="_blank">Jinja</a>, hosted at <a href="https://eu.pythonanywhere.com/" target="_blank">PythonAnwyhere</a>.</p>
-            <p>Version from commit <a href="https://git.dupunkto.org/~dupunkto/somtomorrow/commit/{{ latest_commit_hash_long }}">{{ latest_commit_hash }}</a> (commited on {{ latest_commit_date }} by <a href="mailto:{{ latest_commit_author_email }}">{{ latest_commit_author_name }}</a>).</p>
-            <p>Deployed on {{ latest_deploy_date }}.</p>
+            <p>Version from commit <a href="https://git.dupunkto.org/~dupunkto/somtomorrow/commit/{{ latest_commit_hash_long }}">{{ latest_commit_hash }}</a> (commited on {{ latest_commit_date }} (UTC) by <a href="mailto:{{ latest_commit_author_email }}">{{ latest_commit_author_name }}</a>).</p>
+            <p>Deployed on {{ latest_deploy_date }} (UTC).</p>
         </div>
     </body>
 </html>

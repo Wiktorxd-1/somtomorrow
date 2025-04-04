@@ -62,7 +62,7 @@
 .appointment {
     color: white;
     border-radius: 10px;
-    border: 1px solid var(--gray);
+    border: 1px solid #666;
     background: var(--back);
     padding: 5px 10px;
     z-index: 30;

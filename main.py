@@ -329,7 +329,7 @@ def index():
 @app.route("/favicon")
 @excluded
 def favicon():
-    return send_from_directory("static", "favs/fav.ico", mimetype="image/vnd.microsoft.icon")
+    return send_from_directory("static", "images/favs/fav.ico", mimetype="image/vnd.microsoft.icon")
 
 
 @app.route("/.well-known/security.txt")
