@@ -1,3 +1,4 @@
+from datetime import datetime
 import os
 import re
 import subprocess
@@ -51,3 +52,6 @@ for root, dirs, files in os.walk("."):
 
 subprocess.run(["touch", "/var/www/som_dupunkto_org_wsgi.py"], check=True)
 print("Redeployed page")
+
+with open("last_deploy.txt", "w") as file:
+    file.write(datetime.now().strftime("%d-%m-%Y at %H:%M:%S"))

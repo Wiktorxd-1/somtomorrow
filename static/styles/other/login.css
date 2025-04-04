@@ -115,7 +115,7 @@ form #loginbutton:hover,
     left: 40px;
 }
 
-#imgcredit {
+#footer {
     position: absolute;
     bottom: 10px;
     right: 10px;
@@ -123,7 +123,7 @@ form #loginbutton:hover,
     font-size: .8em;
 }
 
-#imgcredit a {
+#footer a {
     color: inherit;
 }
 

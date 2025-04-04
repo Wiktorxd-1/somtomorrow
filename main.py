@@ -1,17 +1,22 @@
 from flask import Flask, render_template, request, redirect, url_for, session, flash, send_from_directory, g, send_file, jsonify, Response
+
 from PIL import Image
 from datetime import timedelta, datetime, timezone
 from functools import wraps
+
 from identicon import render_identicon
-import re
-import os
-import string
-import random
+
 import io
-import requests
-import pytz
-import locale
 import json
+import locale
+import os
+import pytz
+import random
+import re
+import requests
+import string
+import subprocess
+
 
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
@@ -39,7 +44,8 @@ def capit(string):
 
 def remove_html(string):
     if string:
-        return re.sub(re.compile('<.*?>'), '', string)
+        string_with_linebreaks = string.replace("<br>", " ")
+        return re.sub(re.compile("<.*?>"), "", string_with_linebreaks)
     return string
 
 def max_len(string, max_length):
@@ -61,6 +67,33 @@ def test_save(data):
             return inputdata
     with open("temp.json", "w") as jf:
         json.dump(replace_datetime(data), jf, indent=4)
+
+
+def get_commit_and_deploy_date():
+    with open("last_deploy.txt", "r") as f:
+        latest_deploy_date = f.read().strip()
+
+    latest_commit_hash = subprocess.check_output(["git", "log", "-1", "--pretty=format:%h"]).strip().decode()
+    latest_commit_hash_long = subprocess.check_output(["git", "log", "-1", "--pretty=format:%H"]).strip().decode()
+    latest_commit_timestamp = int(subprocess.check_output(["git", "log", "-1", "--pretty=format:%ct"]).strip())
+    latest_commit_date = datetime.fromtimestamp(latest_commit_timestamp).strftime("%d-%m-%Y at %H:%M:%S")
+
+    author_name = subprocess.check_output(["git", "log", "-1", "--pretty=format:%an"]).strip().decode()
+    author_email = subprocess.check_output(["git", "log", "-1", "--pretty=format:%ae"]).strip().decode()
+
+    comdepdata = {
+        "latest_deploy_date": latest_deploy_date,
+        "latest_commit_hash": latest_commit_hash,
+        "latest_commit_hash_long": latest_commit_hash_long,
+        "latest_commit_date": latest_commit_date,
+        "latest_commit_author_name": author_name,
+        "latest_commit_author_email": author_email
+    }
+
+    return comdepdata
+
+
+comdepdata = get_commit_and_deploy_date()
 
 
 @app.before_request
@@ -95,7 +128,7 @@ def use_session_data(f):
 @app.route("/login")
 @excluded
 def login():
-    return render_template("pages/login/login.html")
+    return render_template("pages/login/login.html", **comdepdata)
 
 
 @app.route("/login/get_token", methods=["POST"])
@@ -148,7 +181,7 @@ def login_own_token():
 
         return redirect(url_for("dashboard"))
 
-    return render_template("pages/login/login_own_token.html")
+    return render_template("pages/login/login_own_token.html", **comdepdata)
 
 
 def set_token_and_info(token):

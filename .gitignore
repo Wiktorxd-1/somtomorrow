@@ -13,3 +13,5 @@ data.json
 dev/
 
 test.py
+
+last_deploy.txt
