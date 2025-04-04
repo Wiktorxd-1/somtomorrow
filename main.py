@@ -24,7 +24,7 @@ app.permanent_session_lifetime = timedelta(hours=1)
 
 locale.setlocale(locale.LC_TIME, "nl_NL")
 
-
+BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 
 # Things with logging in and getting the tokens
 
@@ -70,7 +70,10 @@ def test_save(data):
 
 
 def get_commit_and_deploy_date():
-    with open("last_deploy.txt", "r") as f:
+
+    file_path = os.path.join(BASE_DIR, "data", "config.json")
+
+    with open(os.path.join(BASE_DIR, "last_deploy.txt"), "r") as f:
         latest_deploy_date = f.read().strip()
 
     latest_commit_hash = subprocess.check_output(["git", "log", "-1", "--pretty=format:%h"]).strip().decode()
