@@ -109,18 +109,11 @@ form #loginbutton:hover,
     font-weight: normal;
 }
 
-#secondarylogin {
-    position: absolute;
-    bottom: 5vh;
-    left: 40px;
-}
-
 #footer {
-    position: absolute;
-    bottom: 10px;
-    right: 10px;
+    text-align: right;
     font-weight: normal;
     font-size: .8em;
+    flex-grow: 1;
 }
 
 #footer a {
@@ -158,6 +151,22 @@ form #loginbutton:hover,
 
 #loading-container h2 {
     font-size: 1.5em;
+}
+
+#secondarylogin {
+    flex-grow: 1;
+}
+
+#footer-container {
+    position: absolute;
+    bottom: 20px;
+    left: 40px;
+    width: calc(100% - 80px);
+    margin-right: 40px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-end;
 }
 
 @keyframes fadeIn {
