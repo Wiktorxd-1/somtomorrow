@@ -730,7 +730,7 @@ def planner_island():
 
     api_data = api_data1["items"] + api_data2["items"]
 
-    api_data = clean_somdata(api_data)
+    #api_data = clean_somdata(api_data)
 
     planner_data = [[], [], [], [], []]
 
@@ -754,8 +754,10 @@ def planner_island():
                 homework["id"] = homework["additionalObjects"]["swigemaaktVinkjes"]["items"][0]["swiToekenningId"]
             else:
                 homework["is_finished"] = False
+                homework["id"] = homework["links"][0]["id"]
         else:
             homework["is_finished"] = False
+            homework["id"] = homework["links"][0]["id"]
         
 
     year = int(year)
