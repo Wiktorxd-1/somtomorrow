@@ -76,13 +76,13 @@ def get_commit_and_deploy_date():
     with open(os.path.join(BASE_DIR, "last_deploy.txt"), "r") as f:
         latest_deploy_date = f.read().strip()
 
-    latest_commit_hash = subprocess.check_output(["git", "log", "-1", "--pretty=format:%h"]).strip().decode()
-    latest_commit_hash_long = subprocess.check_output(["git", "log", "-1", "--pretty=format:%H"]).strip().decode()
-    latest_commit_timestamp = int(subprocess.check_output(["git", "log", "-1", "--pretty=format:%ct"]).strip())
+    latest_commit_hash = subprocess.check_output(["git", "log", "-1", "--pretty=format:%h"], cwd=BASE_DIR).strip().decode()
+    latest_commit_hash_long = subprocess.check_output(["git", "log", "-1", "--pretty=format:%H"], cwd=BASE_DIR).strip().decode()
+    latest_commit_timestamp = int(subprocess.check_output(["git", "log", "-1", "--pretty=format:%ct"], cwd=BASE_DIR).strip())
     latest_commit_date = datetime.fromtimestamp(latest_commit_timestamp).strftime("%d-%m-%Y at %H:%M:%S")
 
-    author_name = subprocess.check_output(["git", "log", "-1", "--pretty=format:%an"]).strip().decode()
-    author_email = subprocess.check_output(["git", "log", "-1", "--pretty=format:%ae"]).strip().decode()
+    author_name = subprocess.check_output(["git", "log", "-1", "--pretty=format:%an"], cwd=BASE_DIR).strip().decode()
+    author_email = subprocess.check_output(["git", "log", "-1", "--pretty=format:%ae"], cwd=BASE_DIR).strip().decode()
 
     comdepdata = {
         "latest_deploy_date": latest_deploy_date,
