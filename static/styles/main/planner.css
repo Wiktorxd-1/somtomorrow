@@ -26,7 +26,7 @@
 }
 
 .homeworkitem {
-    border-width: 3px 10px;
+    border-width: 4px;
     border-style: solid;
     padding: 10px;
     border-radius: 10px;
@@ -110,4 +110,9 @@
 .homeworkitem.grote_toets  {
     border-color: var(--red);
     background: var(--red);
+}
+
+.homeworkitem.lesstof  {
+    border-color: var(--dark-blue);
+    background: var(--dark-blue);
 }

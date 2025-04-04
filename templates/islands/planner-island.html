@@ -55,8 +55,23 @@
                     checkBox.innerHTML = "";
                 }
             } else {
-                checkBox.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i>';
-                setTimeout(() => checkBox.innerHTML = "", 1500);
+                // Try again
+
+                let success2 = await updatePlannerItem(checkBoxId, isFinished ? "unfinish" : "finish");
+
+                if (success2) {
+                    checkBox.classList.toggle("finished");
+                    checkBox.classList.toggle("unfinished");
+
+                    if (checkBox.classList.contains("finished")) {
+                        checkBox.innerHTML = '<i class="fa-solid fa-check"></i>';
+                    } else {
+                        checkBox.innerHTML = "";
+                    }
+                } else {
+                    checkBox.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i>';
+                    setTimeout(() => checkBox.innerHTML = "", 1500);
+                }
             }
         });
     });
