@@ -588,6 +588,53 @@ def testgrades_island():
 
     return render_template("islands/grades/testgrades-island.html", gradelist = api_data)
 
+
+
+
+def get_zipped_data_with_dates(year, weeknum, data):
+    year = int(year)
+    weeknum = int(weeknum)
+
+    monday = datetime.strptime(f'{year}-W{weeknum-1}-1', "%Y-W%W-%w").date()
+    tuesday = monday + timedelta(days=1)
+    wednesday = monday + timedelta(days=2)
+    thursday = monday + timedelta(days=3)
+    friday = monday + timedelta(days=4)
+
+    dayname = [
+        monday.strftime("%a %d %B"),
+        tuesday.strftime("%a %d %B"),
+        wednesday.strftime("%a %d %B"),
+        thursday.strftime("%a %d %B"),
+        friday.strftime("%a %d %B")
+    ]
+
+    today = datetime.today().date()
+    current_day_class = []
+
+    for day in [monday, tuesday, wednesday, thursday, friday]:
+        if day == today:
+            current_day_class.append("today")
+        else:
+            current_day_class.append("")
+
+    zipped_data = zip(data, dayname, current_day_class)
+
+    
+    days_to_include = request.args.get("days")
+
+    if days_to_include == "today":
+        if any(current_day_class):
+            today_index = current_day_class.index("today")
+            zipped_data = [list(zipped_data)[today_index]]
+        else:
+            zipped_data = [list(zipped_data)[0]]
+
+    return zipped_data
+
+
+
+
 @app.route("/rooster")
 @use_session_data
 def schedule_main():
@@ -677,40 +724,7 @@ def schedule_island():
                 appt["position"] = index * (100 / count)
                 appt["width"] = 100 / count
 
-    year = int(year)
-    weeknum = int(weeknum)
-
-    monday = datetime.strptime(f'{year}-W{weeknum-1}-1', "%Y-W%W-%w").date()
-    tuesday = monday + timedelta(days=1)
-    wednesday = monday + timedelta(days=2)
-    thursday = monday + timedelta(days=3)
-    friday = monday + timedelta(days=4)
-
-    dayname = [
-        monday.strftime("%d %B"),
-        tuesday.strftime("%d %B"),
-        wednesday.strftime("%d %B"),
-        thursday.strftime("%d %B"),
-        friday.strftime("%d %B")
-    ]
-
-    today = datetime.today().date()
-    current_day_class = []
-
-    for day in [monday, tuesday, wednesday, thursday, friday]:
-        if day == today:
-            current_day_class.append("today")
-        else:
-            current_day_class.append("")
-
-    zipped_data = zip(schedule_data, dayname, current_day_class)
-
-    
-    days_to_include = request.args.get("days")
-
-    if days_to_include == "today":
-        today_index = current_day_class.index("today")
-        zipped_data = [list(zipped_data)[today_index]]
+    zipped_data = get_zipped_data_with_dates(year, weeknum, schedule_data)
 
     return render_template("islands/schedule-island.html", zipped_data = zipped_data)
 
@@ -795,42 +809,8 @@ def planner_island():
             homework["is_finished"] = False
             homework["id"] = homework["links"][0]["id"]
         
-
-    year = int(year)
-    weeknum = int(weeknum)
-
-    monday = datetime.strptime(f'{year}-W{weeknum-1}-1', "%Y-W%W-%w").date()
-    tuesday = monday + timedelta(days=1)
-    wednesday = monday + timedelta(days=2)
-    thursday = monday + timedelta(days=3)
-    friday = monday + timedelta(days=4)
-
-    dayname = [
-        monday.strftime("%d %B"),
-        tuesday.strftime("%d %B"),
-        wednesday.strftime("%d %B"),
-        thursday.strftime("%d %B"),
-        friday.strftime("%d %B")
-    ]
-
-    today = datetime.today().date()
-    current_day_class = []
-
-    for day in [monday, tuesday, wednesday, thursday, friday]:
-        if day == today:
-            current_day_class.append("today")
-        else:
-            current_day_class.append("")
-
-    zipped_data = zip(planner_data, dayname, current_day_class)
-
     
-    days_to_include = request.args.get("days")
-
-    if days_to_include == "today":
-        today_index = current_day_class.index("today")
-        zipped_data = [list(zipped_data)[today_index]]
-
+    zipped_data = get_zipped_data_with_dates(year, weeknum, planner_data)
 
     return render_template("islands/planner-island.html", zipped_data = zipped_data)
 
