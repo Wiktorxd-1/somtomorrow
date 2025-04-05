@@ -16,8 +16,12 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='styles/main/schedule.css') }}">
 
     <style>
-        .weekcontainer {
-            grid-template-columns: auto;
+        .weekcontainer.planner {
+            grid-template-columns: 1fr;
+        }
+
+        .weekcontainer.schedule {
+            grid-template-columns: auto 1fr;
         }
     </style>
 {% endblock %}

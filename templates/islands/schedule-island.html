@@ -1,4 +1,27 @@
-<div class="weekcontainer">
+<div class="weekcontainer schedule">
+    <div class="daycontainer timescontainer">
+        <div class="dayheader"></div>
+        <div class="dayitems timeitems">
+            <div class="time">07:00</div>
+            <div class="time">08:00</div>
+            <div class="time">09:00</div>
+            <div class="time">10:00</div>
+            <div class="time">11:00</div>
+            <div class="time">12:00</div>
+            <div class="time">13:00</div>
+            <div class="time">14:00</div>
+            <div class="time">15:00</div>
+            <div class="time">16:00</div>
+            <div class="time">17:00</div>
+            <div class="time">18:00</div>
+            <div class="time">19:00</div>
+            <div class="time">20:00</div>
+            <div class="time">21:00</div>
+            <div class="time">22:00</div>
+            <div class="time">23:00</div>
+            <div class="time">00:00</div>
+        </div>
+    </div>
     {% for day, day_name, current_day_class in zipped_data %}
         <div class="daycontainer">
             <div class="dayheader{% if current_day_class %} today{% endif %}">{{ day_name }}</div>
@@ -8,11 +31,11 @@
                 {% endfor %}
 
                 {% for appointment in day %}
-                    <div class="appointment {{ appointment.type }}" style="
-                        grid-row-start: {{ appointment.rowStart }};
+                    <div class="appointment {{ appointment.type }}"
+                        style="grid-row-start: {{ appointment.rowStart }};
                         grid-row-end: {{ appointment.rowEnd }};
-                        margin-left: {{ appointment.position }}%;
-                        width: {{ appointment.width }}%">
+                        margin-left: {{ appointment.position }};
+                        width: {{ appointment.width }}">
                         <span class="appo-icon">{{ appointment.icon | safe }}</span>
                         <span class="appo-title">{{ appointment.title }}</span>
                         <span class="appo-location">{{ appointment.locatie }}</span>
