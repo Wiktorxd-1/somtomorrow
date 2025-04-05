@@ -9,7 +9,7 @@
     </head>
     <body>
         <div id="mainlogin" class="hide-on-load">
-            <h1>Somtomorrow</h1>
+            <h1>Somtomorrow<!-- start devb --> (development version)<!-- end devb --></h1>
 
             <h2>Inloggen met je Somtoday-account</h2>
 
@@ -47,5 +47,6 @@
                 <p>Deployed on {{ latest_deploy_date }} (UTC).</p>
             </div>
         </div>
+        {% block scripts %}{% endblock %}
     </body>
 </html>

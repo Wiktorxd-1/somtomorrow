@@ -108,13 +108,15 @@ def check_login():
 
     if view_func and getattr(view_func, "is_excluded", False):
         return  # Skip token check if endpoint is excluded
+    
+    excluded_pages = ["static", "favicon", "security", "robots"]
 
-    if any(keyword in request.endpoint for keyword in ["static", "favicon", "security", "robots"]):
-        return  # Static files are also excluded
+    if any(keyword in request.endpoint for keyword in excluded_pages) or any(keyword in request.url for keyword in excluded_pages):
+        return
 
     if not logged_in():
-        if "api" in request.endpoint:
-            return "Token not valid", 401
+        if "api" in request.url or "island" in request.url:
+            return "Token not valid", 401  # Sometimes you can't return the logout page
         return redirect(url_for("logout"))
 
 

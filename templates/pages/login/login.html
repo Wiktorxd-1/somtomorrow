@@ -19,7 +19,19 @@
 
         <input type="submit" id="loginbutton" value="Inloggen">
     </form>
-    
+{% endblock %}
+
+{% block othercontent %}
+    <div id="loading-container">
+        <h1>Data ophalen bij Somtoday...</h1>
+        <img src="/api/loading.gif">
+        <h2>Dit kan eventjes duren. Sorry!</h2>
+    </div>
+{% endblock %}     
+
+{% block otherlogin %}<a href="/login/own_token" class="otherloginmethod">Inloggen met een OAuth-token</a>{% endblock %}
+
+{% block scripts %}
     <script>
         const loginForm = document.getElementById("loginform");
         const messages = document.getElementById("messages");
@@ -53,7 +65,7 @@
                     element.style.display = "none";
                 }, 400);
             });
-    
+
             let formData = new FormData(this);
             
             fetch("/login/get_token", {
@@ -106,13 +118,3 @@
         });
     </script>
 {% endblock %}
-
-{% block othercontent %}
-    <div id="loading-container">
-        <h1>Data ophalen bij Somtoday...</h1>
-        <img src="/api/loading.gif">
-        <h2>Dit kan eventjes duren. Sorry!</h2>
-    </div>
-{% endblock %}     
-
-{% block otherlogin %}<a href="/login/own_token" class="otherloginmethod">Inloggen met een OAuth-token</a>{% endblock %}
