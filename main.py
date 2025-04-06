@@ -70,9 +70,6 @@ def test_save(data):
 
 
 def get_commit_and_deploy_date():
-
-    file_path = os.path.join(BASE_DIR, "data", "config.json")
-
     with open(os.path.join(BASE_DIR, "last_deploy.txt"), "r") as f:
         latest_deploy_date = f.read().strip()
 
@@ -853,6 +850,15 @@ def finish_homework():
         return "ok", 200
     else:
         return "error", 500
+
+
+
+@app.route("/info")
+@use_session_data
+def info():
+    return render_template("pages/main/info.html", **comdepdata)
+
+
 
 
 

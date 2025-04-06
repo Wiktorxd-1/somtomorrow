@@ -1,0 +1,26 @@
+{% extends "pages/main/base.html" %}
+
+{% set active_page = "info" %}
+
+{% block title %}Over Somtomorrow{% endblock %}
+
+
+{% block extra_headers %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/main/info.css') }}">
+{% endblock %}
+
+
+{% block content %}
+    <div id="logo-text">
+        <img src="/static/images/logo_padding.png" id="big-logo">
+        <span>Somtomorrow</span>
+    </div>
+    <div id="version-info">
+        <span>Version from commit <a href="https://git.dupunkto.org/~dupunkto/somtomorrow/commit/{{ latest_commit_hash_long }}" id="latest-commit-hash">{{ latest_commit_hash }}</a> (commited on {{ latest_commit_date }} (UTC) by <a href="mailto:{{ latest_commit_author_email }}">{{ latest_commit_author_name }}</a>)</span><br>
+        <span>Deployed on {{ latest_deploy_date }} (UTC)</span>
+    </div>
+    <p><strong>Somtomorrow</strong> is beter werkende Somtoday-client, gemaakt voor en door scholieren.</p>
+    <p>Somtomorrow is een project van <a href="https://dupunkto.org">{du}punkto</a></p>
+    Made with <a href="https://github.com/pallets/flask" target="_blank">Flask</a> and <a href="https://github.com/pallets/jinja" target="_blank">Jinja</a>, hosted at <a href="https://eu.pythonanywhere.com/" target="_blank">PythonAnwyhere</a>.<br>
+    
+{% endblock %}

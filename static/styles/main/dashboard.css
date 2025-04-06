@@ -5,7 +5,7 @@
     align-items: center;
     gap: 20px;
     flex-grow: 1;
-    border: 2px solid var(--purple);
+    border: 1px solid var(--gray);
     padding: 20px;
     border-radius: 20px;
 }
