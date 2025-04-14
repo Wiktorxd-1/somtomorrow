@@ -84,7 +84,7 @@
                     if (data.status === "success") {
                         window.location.href = "/dashboard";
                     } else {
-                        addMessage(`Error! ${data.message}`, "error");
+                        addMessage(`Error! ${data.message ? data.message : ""}`, "error");
 
                         setTimeout(() => {
                             hideOnLoad.forEach(element => {
