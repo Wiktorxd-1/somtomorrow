@@ -16,13 +16,11 @@
             {% block mainlogin %}{% endblock %}
 
             {% with messages = get_flashed_messages(with_categories=True) %}
-                {% if messages %}
-                    <div id="messages">
-                        {% for category, message in messages %}
-                            <div class="message {{ category }}">{{ message }}</div>
-                        {% endfor %}
-                    </div>
-                {% endif %}
+                <div id="messages">
+                    {% for category, message in messages %}
+                        <div class="message {{ category }}">{{ message }}</div>
+                    {% endfor %}
+                </div>
             {% endwith %}
         </div>
 
