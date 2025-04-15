@@ -21,7 +21,7 @@ def get_comment_syntax(filename):
     elif filename.endswith(".html"):
         return "<!-- start devb -->", "<!-- end devb -->"
     elif filename.endswith(".css"):
-        return "/* start devb ", "/* end devb */"
+        return "/* start devb */", "/* end devb */"
     else:
         return None, None
 
