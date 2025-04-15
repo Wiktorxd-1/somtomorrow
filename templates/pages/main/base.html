@@ -70,7 +70,7 @@
                 setError(error) {
                     this.setFinished();
                     console.error("Error fetching data:", error);
-                    this.innerHTML = `Error fetching data! ${error}`;
+                    this.innerHTML = `<div class="error-box"><i class="fa-solid fa-triangle-exclamation"></i> Error fetching data! ${error}</div>`;
                 }
 
                 async reloadData() {

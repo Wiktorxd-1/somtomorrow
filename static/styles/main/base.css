@@ -259,3 +259,10 @@ du-island[loading] > *:not(#island-loading) {
 #content {
     padding: 20px;
 }
+
+.error-box {
+    background: var(--red);
+    padding: 10px;
+    border-radius: 10px;
+    text-align: center;
+}

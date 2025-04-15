@@ -518,7 +518,7 @@ def testgrades_island():
                 is_fail = True
             else:
                 is_fail = False
-        except (TypeError, AttributeError):
+        except Exception:
             if letter_grade == "O":
                 is_fail = True
             else:
@@ -563,10 +563,10 @@ def testgrades_island():
             grade["retake"] = {
                 "first_retake": {
                     "date": format_date(datetime.strptime(grade["herkansing"]["datumInvoer"], "%Y-%m-%dT%H:%M:%S.%f%z")),
-                    "result": grade["herkansing"]["resultaat"],
-                    "result_is_fail": grade_is_fail(grade["herkansing"]["resultaat"], ""),
-                    "result_is_confetti": True if float(grade["herkansing"]["resultaat"].replace(",", ".")) >= 10 else False,
-                    "effective_result": True if grade["geldendResultaat"] == grade["herkansing"]["resultaat"] else False,
+                    "result": grade["herkansing"].get("resultaat", "onbekend"),
+                    "result_is_fail": grade_is_fail(grade["herkansing"].get("resultaat", "onbekend"), ""),
+                    "result_is_confetti": True if float(grade["herkansing"].get("resultaat", "10.0").replace(",", ".")) >= 10 else False,
+                    "effective_result": True if grade["geldendResultaat"] == grade["herkansing"].get("resultaat", "onbekend") else False,
                 },
                 "first_attempt": {
                     "date": format_date(datetime.strptime(grade["datumInvoer"], "%Y-%m-%dT%H:%M:%S.%f%z")),
