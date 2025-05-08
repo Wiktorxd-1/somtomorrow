@@ -65,8 +65,6 @@ def test_save(data):
             return inputdata.timestamp()
         else:
             return inputdata
-    with open("temp.json", "w") as jf:
-        json.dump(replace_datetime(data), jf, indent=4)
 
 
 def get_commit_and_deploy_date():
@@ -243,7 +241,7 @@ def logout():
 def logindev():
     user = request.args.get("user")
 
-    with open(f"rtoken{user}.txt", "r") as file:
+    with open(os.path.join(BASE_DIR, f"rtoken{user}.txt"), "r") as file:
         rtoken = file.read()
     url = "https://somtoday.nl/oauth2/token"
     body = {
@@ -255,7 +253,7 @@ def logindev():
 
     data = response.json()
 
-    with open(f"rtoken{user}.txt", "w") as file:
+    with open(os.path.join(BASE_DIR, f"rtoken{user}.txt"), "w") as file:
         file.write(data.get("refresh_token", rtoken))
 
     set_token_and_info(data.get("access_token"))
@@ -267,7 +265,7 @@ def logindev():
 @app.route("/login/devauto")
 @excluded
 def logindevauto():
-    with open("rtoken.txt", "r") as file:
+    with open(os.path.join(BASE_DIR, "rtoken.txt"), "r") as file:
         rtoken = file.read()
     url = "https://somtoday.nl/oauth2/token"
     body = {
@@ -279,7 +277,7 @@ def logindevauto():
 
     data = response.json()
 
-    with open("rtoken.txt", "w") as file:
+    with open(os.path.join(BASE_DIR, "rtoken.txt"), "w") as file:
         file.write(data.get("refresh_token", rtoken))
 
     set_token_and_info(data.get("access_token"))
