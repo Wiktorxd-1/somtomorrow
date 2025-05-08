@@ -51,20 +51,19 @@ def remove_html(string):
 def max_len(string, max_length):
     return string if len(string) <= max_length else string[:max_length - 3] + "..."
     
-def test_save(data):
-    def replace_datetime(inputdata):
-        if isinstance(inputdata, dict):
-            return {key: replace_datetime(value) for key, value in inputdata.items()}
-        elif isinstance(inputdata, list):
-            return [replace_datetime(item) for item in inputdata]
-        elif isinstance(inputdata, tuple):
-            return tuple(replace_datetime(item) for item in inputdata)
-        elif isinstance(inputdata, set):
-            return {replace_datetime(item) for item in inputdata}
-        elif isinstance(inputdata, datetime):
-            return inputdata.timestamp()
-        else:
-            return inputdata
+def test_save(inputdata):
+    if isinstance(inputdata, dict):
+        return {key: test_save(value) for key, value in inputdata.items()}
+    elif isinstance(inputdata, list):
+        return [test_save(item) for item in inputdata]
+    elif isinstance(inputdata, tuple):
+        return tuple(test_save(item) for item in inputdata)
+    elif isinstance(inputdata, set):
+        return {test_save(item) for item in inputdata}
+    elif isinstance(inputdata, datetime):
+        return inputdata.timestamp()
+    else:
+        return inputdata
 
 
 def get_commit_and_deploy_date():
@@ -706,6 +705,7 @@ def schedule_island():
         dt_end = datetime.strptime(appointment["eindDatumTijd"], "%Y-%m-%dT%H:%M:%S")
 
         appointment["title"] = (capit(appointment["vak"]["naam"]).replace("e taal en literatuur", "") if len(appointment["vak"]["naam"].replace("e taal en literatuur", "")) < 20 else appointment["vak"]["afkorting"].upper()) if appointment.get("vak", {}).get("naam") else appointment["titel"]
+        appointment["title_full"] = capit(appointment["vak"]["naam"]) if appointment.get("vak", {}).get("naam") else appointment["titel"]
 
         appointment["icon"] = get_icon(appointment["vak"]["naam"] if appointment.get("vak", {}).get("naam") else appointment["titel"])
 

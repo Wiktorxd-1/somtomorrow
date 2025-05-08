@@ -34,25 +34,38 @@
                     <div class="appointment {{ appointment.type }}"
                         style="grid-row-start: {{ appointment.rowStart }};
                         grid-row-end: {{ appointment.rowEnd }};
-                        margin-left: {{ appointment.position }};
-                        width: {{ appointment.width }}">
+                        margin-left: {{ appointment.position }}%;
+                        width: {{ appointment.width }}%">
                         <span class="appo-icon">{{ appointment.icon | safe }}</span>
                         <span class="appo-title">{{ appointment.title }}</span>
                         <span class="appo-location">{{ appointment.locatie }}</span>
-                        <div class="appo-time-container">
-                            <span class="appo-time">{{ appointment.start_time }} - {{ appointment.end_time }}</span>
-                            <span class="appo-hours">{{ appointment.lesson_hours }}</span>
-                        </div>
-
-                        <div class="appo-panel-container">
-                            <div class="appo-panel-title">
-                                <span class="appo-panel-icon">{{ appointment.icon | safe }}</span>
-                                <span class="appo-panel-subject">{{ appointment.title }}</span>
+                        <div class="appo-panel">
+                            <div class="appo-panel-tile-subject-title">
+                                <div class="appo-panel-tile-subject-main">
+                                    <span class="appo-panel-icon">{{ appointment.icon | safe }}</span>
+                                    <span class="appo-panel-subject">{{ appointment.title_full }}</span>
+                                </div>
+                                <span class="appo-panel-tile-title-main">{{ appointment.titel }}</span>
                             </div>
-                            <div class="appo-panel-location">{{ appointment.locatie }}</div>
-                            <div class="appo--panel-time-container">
-                                <span class="appo-panel-time">{{ appointment.start_time }} - {{ appointment.end_time }}</span>
-                                <span class="appo-panel-hours">{{ appointment.lesson_hours }}</span>
+                            <div class="appo-panel-tile-location appo-panel-tile">
+                                <span class="appo-panel-tile-title">Locatie <i class="fa-solid fa-location-dot"></i></span>
+                                <span class="appo-panel-location">{{ appointment.locatie }}</span>
+                            </div>
+                            <div class="appo-panel-tile-time appo-panel-tile">
+                                <span class="appo-panel-tile-title">Tijd <i class="fa-solid fa-clock"></i></span>
+                                <span class="appo-panel-time">{{ appointment.lesson_hours }}: {{ appointment.start_time }} - {{ appointment.end_time }}</span>
+                            </div>
+                            <div class="appo-panel-tile-description appo-panel-tile">
+                                <span class="appo-panel-tile-title">Omschrijving <i class="fa-solid fa-circle-info"></i></span>
+                                <span class="appo-panel-description">{{ appointment.omschrijving }}</span>
+                            </div>
+                            <div class="appo-panel-tile-classgroup appo-panel-tile">
+                                <span class="appo-panel-tile-title">Lesgroep <i class="fa-solid fa-users"></i></span>
+                                <span class="appo-panel-classgroup">{{ appointment.lesgroepen | map(attribute="naam") | join(", ") }}</span>
+                            </div>
+                            <div class="appo-panel-tile-teachers appo-panel-tile">
+                                <span class="appo-panel-tile-title">Docent(en) <i class="fa-solid fa-user"></i></span>
+                                <span class="appo-panel-teachers">{{ appointment.docentNamen | join(", ") }}</span>
                             </div>
                         </div>
                     </div>
@@ -61,3 +74,23 @@
         </div>
     {% endfor %}
 </div>
+
+
+<script>
+    document.addEventListener("click", function (event) {
+        document.querySelectorAll(".appointment").forEach(appo => {
+            const appoPanel = appo.querySelector(".appo-panel");
+
+
+            if (appo.contains(event.target)) {
+                appo.classList.add("appo-active");
+                appoPanel.style.animation = "";
+            } else {
+                appoPanel.style.animation = "slideDown 300ms ease-out forwards";
+                setTimeout(() => {
+                    appo.classList.remove("appo-active");
+                }, 300);
+            }
+        });
+    });
+</script>
