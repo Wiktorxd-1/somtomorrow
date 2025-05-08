@@ -238,6 +238,30 @@ def logout():
     return redirect(url_for("login"))
 
 
+@app.route("/login/dev")
+@excluded
+def logindev():
+    user = request.args.get("user")
+
+    with open(f"rtoken{user}.txt", "r") as file:
+        rtoken = file.read()
+    url = "https://somtoday.nl/oauth2/token"
+    body = {
+        "grant_type": "refresh_token",
+        "refresh_token": rtoken,
+        "client_id": "somtoday-leerling-native"
+    }
+    response = requests.post(url, data=body)
+
+    data = response.json()
+
+    with open(f"rtoken{user}.txt", "w") as file:
+        file.write(data.get("refresh_token", rtoken))
+
+    set_token_and_info(data.get("access_token"))
+
+    return redirect(url_for("dashboard"))
+
 # start devb
 
 @app.route("/login/devauto")
@@ -257,7 +281,6 @@ def logindevauto():
 
     with open("rtoken.txt", "w") as file:
         file.write(data.get("refresh_token", rtoken))
-
 
     set_token_and_info(data.get("access_token"))
 
