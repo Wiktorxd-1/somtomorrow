@@ -30,13 +30,13 @@
     border-style: solid;
     padding: 10px;
     border-radius: 10px;
-    font-size: .7em;
+    font-size: 0.7em;
     hyphens: auto;
     display: grid;
     grid-template-columns: auto 1fr auto;
     grid-template-rows: repeat(2, auto);
     grid-column-gap: 10px;
-    grid-row-gap: 5px; 
+    grid-row-gap: 5px;
     align-items: center;
     justify-content: center;
 }
@@ -84,7 +84,7 @@
 
 .homework-finished-container:hover {
     background: var(--gray);
-    opacity: .3;
+    opacity: 0.3;
 }
 
 .homework-finished-container img {
@@ -107,12 +107,12 @@
     background: var(--purple);
 }
 
-.homeworkitem.grote_toets  {
+.homeworkitem.grote_toets {
     border-color: var(--red);
     background: var(--red);
 }
 
-.homeworkitem.lesstof  {
+.homeworkitem.lesstof {
     border-color: var(--dark-blue);
     background: var(--dark-blue);
 }

@@ -43,6 +43,18 @@
                             <span class="appo-time">{{ appointment.start_time }} - {{ appointment.end_time }}</span>
                             <span class="appo-hours">{{ appointment.lesson_hours }}</span>
                         </div>
+
+                        <div class="appo-panel-container">
+                            <div class="appo-panel-title">
+                                <span class="appo-panel-icon">{{ appointment.icon | safe }}</span>
+                                <span class="appo-panel-subject">{{ appointment.title }}</span>
+                            </div>
+                            <div class="appo-panel-location">{{ appointment.locatie }}</div>
+                            <div class="appo--panel-time-container">
+                                <span class="appo-panel-time">{{ appointment.start_time }} - {{ appointment.end_time }}</span>
+                                <span class="appo-panel-hours">{{ appointment.lesson_hours }}</span>
+                            </div>
+                        </div>
                     </div>
                 {% endfor %}
             </div>

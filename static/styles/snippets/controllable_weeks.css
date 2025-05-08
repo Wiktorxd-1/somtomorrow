@@ -11,7 +11,8 @@
     gap: 1em;
 }
 
-.pagemenu-item, #go-to-current-week {
+.pagemenu-item,
+#go-to-current-week {
     padding: 10px;
     display: inline-block;
     border-radius: 10px;
@@ -21,7 +22,8 @@
     border: 1px solid var(--gray);
 }
 
-.pagemenu-item:hover, #go-to-current-week:hover {
+.pagemenu-item:hover,
+#go-to-current-week:hover {
     background: var(--dark-purple);
     border-color: var(--dark-purple);
 }

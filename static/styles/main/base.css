@@ -151,7 +151,6 @@ main {
     flex-direction: row-reverse;
     gap: 10px;
     height: 100%;
-    
 }
 
 #userinfoname {
@@ -160,7 +159,7 @@ main {
 }
 
 #userinfoschoolclass {
-    font-size: .9em;
+    font-size: 0.9em;
     color: #aaa;
     font-weight: 400;
 }
@@ -195,7 +194,8 @@ main {
     text-align: center;
 }
 
-.subpagemenu-item.active, .subpagemenu-item:hover {
+.subpagemenu-item.active,
+.subpagemenu-item:hover {
     border: 2px solid var(--light-purple);
 }
 
@@ -222,7 +222,8 @@ main {
     margin-bottom: 2em;
 }
 
-body:has(main .error-page.False) #sidebar, body:has(main .error-page) #topbar {
+body:has(main .error-page.False) #sidebar,
+body:has(main .error-page) #topbar {
     display: none;
 }
 

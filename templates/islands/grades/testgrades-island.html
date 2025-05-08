@@ -25,9 +25,11 @@
                                 <span class="retake-info">
                                     <span class="retake-number">Eerste herkansing</span>
                                     <span class="retake-date"><i class="fa-solid fa-calendar-day"></i> {{ grade.retake.first_retake.date }}</span>
-                                    {% if grade.retake.first_retake.effective_result %}
+                                    
                                 </span>
-                                <span class="retake-effective-result">Geldend cijfer{% endif %}</span>
+                                {% if grade.retake.first_retake.effective_result %}
+                                    <span class="retake-effective-result">Geldend cijfer</span>
+                                {% endif %}
                             </div>
                             <span class="retake-result{% if grade.retake.first_retake.result_is_fail %} grade-fail{% endif %}{% if grade.retake.first_retake.result_is_confetti %} grade-confetti{% endif %}">{{ grade.retake.first_retake.result }}</span>
                         </div>
@@ -36,9 +38,10 @@
                                 <span class="retake-info">
                                     <span class="retake-number">Eerste poging</span>
                                     <span class="retake-date"><i class="fa-solid fa-calendar-day"></i> {{ grade.retake.first_attempt.date }}</span>
-                                    {% if grade.retake.first_attempt.effective_result %}
                                 </span>
-                                <span class="retake-effective-result">Geldend cijfer{% endif %}</span>
+                                {% if grade.retake.first_attempt.effective_result %}
+                                    <span class="retake-effective-result">Geldend cijfer</span>
+                                {% endif %}
                             </div>
                             <span class="retake-result{% if grade.retake.first_attempt.result_is_fail %} grade-fail{% endif %}{% if grade.retake.first_attempt.result_is_confetti %} grade-confetti{% endif %}">{{ grade.retake.first_attempt.result }}</span>
                         </div>

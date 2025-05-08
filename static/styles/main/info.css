@@ -1,27 +1,27 @@
 #big-logo {
-  height: 3em;
+    height: 3em;
 }
 
 #logo-text {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 10px;
-  font-weight: bolder;
-  font-size: 2em;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    font-weight: bolder;
+    font-size: 2em;
 }
 
 a {
-  color: inherit;
+    color: inherit;
 }
 
 #version-info {
-  font-size: .8em;
-  color: var(--gray);
-  margin-bottom: 3em;
+    font-size: 0.8em;
+    color: var(--gray);
+    margin-bottom: 3em;
 }
 
 #latest-commit-hash {
-  text-decoration: none;
-  font-weight: bolder;
+    text-decoration: none;
+    font-weight: bolder;
 }
