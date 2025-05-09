@@ -12,6 +12,18 @@
                         {% if homework.is_finished %} 
                             <i class="fa-solid fa-check"></i>
                         {% endif %}
+                    
+                    </div>
+
+
+                    <div class="info-panel">
+                        <div class="info-panel-tile-subject-title">
+                            <div class="info-panel-tile-subject-main">
+                                <span class="info-panel-icon">{{ homework.icon | safe }}</span>
+                                <span class="info-panel-subject">{{ homework.subject_long }}</span>
+                            </div>
+                            <span class="info-panel-tile-title-main">{{ appointment.titel  or '<span class="unavailable">Onbekend</span>' | safe }}</span>
+                        </div>
                     </div>
                 </div>
             {% endfor %}

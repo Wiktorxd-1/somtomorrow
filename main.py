@@ -50,20 +50,22 @@ def remove_html(string):
 
 def max_len(string, max_length):
     return string if len(string) <= max_length else string[:max_length - 3] + "..."
-    
-def test_save(inputdata):
-    if isinstance(inputdata, dict):
-        return {key: test_save(value) for key, value in inputdata.items()}
-    elif isinstance(inputdata, list):
-        return [test_save(item) for item in inputdata]
-    elif isinstance(inputdata, tuple):
-        return tuple(test_save(item) for item in inputdata)
-    elif isinstance(inputdata, set):
-        return {test_save(item) for item in inputdata}
-    elif isinstance(inputdata, datetime):
-        return inputdata.timestamp()
-    else:
-        return inputdata
+
+def print_json_data(data):
+    def sterilize_data(inputdata):
+        if isinstance(inputdata, dict):
+            return {key: sterilize_data(value) for key, value in inputdata.items()}
+        elif isinstance(inputdata, list):
+            return [sterilize_data(item) for item in inputdata]
+        elif isinstance(inputdata, tuple):
+            return tuple(sterilize_data(item) for item in inputdata)
+        elif isinstance(inputdata, set):
+            return {sterilize_data(item) for item in inputdata}
+        elif isinstance(inputdata, datetime):
+            return inputdata.timestamp()
+        else:
+            return inputdata
+    print(json.dumps(sterilize_data(data), indent=4))
 
 
 def get_commit_and_deploy_date():
