@@ -746,6 +746,8 @@ def schedule_island():
 
     zipped_data = get_zipped_data_with_dates(year, weeknum, schedule_data)
 
+    # print(json.dumps(test_save(schedule_data), indent=4))
+
     return render_template("islands/schedule-island.html", zipped_data = zipped_data)
 
 @app.route("/planner")

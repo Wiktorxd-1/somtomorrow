@@ -41,33 +41,39 @@
                             <span class="appo-title">{{ appointment.title }}</span>
                         </div>
                         <span class="appo-location">{{ appointment.locatie }}</span>
-                        <div class="appo-panel">
-                            <div class="appo-panel-tile-subject-title">
-                                <div class="appo-panel-tile-subject-main">
-                                    <span class="appo-panel-icon">{{ appointment.icon | safe }}</span>
-                                    <span class="appo-panel-subject">{{ appointment.title_full }}</span>
+                        <div class="info-panel">
+                            <div class="info-panel-tile-subject-title">
+                                <div class="info-panel-tile-subject-main">
+                                    <span class="info-panel-icon">{{ appointment.icon | safe }}</span>
+                                    <span class="info-panel-subject">{{ appointment.title_full }}</span>
                                 </div>
-                                <span class="appo-panel-tile-title-main">{{ appointment.titel }}</span>
+                                <span class="info-panel-tile-title-main">{{ appointment.titel  or '<span class="unavailable">Onbekend</span>' | safe }}</span>
                             </div>
-                            <div class="appo-panel-tile-location appo-panel-tile">
-                                <span class="appo-panel-tile-title">Locatie <i class="fa-solid fa-location-dot"></i></span>
-                                <span class="appo-panel-location">{{ appointment.locatie }}</span>
+                            <div class="info-panel-tile-location info-panel-tile">
+                                <span class="info-panel-tile-title">Locatie <i class="fa-solid fa-location-dot"></i></span>
+                                <span class="info-panel-location">{{ appointment.locatie or '<span class="unavailable">Onbekend</span>' | safe }}</span>
                             </div>
-                            <div class="appo-panel-tile-time appo-panel-tile">
-                                <span class="appo-panel-tile-title">Tijd <i class="fa-solid fa-clock"></i></span>
-                                <span class="appo-panel-time">{{ appointment.lesson_hours }}: {{ appointment.start_time }} - {{ appointment.end_time }}</span>
+                            <div class="info-panel-tile-time info-panel-tile">
+                                <span class="info-panel-tile-title">Tijd <i class="fa-solid fa-clock"></i></span>
+                                <span class="info-panel-time">{{ appointment.lesson_hours ~ ':' if appointment.lesson_hours else '' }}{{ appointment.start_time }} - {{ appointment.end_time }}</span>
                             </div>
-                            <div class="appo-panel-tile-description appo-panel-tile">
-                                <span class="appo-panel-tile-title">Omschrijving <i class="fa-solid fa-circle-info"></i></span>
-                                <span class="appo-panel-description">{{ appointment.omschrijving }}</span>
+                            <div class="info-panel-tile-description info-panel-tile">
+                                <span class="info-panel-tile-title">Omschrijving <i class="fa-solid fa-circle-info"></i></span>
+                                <span class="info-panel-description">{{ appointment.omschrijving or '<span class="unavailable">Onbekend</span>' | safe }}</span>
                             </div>
-                            <div class="appo-panel-tile-classgroup appo-panel-tile">
-                                <span class="appo-panel-tile-title">Lesgroep <i class="fa-solid fa-users"></i></span>
-                                <span class="appo-panel-classgroup">{{ appointment.lesgroepen | map(attribute="naam") | join(", ") }}</span>
+                            <div class="info-panel-tile-classgroup info-panel-tile">
+                                <span class="info-panel-tile-title">Lesgroep <i class="fa-solid fa-users"></i></span>
+                                <span class="info-panel-classgroup">
+                                    {% if appointment.lesgroepen %}
+                                        {{ appointment.lesgroepen | map(attribute="naam") | join(", ") }}
+                                    {% else %}
+                                        <span class="unavailable">Onbekend</span>
+                                    {% endif %}
+                                </span>
                             </div>
-                            <div class="appo-panel-tile-teachers appo-panel-tile">
-                                <span class="appo-panel-tile-title">Docent(en) <i class="fa-solid fa-user"></i></span>
-                                <span class="appo-panel-teachers">{{ appointment.docentNamen | join(", ") }}</span>
+                            <div class="info-panel-tile-teachers info-panel-tile">
+                                <span class="info-panel-tile-title">Docent(en) <i class="fa-solid fa-user"></i></span>
+                                <span class="info-panel-teachers">{{ appointment.docentNamen | join(", ") }}</span>
                             </div>
                         </div>
                     </div>
@@ -81,7 +87,7 @@
 <script>
     document.addEventListener("click", function (event) {
         document.querySelectorAll(".appointment").forEach(appo => {
-            const appoPanel = appo.querySelector(".appo-panel");
+            const appoPanel = appo.querySelector(".info-panel");
 
 
             if (appo.contains(event.target)) {

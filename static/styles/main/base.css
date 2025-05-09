@@ -271,3 +271,56 @@ du-island[loading] > *:not(#island-loading) {
     border-radius: 10px;
     text-align: center;
 }
+
+
+
+.info-panel {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 30px 30px 30px 90px;
+    background: var(--back);
+    border-top: 2px solid var(--purple);
+    display: none;
+    z-index: 100;
+    cursor: initial;
+    font-size: 1.1em;
+    
+    
+    gap: 15px;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: wrap;
+
+    animation: slideUp 300ms ease-out forwards;
+    
+}
+
+.unavailable {
+    color: #737171;
+    font-weight: 400;
+}
+
+
+@keyframes slideUp {
+    from {
+        transform: translateY(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideDown {
+    from {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateY(100%);
+        opacity: 0;
+    }
+}

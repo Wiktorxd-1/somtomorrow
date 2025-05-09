@@ -17,43 +17,30 @@ It's currently very much a prototype but it works and that's just amazing!
 
 Yeah it's a lot...
 
-### Other
-
-- [x] Add better error handling at login (from Vik)
-- [x] Add some async stuff so users do not have to wait for the paige to load they just have to wait for the content to load
-- [ ] Add caching, probs backend-database caching with Flask-Sessions?
-
 ### Auth
 
-- [x] Finish auth with school/username/password (with Vik)
 - [ ] Add long term login with refresh tokens
 - [ ] Maybe look into using the Somtoday login after all with a kind of redirect?
-- [ ] Add some kind of loading screen when getting the tokens from Vik!
+- [ ] Fix Authtoday
 
 ### Features
 
 - [ ] Add notification system for grades (easy) and schedules (certainly impossible) (with Firebase???)
-- [x] Add avatars (identicon?)
 
 ### Pages
 
 #### Dashboard
 
-- [x] Latest grades
-- [x] Future homework
-- [x] Schedule of current day
+- [ ] Better design
 
 #### Grades
 
-- [x] Finish current grade page
-  - [x] Extra info on click
-  - [x] Finish styles
 - [ ] Add reports
-- [x] Add herkansingen
-  - [ ] Clean up the herkansing data and make it a list?
+- [ ] Clean up the herkansing data and make it a list?
 - [ ] Add future tests (empty test columns)
 - [ ] Add grade page for each subject
 - [ ] Add *deeltoetsen*
+- [ ] Add calculator for which grade you need to get
 - [ ] Add stats
   - [ ] Timeline for each grade
   - [ ] Histograph for all grades
@@ -61,12 +48,12 @@ Yeah it's a lot...
 
 #### Planner
 
-- [x] Add homework made or not
-- [ ] Add popup with more info
-- [x] Add tests and *inleveropdrachten*
-- [x] Just better layout
+- [ ] Add info panel
 
 #### Schedule
 
-- [ ] Make clickable
-- [ ] Diffrent types of appointments
+- [ ] Diffrent appointment types (*inidvidueel*, *rooster*, *examen*, *toets*)
+
+#### Other
+
+- [ ] Leermiddelen
