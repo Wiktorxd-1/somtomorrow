@@ -13,6 +13,8 @@
     --purple: #6822cb;
     --light-purple: #9759ee;
     --dark-purple: #511b9e;
+
+    --highlight-purple: #2d1e42;
 }
 
 :root {
@@ -130,8 +132,10 @@ main {
     align-items: center;
     height: 60px;
     padding: 10px;
-    /* background: var(--black); */
-    /* border-bottom: 1px solid #314049; */
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background: var(--back);
 }
 
 #topbar h1 {

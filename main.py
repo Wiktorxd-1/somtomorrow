@@ -221,6 +221,7 @@ def set_token_and_info(token):
     session["identicon_name"] = first_name.strip().lower().replace(" ", "") + last_name.strip().lower().replace(" ", "")
     session["school_name"] = schooldata_data["huidigeVestiging"]["naam"]
     session["main_class"] = schooldata_data["stamgroepnaam"]
+
     session["token"] = token
     session["login_time"] = datetime.now(timezone.utc).timestamp()
 
@@ -722,7 +723,6 @@ def schedule_island():
         appointment["start_time"] = dt_start.strftime("%H:%M")
         appointment["end_time"] = dt_end.strftime("%H:%M")
         appointment["type"] = appointment["afspraakItemType"].lower()
-
 
         schedule_data[dt_start.weekday()].append(appointment)
 

@@ -36,8 +36,10 @@
                         grid-row-end: {{ appointment.rowEnd }};
                         margin-left: {{ appointment.position }}%;
                         width: {{ appointment.width }}%">
-                        <span class="appo-icon">{{ appointment.icon | safe }}</span>
-                        <span class="appo-title">{{ appointment.title }}</span>
+                        <div class="appo-subject">
+                            <span class="appo-icon">{{ appointment.icon | safe }}</span>
+                            <span class="appo-title">{{ appointment.title }}</span>
+                        </div>
                         <span class="appo-location">{{ appointment.locatie }}</span>
                         <div class="appo-panel">
                             <div class="appo-panel-tile-subject-title">
