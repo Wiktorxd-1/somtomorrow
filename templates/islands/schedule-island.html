@@ -88,9 +88,11 @@
                 appo.classList.add("appo-active");
                 appoPanel.style.animation = "";
             } else {
+                appo.style.zIndex = 30;
                 appoPanel.style.animation = "slideDown 300ms ease-out forwards";
                 setTimeout(() => {
                     appo.classList.remove("appo-active");
+                    appo.style.zIndex = "";
                 }, 300);
             }
         });
