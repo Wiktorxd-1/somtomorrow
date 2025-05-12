@@ -12,7 +12,6 @@
                         {% if homework.is_finished %} 
                             <i class="fa-solid fa-check"></i>
                         {% endif %}
-                    
                     </div>
 
 
@@ -22,7 +21,10 @@
                                 <span class="info-panel-icon">{{ homework.icon | safe }}</span>
                                 <span class="info-panel-subject">{{ homework.subject_long }}</span>
                             </div>
-                            <span class="info-panel-tile-title-main">{{ appointment.titel  or '<span class="unavailable">Onbekend</span>' | safe }}</span>
+                        </div>
+                        <div class="info-panel-tile-content info-panel-tile">
+                            <h1>{{ homework.studiewijzerItem.onderwerp }}</h1>
+                            {{ homework.studiewijzerItem.omschrijving | safe }}
                         </div>
                     </div>
                 </div>
@@ -30,6 +32,30 @@
         </div>
     {% endfor %}
 </div>
+
+<script>
+    document.addEventListener("click", function (event) {
+        document.querySelectorAll(".homeworkitem").forEach(hw => {
+            const hwPanel = hw.querySelector(".info-panel");
+            const checkBox = hw.querySelector(".homework-finished-container")
+
+
+            if (hw.contains(event.target) && !checkBox.contains(event.target)) {
+                hw.classList.add("hw-active");
+                hwPanel.style.animation = "";
+            } else if (hw.classList.contains("hw-active") && !checkBox.contains(event.target)) {
+                hwPanel.style.zIndex = 90;
+                hw.style.zIndex = 30;
+                hwPanel.style.animation = "slideDown 300ms ease-out forwards";
+                setTimeout(() => {
+                    hw.classList.remove("hw-active");
+                    hw.style.zIndex = "";
+                    hwPanel.style.zIndex = "";
+                }, 300);
+            }
+        });
+    });
+</script>
 
 <script>
     function updatePlannerItem(id, state) {

@@ -104,17 +104,15 @@
             if (appo.contains(event.target)) {
                 appo.classList.add("appo-active");
                 appoPanel.style.animation = "";
-            } else {
-                if (appo.classList.contains("appo-active")) {
-                    appoPanel.style.zIndex = 90;
-                    appo.style.zIndex = 30;
-                    appoPanel.style.animation = "slideDown 300ms ease-out forwards";
-                    setTimeout(() => {
-                        appo.classList.remove("appo-active");
-                        appo.style.zIndex = "";
-                        appoPanel.style.zIndex = "";
-                    }, 300);
-                }
+            } else if (appo.classList.contains("appo-active")) {
+                appoPanel.style.zIndex = 90;
+                appo.style.zIndex = 30;
+                appoPanel.style.animation = "slideDown 300ms ease-out forwards";
+                setTimeout(() => {
+                    appo.classList.remove("appo-active");
+                    appo.style.zIndex = "";
+                    appoPanel.style.zIndex = "";
+                }, 300);
             }
         });
     });

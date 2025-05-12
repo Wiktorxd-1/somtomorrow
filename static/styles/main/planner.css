@@ -26,7 +26,7 @@
 }
 
 .homeworkitem {
-    border-width: 4px;
+    border-width: 2px 2px 2px 7px;
     border-style: solid;
     padding: 10px;
     border-radius: 10px;
@@ -39,10 +39,17 @@
     grid-row-gap: 5px;
     align-items: center;
     justify-content: center;
+    cursor: pointer;
+    transition: background 300ms ease-in-out;
+}
+
+.homeworkitem:hover,
+.hw-active {
+    background: var(--highlight-purple);
 }
 
 .homeworkitem:has(.homework-finished-container.finished) {
-    background: var(--dark-green) !important;
+    background: #00ff286b !important;
 }
 
 .subject-name {
@@ -94,25 +101,33 @@
 
 .homeworkitem.huiswerk {
     border-color: var(--blue);
-    background: var(--blue);
 }
 
 .homeworkitem.toets {
     border-color: var(--yellow);
-    background: var(--yellow);
 }
 
 .homeworkitem.inleveropdracht {
     border-color: var(--purple);
-    background: var(--purple);
 }
 
 .homeworkitem.grote_toets {
     border-color: var(--red);
-    background: var(--red);
 }
 
 .homeworkitem.lesstof {
     border-color: var(--dark-blue);
-    background: var(--dark-blue);
+}
+
+.hw-active .info-panel {
+    display: flex;
+}
+
+.info-panel {
+    font-size: 1.3em;
+}
+
+.info-panel-tile-content * {
+    background: unset !important;
+    color: unset !important;
 }

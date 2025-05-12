@@ -75,7 +75,7 @@ main {
     position: fixed;
     width: 60px;
     height: 100%;
-    z-index: 100;
+    z-index: 1000;
 }
 
 #menu {
@@ -293,6 +293,57 @@ du-island[loading] > *:not(#island-loading) {
     flex-wrap: wrap;
 
     animation: slideUp 300ms ease-out forwards;
+}
+
+.info-panel-tile-subject-title {
+    align-self: center;
+    flex-grow: 5;
+}
+
+.info-panel-tile-subject-title img {
+    height: 1em;
+}
+
+.info-panel-tile {
+    padding: 10px;
+    border: 1px solid #aaa;
+    width: fit-content;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    min-width: fit-content;
+    flex-grow: 1;
+    max-width: 250px;
+    font-weight: 900;
+}
+
+.info-panel-tile-title {
+    font-size: 0.8em;
+    color: #aaa;
+    margin-bottom: 0.5em;
+    font-weight: 300;
+}
+
+.info-panel-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.info-panel-tile-title i {
+    margin-inline-start: 0.25em;
+}
+
+.info-panel-tile-subject-main {
+    font-weight: 900;
+    font-size: 1.8em;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+}
+.info-panel-tile-title-main {
+    color: #aaa;
 }
 
 .unavailable {
