@@ -714,8 +714,16 @@ def schedule_island():
 
         appointment["dt_start"] = dt_start
         appointment["dt_end"] = dt_end
-        appointment["rowStart"] = (dt_start.hour - 6) * 12 + round(dt_start.minute / 60 * 12) + 1
-        appointment["rowEnd"] = (dt_end.hour - 6) * 12 + round(dt_end.minute / 60 * 12) + 1
+
+        # The container goes from 8 to 18, so 10 hours, so 100% is 10 hours, so 10% is 60 minutes so 1 minute is 1/6%
+
+        duration_minutes = int((dt_end - dt_start).total_seconds() // 60)
+
+        eight_am = datetime(dt_start.year, dt_start.month, dt_start.day, 8, 0)
+        minutes_since_8am = max(0, (dt_start - eight_am).total_seconds() // 60)
+
+        appointment["height"] = duration_minutes * (1/6)
+        appointment["top"] = minutes_since_8am * (1/6)
 
         if appointment.get("beginLesuur"):
             if appointment.get("eindLesuur"):
@@ -728,7 +736,9 @@ def schedule_island():
 
         schedule_data[dt_start.weekday()].append(appointment)
 
-    
+
+    # This is very broken, but i dont want to fix
+
     for daydata in schedule_data:
         daydata = sorted(daydata, key=lambda x: x["dt_start"])
 
