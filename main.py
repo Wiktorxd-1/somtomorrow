@@ -1,4 +1,17 @@
-from flask import Flask, render_template, request, redirect, url_for, session, flash, send_from_directory, g, send_file, jsonify, Response
+from flask import (
+    Flask,
+    render_template,
+    request,
+    redirect,
+    url_for,
+    session,
+    flash,
+    send_from_directory,
+    g,
+    send_file,
+    jsonify,
+    Response,
+)
 
 from PIL import Image
 from datetime import timedelta, datetime, timezone
@@ -34,13 +47,16 @@ def excluded(endpoint):
     endpoint.is_excluded = True
     return endpoint
 
+
 def logged_in():
     if "token" in session and datetime.now(timezone.utc).timestamp() - session.get("login_time", 0) < 3600:
         return True
     return False
 
+
 def capit(string):
     return string[:1].upper() + string[1:]
+
 
 def remove_html(string):
     if string:
@@ -48,8 +64,10 @@ def remove_html(string):
         return re.sub(re.compile("<.*?>"), "", string_with_linebreaks)
     return string
 
+
 def max_len(string, max_length):
-    return string if len(string) <= max_length else string[:max_length - 3] + "..."
+    return string if len(string) <= max_length else string[: max_length - 3] + "..."
+
 
 def print_json_data(data):
     def sterilize_data(inputdata):
@@ -65,6 +83,7 @@ def print_json_data(data):
             return inputdata.timestamp()
         else:
             return inputdata
+
     print(json.dumps(sterilize_data(data), indent=4))
 
 
@@ -86,7 +105,7 @@ def get_commit_and_deploy_date():
         "latest_commit_hash_long": latest_commit_hash_long,
         "latest_commit_date": latest_commit_date,
         "latest_commit_author_name": author_name,
-        "latest_commit_author_email": author_email
+        "latest_commit_author_email": author_email,
     }
 
     return comdepdata
@@ -104,7 +123,7 @@ def check_login():
 
     if view_func and getattr(view_func, "is_excluded", False):
         return  # Skip token check if endpoint is excluded
-    
+
     excluded_pages = ["static", "favicon", "security", "robots"]
 
     if any(keyword in request.endpoint for keyword in excluded_pages) or any(keyword in request.url for keyword in excluded_pages):
@@ -123,6 +142,7 @@ def use_session_data(f):
             setattr(g, key, session[key])
             g.capit = capit
         return f(*args, **kwargs)
+
     return wrapper
 
 
@@ -141,11 +161,7 @@ def get_token():
 
     # Robin's amazing Vik magic
 
-    reqdata = {
-        "school": school,
-        "username": username,
-        "password": password
-    }
+    reqdata = {"school": school, "username": username, "password": password}
 
     response = requests.post("https://vik.dupunkto.org/api/authtoday", json=reqdata)
 
@@ -227,7 +243,6 @@ def set_token_and_info(token):
     session["token"] = token
     session["login_time"] = datetime.now(timezone.utc).timestamp()
 
-
     return True
 
 
@@ -249,7 +264,7 @@ def logindev():
     body = {
         "grant_type": "refresh_token",
         "refresh_token": rtoken,
-        "client_id": "somtoday-leerling-native"
+        "client_id": "somtoday-leerling-native",
     }
     response = requests.post(url, data=body)
 
@@ -262,7 +277,9 @@ def logindev():
 
     return redirect(url_for("dashboard"))
 
+
 # start devb
+
 
 @app.route("/login/devauto")
 @excluded
@@ -273,7 +290,7 @@ def logindevauto():
     body = {
         "grant_type": "refresh_token",
         "refresh_token": rtoken,
-        "client_id": "somtoday-leerling-native"
+        "client_id": "somtoday-leerling-native",
     }
     response = requests.post(url, data=body)
 
@@ -287,7 +304,7 @@ def logindevauto():
     return redirect(url_for("dashboard"))
 
 
-@app.route("/login/devtester",methods=["GET", "POST"])
+@app.route("/login/devtester", methods=["GET", "POST"])
 @excluded
 def logindevtester():
     if request.method == "POST":
@@ -300,7 +317,7 @@ def logindevtester():
         body = {
             "grant_type": "refresh_token",
             "refresh_token": rtoken,
-            "client_id": "somtoday-leerling-native"
+            "client_id": "somtoday-leerling-native",
         }
         response = requests.post(url, data=body)
 
@@ -313,7 +330,7 @@ def logindevtester():
 
         return redirect(url_for("dashboard"))
 
-    return '''
+    return """
         <form method="post">
             <label>Choose a token</label><br>
 
@@ -328,10 +345,10 @@ def logindevtester():
 
             <input type="submit" value="Continue">
         </form>
-    '''
+    """
+
 
 # end devb
-
 
 
 @app.route("/")
@@ -343,9 +360,8 @@ def index():
     return redirect(url_for("login"))
 
 
-
-
 # Basic files
+
 
 @app.route("/favicon.ico")
 @app.route("/favicon")
@@ -358,6 +374,7 @@ def favicon():
 @excluded
 def securitytxt():
     return send_from_directory("static", "txts/security.txt", mimetype="text/plain")
+
 
 @app.route("/security.txt")
 @excluded
@@ -372,8 +389,6 @@ def robots():
     return send_from_directory("static", "txts/robots.txt", mimetype="text/plain")
 
 
-
-
 def clean_somdata(data):
     if isinstance(data, list):
         return [clean_somdata(item) for item in data]
@@ -383,9 +398,8 @@ def clean_somdata(data):
         return data
 
 
-
-
 # Main pages
+
 
 @app.route("/dashboard")
 @use_session_data
@@ -393,11 +407,11 @@ def dashboard():
     return render_template("pages/main/dashboard.html")
 
 
-
 @app.route("/cijfers")
 @use_session_data
 def grades_main():
     return redirect(url_for("testgrades"))
+
 
 @app.route("/cijfers/toetscijfers")
 @use_session_data
@@ -449,13 +463,12 @@ def get_icon(subject):
         "wiskunde": '<i class="fa-solid fa-calculator"></i>',
         "bedrijfseconomie": '<i class="fa-solid fa-building"></i>',
         "management": '<i class="fa-solid fa-building"></i>',
-        "filosofie": '<i class="fa-solid fa-brain"></i>'
+        "filosofie": '<i class="fa-solid fa-brain"></i>',
     }
     for key in subjects_icons:
         if key.lower() in subject.lower():
             return subjects_icons[key]
     return '<i class="fa-solid fa-book"></i>'
-
 
 
 @app.route("/api/islands/grades/testgrades")
@@ -471,54 +484,52 @@ def testgrades_island():
             "Authorization": f"Bearer {token}",
             "Accept": "application/json",
             "Origin": "https://somtoday.nl",
-            "Range": "items=0-99"
+            "Range": "items=0-99",
         },
         {
             "Authorization": f"Bearer {token}",
             "Accept": "application/json",
             "Origin": "https://somtoday.nl",
-            "Range": "items=100-199"
+            "Range": "items=100-199",
         },
         {
             "Authorization": f"Bearer {token}",
             "Accept": "application/json",
             "Origin": "https://somtoday.nl",
-            "Range": "items=200-299"
+            "Range": "items=200-299",
         },
         {
             "Authorization": f"Bearer {token}",
             "Accept": "application/json",
             "Origin": "https://somtoday.nl",
-            "Range": "items=300-399"
+            "Range": "items=300-399",
         },
         {
             "Authorization": f"Bearer {token}",
             "Accept": "application/json",
             "Origin": "https://somtoday.nl",
-            "Range": "items=400-499"
+            "Range": "items=400-499",
         },
         {
             "Authorization": f"Bearer {token}",
             "Accept": "application/json",
             "Origin": "https://somtoday.nl",
-            "Range": "items=500-599"
-        }
+            "Range": "items=500-599",
+        },
     ]
 
     api_data = []
 
     for headers in headers_list:
-        response = requests.get(api_url, headers = headers)
+        response = requests.get(api_url, headers=headers)
         responseData = response.json()
         for item in responseData["items"]:
             api_data.append(item)
 
     api_data = clean_somdata(api_data)
 
-
     types_to_include = ["Toetskolom", "Werkstukcijferkolom", "Advieskolom"]
-    api_data = [item for item in api_data if item["type"] in types_to_include and ("geldendResultaat" in item or "resultaatLabelAfkorting" in item)] # Filter unwanted grade types
-
+    api_data = [item for item in api_data if item["type"] in types_to_include and ("geldendResultaat" in item or "resultaatLabelAfkorting" in item)]  # Filter unwanted grade types
 
     def format_date(dt_entered):
         now = datetime.now(pytz.timezone("Europe/Amsterdam"))
@@ -547,7 +558,6 @@ def testgrades_island():
             else:
                 is_fail = False
         return is_fail
-
 
     for grade in api_data:
         if grade.get("resultaatLabelAfkorting"):
@@ -581,7 +591,6 @@ def testgrades_island():
 
         grade["confetti"] = True if float(grade.get("geldendResultaat", "0.0").replace(",", ".")) >= 10 else False
 
-
         if grade.get("herkansing"):
             grade["retake"] = {
                 "first_retake": {
@@ -597,27 +606,24 @@ def testgrades_island():
                     "result_is_fail": grade_is_fail(grade.get("resultaat"), grade.get("resultaatLabelAfkorting")),
                     "result_is_confetti": True if float(grade.get("resultaat", grade.get("resultaatLabelAfkorting")).replace(",", ".")) >= 10 else False,
                     "effective_result": True if grade["resultaat"] == grade["geldendResultaat"] else False,
-                }
+                },
             }
             grade["retake_is_effective_result"] = False if grade["resultaat"] == grade["geldendResultaat"] else True
-
 
     api_data = sorted(api_data, key=lambda x: x["datetime_sort"], reverse=True)
 
     max_amount = request.args.get("max")
     if max_amount:
-        api_data = api_data[:int(max_amount)]
+        api_data = api_data[: int(max_amount)]
 
-    return render_template("islands/grades/testgrades-island.html", gradelist = api_data)
-
-
+    return render_template("islands/grades/testgrades-island.html", gradelist=api_data)
 
 
 def get_zipped_data_with_dates(year, weeknum, data):
     year = int(year)
     weeknum = int(weeknum)
 
-    monday = datetime.strptime(f'{year}-W{weeknum-1}-1', "%Y-W%W-%w").date()
+    monday = datetime.strptime(f"{year}-W{weeknum - 1}-1", "%Y-W%W-%w").date()
     tuesday = monday + timedelta(days=1)
     wednesday = monday + timedelta(days=2)
     thursday = monday + timedelta(days=3)
@@ -628,7 +634,7 @@ def get_zipped_data_with_dates(year, weeknum, data):
         tuesday.strftime("%a %d %B"),
         wednesday.strftime("%a %d %B"),
         thursday.strftime("%a %d %B"),
-        friday.strftime("%a %d %B")
+        friday.strftime("%a %d %B"),
     ]
 
     today = datetime.today().date()
@@ -642,7 +648,6 @@ def get_zipped_data_with_dates(year, weeknum, data):
 
     zipped_data = zip(data, dayname, current_day_class)
 
-    
     days_to_include = request.args.get("days")
 
     if days_to_include == "today":
@@ -655,8 +660,6 @@ def get_zipped_data_with_dates(year, weeknum, data):
     return zipped_data
 
 
-
-
 @app.route("/rooster")
 @use_session_data
 def schedule_main():
@@ -667,8 +670,7 @@ def schedule_main():
         next_week = today
     year = next_week.year
     weeknum = next_week.isocalendar()[1]
-    return render_template("pages/main/schedule.html", current_weeknum = weeknum, current_year = year)
-
+    return render_template("pages/main/schedule.html", current_weeknum=weeknum, current_year=year)
 
 
 @app.route("/api/islands/schedule")
@@ -691,12 +693,9 @@ def schedule_island():
 
     api_url = f"https://api.somtoday.nl/rest/v1/afspraakitems/{student_id}/jaar/{year}/week/{weeknum}?additional=docentAfkortingen"
 
-    api_headers = {
-        "Authorization": f"Bearer {token}",
-        "Accept": "application/json"
-    }
+    api_headers = {"Authorization": f"Bearer {token}", "Accept": "application/json"}
 
-    response = requests.get(api_url, headers = api_headers)
+    response = requests.get(api_url, headers=api_headers)
     api_data = response.json()
 
     api_data = clean_somdata(api_data)
@@ -722,8 +721,8 @@ def schedule_island():
         eight_am = datetime(dt_start.year, dt_start.month, dt_start.day, 8, 0)
         minutes_since_8am = max(0, (dt_start - eight_am).total_seconds() // 60)
 
-        appointment["height"] = duration_minutes * (1/6)
-        appointment["top"] = minutes_since_8am * (1/6)
+        appointment["height"] = duration_minutes * (1 / 6)
+        appointment["top"] = minutes_since_8am * (1 / 6)
 
         if appointment.get("beginLesuur"):
             if appointment.get("eindLesuur"):
@@ -736,31 +735,29 @@ def schedule_island():
 
         schedule_data[dt_start.weekday()].append(appointment)
 
-
     # This is very broken, but i dont want to fix
 
     for daydata in schedule_data:
         daydata = sorted(daydata, key=lambda x: x["dt_start"])
 
         for appt in daydata:
-            overlapping = [a for a in daydata if not (a['dt_end'] <= appt['dt_start'] or a['dt_start'] >= appt['dt_end'])]
+            overlapping = [a for a in daydata if not (a["dt_end"] <= appt["dt_start"] or a["dt_start"] >= appt["dt_end"])]
             count = len(overlapping)
 
             # Position is the percentage of left-margin that needs to be added
-            
+
             if count == 1:
                 appt["position"] = 0
                 appt["width"] = 100
             else:
-                index = sorted(overlapping, key=lambda x: x['dt_end']).index(appt)
+                index = sorted(overlapping, key=lambda x: x["dt_end"]).index(appt)
                 appt["position"] = index * (100 / count)
                 appt["width"] = 100 / count
 
     zipped_data = get_zipped_data_with_dates(year, weeknum, schedule_data)
 
-    # print(json.dumps(test_save(schedule_data), indent=4))
+    return render_template("islands/schedule-island.html", zipped_data=zipped_data)
 
-    return render_template("islands/schedule-island.html", zipped_data = zipped_data)
 
 @app.route("/planner")
 @use_session_data
@@ -773,8 +770,7 @@ def planner_main():
     year = next_week.year
     weeknum = next_week.isocalendar()[1]
 
-    return render_template("pages/main/planner.html", current_weeknum = weeknum, current_year = year)
-
+    return render_template("pages/main/planner.html", current_weeknum=weeknum, current_year=year)
 
 
 @app.route("/api/islands/planner")
@@ -795,26 +791,21 @@ def planner_island():
         weeknum = next_week.isocalendar()[1]
         year = next_week.year
 
-    
-    api_headers = {
-        "Authorization": f"Bearer {token}",
-        "Accept": "application/json"
-    }
+    api_headers = {"Authorization": f"Bearer {token}", "Accept": "application/json"}
 
     api_url1 = f"https://api.somtoday.nl/rest/v1/studiewijzeritemafspraaktoekenningen?geenDifferentiatieOfGedifferentieerdVoorLeerling={student_id}&jaarWeek={year}~{weeknum}&additional=leerlingen&additional=swigemaaktVinkjes&additional=lesgroep&additional=leerlingenMetInleveringStatus&additional=leerlingProjectgroep&additional=studiewijzerId"
 
-
-    response1 = requests.get(api_url1, headers = api_headers)
+    response1 = requests.get(api_url1, headers=api_headers)
     api_data1 = response1.json()
 
     api_url2 = f"https://api.somtoday.nl/rest/v1/studiewijzeritemdagtoekenningen?geenDifferentiatieOfGedifferentieerdVoorLeerling={student_id}&jaarWeek={year}~{weeknum}&additional=leerlingen&additional=swigemaaktVinkjes&additional=lesgroep&additional=leerlingenMetInleveringStatus&additional=leerlingProjectgroep&additional=studiewijzerId"
-    
-    response2 = requests.get(api_url2, headers = api_headers)
+
+    response2 = requests.get(api_url2, headers=api_headers)
     api_data2 = response2.json()
 
     api_data = api_data1["items"] + api_data2["items"]
 
-    #api_data = clean_somdata(api_data)
+    # api_data = clean_somdata(api_data)
 
     planner_data = [[], [], [], [], []]
 
@@ -842,11 +833,10 @@ def planner_island():
         else:
             homework["is_finished"] = False
             homework["id"] = homework["links"][0]["id"]
-        
-    
+
     zipped_data = get_zipped_data_with_dates(year, weeknum, planner_data)
 
-    return render_template("islands/planner-island.html", zipped_data = zipped_data)
+    return render_template("islands/planner-island.html", zipped_data=zipped_data)
 
 
 @app.route("/api/finish_homework", methods=["PUT"])
@@ -861,31 +851,26 @@ def finish_homework():
 
     api_data = {
         "leerling": {
-                "links": [
-                    {
-                        "id": student_id,
-                        "rel": "self",
-                        "href": f"https://api.somtoday.nl/rest/v1/leerlingen/{student_id}"
-                    }
-                ]
-            },
-            "swiToekenningId": id,
-        "gemaakt": False if "unfinish" in finish_status.lower() else True
+            "links": [
+                {
+                    "id": student_id,
+                    "rel": "self",
+                    "href": f"https://api.somtoday.nl/rest/v1/leerlingen/{student_id}",
+                }
+            ]
+        },
+        "swiToekenningId": id,
+        "gemaakt": False if "unfinish" in finish_status.lower() else True,
     }
 
-    api_headers = {
-        "Authorization": f"Bearer {token}",
-        "Accept": "application/json"
-    }
+    api_headers = {"Authorization": f"Bearer {token}", "Accept": "application/json"}
 
-    response = requests.put(api_url, headers = api_headers, json = api_data)
-
+    response = requests.put(api_url, headers=api_headers, json=api_data)
 
     if response.status_code == requests.codes.ok:
         return "ok", 200
     else:
         return "error", 500
-
 
 
 @app.route("/info")
@@ -894,10 +879,8 @@ def info():
     return render_template("pages/main/info.html", **comdepdata)
 
 
-
-
-
 # Identicons API
+
 
 @app.route("/api/identicon/<username>")
 @excluded
@@ -914,21 +897,46 @@ def identicon(username):
 
 # Loading icon API
 
+
 @app.route("/api/loading.gif")
 @excluded
 def generate_gif():
     speed = int(request.args.get("speed", 670))
 
-    images = [Image.open(io.BytesIO(render_identicon("".join(random.choices(string.ascii_letters + string.digits, k=random.randint(5, 20))), (0, 0, 0, 0)))) for _ in range(20)]
+    images = [
+        Image.open(
+            io.BytesIO(
+                render_identicon(
+                    "".join(
+                        random.choices(
+                            string.ascii_letters + string.digits,
+                            k=random.randint(5, 20),
+                        )
+                    ),
+                    (0, 0, 0, 0),
+                )
+            )
+        )
+        for _ in range(20)
+    ]
 
     gif_bytes = io.BytesIO()
-    images[0].save(gif_bytes, format="GIF", save_all=True, append_images=images[1:], duration=speed, loop=0, disposal=2)
+    images[0].save(
+        gif_bytes,
+        format="GIF",
+        save_all=True,
+        append_images=images[1:],
+        duration=speed,
+        loop=0,
+        disposal=2,
+    )
     gif_bytes.seek(0)
 
     return Response(gif_bytes.read(), mimetype="image/gif")
 
 
 # Error pages
+
 
 @app.errorhandler(404)
 @excluded

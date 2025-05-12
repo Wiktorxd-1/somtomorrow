@@ -274,8 +274,6 @@ du-island[loading] > *:not(#island-loading) {
     margin: auto;
 }
 
-
-
 .info-panel {
     position: fixed;
     bottom: 0;
@@ -288,15 +286,13 @@ du-island[loading] > *:not(#island-loading) {
     z-index: 100;
     cursor: initial;
     font-size: 1.1em;
-    
-    
+
     gap: 15px;
     flex-direction: row;
     justify-content: space-between;
     flex-wrap: wrap;
 
     animation: slideUp 300ms ease-out forwards;
-    
 }
 
 .unavailable {
@@ -304,6 +300,10 @@ du-island[loading] > *:not(#island-loading) {
     font-weight: 400;
 }
 
+ul,
+ol {
+    padding-inline-start: 1em;
+}
 
 @keyframes slideUp {
     from {

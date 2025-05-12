@@ -2,7 +2,7 @@
     <div class="daycontainer timescontainer">
         <div class="dayheader"></div>
         <div class="dayitems timeitems">
-            {% for i in range(10) %}
+            {% for i in range(11) %}
                 <div class="time" style="top: {{ i * 10}}%">{{ '%02d' % (i + 8) }}:00</div>
             {% endfor %}
         </div>
@@ -12,7 +12,7 @@
             <div class="dayheader{% if current_day_class %} today{% endif %}">{{ day_name }}</div>
                 <div class="dayitems">
 
-                {% for i in range(10) %}
+                {% for i in range(11) %}
                     <div class="line" style="top: {{ i * 10}}%"></div>
                 {% endfor %}
 
@@ -33,11 +33,11 @@
                                     <span class="info-panel-icon">{{ appointment.icon | safe }}</span>
                                     <span class="info-panel-subject">{{ appointment.title_full }}</span>
                                 </div>
-                                <span class="info-panel-tile-title-main">{{ appointment.titel  or '<span class="unavailable">Onbekend</span>' | safe }}</span>
+                                <span class="info-panel-tile-title-main">{{ (appointment.titel  or '<span class="unavailable">Onbekend</span>') | safe }}</span>
                             </div>
                             <div class="info-panel-tile-location info-panel-tile">
                                 <span class="info-panel-tile-title">Locatie <i class="fa-solid fa-location-dot"></i></span>
-                                <span class="info-panel-location">{{ appointment.locatie or '<span class="unavailable">Onbekend</span>' | safe }}</span>
+                                <span class="info-panel-location">{{ (appointment.locatie or '<span class="unavailable">Onbekend</span>') | safe }}</span>
                             </div>
                             <div class="info-panel-tile-time info-panel-tile">
                                 <span class="info-panel-tile-title">Tijd <i class="fa-solid fa-clock"></i></span>
@@ -45,7 +45,7 @@
                             </div>
                             <div class="info-panel-tile-description info-panel-tile">
                                 <span class="info-panel-tile-title">Omschrijving <i class="fa-solid fa-circle-info"></i></span>
-                                <span class="info-panel-description">{{ appointment.omschrijving or '<span class="unavailable">Onbekend</span>' | safe }}</span>
+                                <span class="info-panel-description">{{ (appointment.omschrijving or '<span class="unavailable">Onbekend</span>') | safe }}</span>
                             </div>
                             <div class="info-panel-tile-classgroup info-panel-tile">
                                 <span class="info-panel-tile-title">Lesgroep <i class="fa-solid fa-users"></i></span>
@@ -64,11 +64,36 @@
                         </div>
                     </div>
                 {% endfor %}
+
+                {% if current_day_class %}
+                    <div class="line" id="current-line"></div>
+                {% endif %}
             </div>
         </div>
     {% endfor %}
 </div>
 
+<script>
+    const currentLine = document.getElementById("current-line")
+
+    function update() {
+        const now = new Date();
+
+        const todayAtEight = new Date();
+        todayAtEight.setHours(8, 0, 0, 0);
+
+        const diffInMs = now - todayAtEight;
+        const diffInMinutes = diffInMs / (1000 * 60);
+
+        if (currentLine) {
+            currentLine.style.top = diffInMinutes * (1/6) + "%";
+        }
+    }
+    update()
+    setInterval(() => {
+        update()
+    }, 10000);
+</script>
 
 <script>
     document.addEventListener("click", function (event) {
@@ -80,12 +105,16 @@
                 appo.classList.add("appo-active");
                 appoPanel.style.animation = "";
             } else {
-                appo.style.zIndex = 30;
-                appoPanel.style.animation = "slideDown 300ms ease-out forwards";
-                setTimeout(() => {
-                    appo.classList.remove("appo-active");
-                    appo.style.zIndex = "";
-                }, 300);
+                if (appo.classList.contains("appo-active")) {
+                    appoPanel.style.zIndex = 90;
+                    appo.style.zIndex = 30;
+                    appoPanel.style.animation = "slideDown 300ms ease-out forwards";
+                    setTimeout(() => {
+                        appo.classList.remove("appo-active");
+                        appo.style.zIndex = "";
+                        appoPanel.style.zIndex = "";
+                    }, 300);
+                }
             }
         });
     });

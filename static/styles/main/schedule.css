@@ -56,20 +56,19 @@
     border-radius: 10px;
     border: 1px solid #666;
     background: var(--back);
-    padding: 5px 10px;
+    padding: 10px;
     z-index: 30;
-    grid-column: 1 / -1;
     hyphens: auto;
-    display: flex;
-    align-items: center;
-    font-size: 0.9em;
-    gap: 5px;
     cursor: pointer;
     transition: 200ms all ease-in-out;
-    flex-direction: row;
-    flex-wrap: wrap;
     overflow: hidden;
     position: absolute;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-content: center;
 }
 
 .appointment:hover,
@@ -87,18 +86,19 @@
 }
 
 .appo-subject {
-    flex-grow: 1;
     display: flex;
     flex-direction: row;
     gap: 5px;
-    flex-wrap: wrap;
     overflow: hidden;
+    flex-grow: 1;
+    margin-right: 5px;
 }
 
 .appo-icon {
     display: flex;
     align-items: center;
     justify-content: center;
+    font-size: .8em;
 }
 
 .appo-icon img {
@@ -157,4 +157,9 @@
 }
 .info-panel-tile-title-main {
     color: #aaa;
+}
+
+#current-line {
+    border-color: var(--purple);
+    border-width: 3px;
 }
