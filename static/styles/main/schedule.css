@@ -121,4 +121,8 @@
 #current-line {
     border-color: var(--purple);
     border-width: 3px;
+    z-index: 60;
+    width: 110%;
+    left: -5%;
+    border-radius: 100px;
 }

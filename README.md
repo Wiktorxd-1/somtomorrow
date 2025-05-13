@@ -1,17 +1,17 @@
 # Somtomorrow
 
 A next-gen Somtoday webapp that works how students want it to work.  
-Built in Flask and Jinja.
-
-It's currently very much a prototype but it works and that's just amazing!
+Built with the amazing Flask framework and the Jinja templating engine.  
+It's currently still a prototype, but what we have already built is quite great :D
 
 ## Run yourself
 
-- clone the repo  
-- cd into the repo  
-- run `pip install -r requirements.txt` to install stuff  
-- run `flask --app main run` (or `python main.py`)  
-- visit `localhost:5000` and there it is!
+Flask is very simple, so this is all you need to run the app locally:
+
+- Clone and cd into the repo
+- Run `pip install -r requirements.txt` to install stuff
+- Run `python main.py` (Windows and some Linux and macOS installations) or `python3 main.py` (Linux and macOS)
+- Visit `localhost:4000` and there it is!
 
 ## To-do
 
@@ -19,7 +19,7 @@ Yeah it's a lot...
 
 ### Auth
 
-- [ ] Add long term login with refresh tokens
+- [ ] Login once and store the refresh token -> connect somtd with somtm acc or just automatic logins with sessions?
 - [ ] Maybe look into using the Somtoday login after all with a kind of redirect?
 - [ ] Fix Authtoday
 
@@ -32,6 +32,8 @@ Yeah it's a lot...
 #### Dashboard
 
 - [ ] Better design
+- [ ] Add recently used leermids
+- [ ] Add next schedule appo
 
 #### Grades
 
@@ -46,14 +48,12 @@ Yeah it's a lot...
   - [ ] Histograph for all grades
   - [ ] Median, average and stuff
 
-#### Planner
-
-- [ ] Add info panel
-
 #### Schedule
 
-- [ ] Diffrent appointment types (*inidvidueel*, *rooster*, *examen*, *toets*)
+- [ ] Differ between appointment types (*inidvidueel*, *rooster*, *examen*, *toets*)
 
 #### Other
 
-- [ ] Leermiddelen
+- [ ] Leermids
+- [ ] Afwezigheid
+- [ ] Subjects (also leermids???)

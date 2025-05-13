@@ -123,11 +123,35 @@
     display: flex;
 }
 
-.info-panel {
+.homeworkitem .info-panel {
+    font-size: 1.6em;
+}
+
+.homeworkitem .info-panel-tile-content * {
+    background: unset !important;
+    color: unset !important;
+}
+
+.homeworkitem .info-panel-tile-content {
+    font-weight: 400;
+    font-size: .9em;
+}
+
+.homeworkitem .info-panel-tile-content h1 {
+    font-weight: 800;
     font-size: 1.3em;
 }
 
-.info-panel-tile-content * {
-    background: unset !important;
-    color: unset !important;
+.no-homework {
+    text-align: center;
+}
+
+
+
+@media (max-width: 1000px) {
+    .weekcontainer {
+        grid-template-rows: repeat(5, auto);
+        grid-template-columns: unset;
+        gap: 40px;
+    }
 }

@@ -2,33 +2,39 @@
     {% for day, day_name, current_day_class in zipped_data %}
         <div class="daycontainer">
             <div class="dayheader{% if current_day_class %} today{% endif %}">{{ day_name }}</div>
-            {% for homework in day %}
-                <div class="homeworkitem {{ homework.type }}">
-                    <span class="subject-icon">{{ homework.icon | safe }}</span>
-                    <span class="subject-name" data-subject-full="{{ homework.subject_long }}" data-subject-short="{{ homework.subject_short }}">{{ homework.subject_long }}</span>
-                    <span class="homework-title">{{ homework.title }}</span>
-                    <div class="homework-finished-container{{ ' finished' if homework.is_finished else ' unfinised' }}" id="{{ homework.id }}">
-                        <!-- For homework that is finished on load -->
-                        {% if homework.is_finished %} 
-                            <i class="fa-solid fa-check"></i>
-                        {% endif %}
-                    </div>
+            {% if not day %} 
+                <div class="no-homework unavailable">
+                    Geen items op de planner!
+                </div>
+            {% else %}
+                {% for homework in day %}
+                    <div class="homeworkitem {{ homework.type }}">
+                        <span class="subject-icon">{{ homework.icon | safe }}</span>
+                        <span class="subject-name" data-subject-full="{{ homework.subject_long }}" data-subject-short="{{ homework.subject_short }}">{{ homework.subject_long }}</span>
+                        <span class="homework-title">{{ homework.title }}</span>
+                        <div class="homework-finished-container{{ ' finished' if homework.is_finished else ' unfinised' }}" id="{{ homework.id }}">
+                            <!-- For homework that is finished on load -->
+                            {% if homework.is_finished %} 
+                                <i class="fa-solid fa-check"></i>
+                            {% endif %}
+                        </div>
 
 
-                    <div class="info-panel">
-                        <div class="info-panel-tile-subject-title">
-                            <div class="info-panel-tile-subject-main">
-                                <span class="info-panel-icon">{{ homework.icon | safe }}</span>
-                                <span class="info-panel-subject">{{ homework.subject_long }}</span>
+                        <div class="info-panel">
+                            <div class="info-panel-tile-subject-title">
+                                <div class="info-panel-tile-subject-main">
+                                    <span class="info-panel-icon">{{ homework.icon | safe }}</span>
+                                    <span class="info-panel-subject">{{ homework.subject_long }}</span>
+                                </div>
+                            </div>
+                            <div class="info-panel-tile-content info-panel-tile">
+                                <h1>{{ homework.studiewijzerItem.onderwerp }}</h1>
+                                {{ homework.studiewijzerItem.omschrijving | safe }}
                             </div>
                         </div>
-                        <div class="info-panel-tile-content info-panel-tile">
-                            <h1>{{ homework.studiewijzerItem.onderwerp }}</h1>
-                            {{ homework.studiewijzerItem.omschrijving | safe }}
-                        </div>
                     </div>
-                </div>
-            {% endfor %}
+                {% endfor %}
+            {% endif %}
         </div>
     {% endfor %}
 </div>
@@ -39,19 +45,20 @@
             const hwPanel = hw.querySelector(".info-panel");
             const checkBox = hw.querySelector(".homework-finished-container")
 
-
-            if (hw.contains(event.target) && !checkBox.contains(event.target)) {
-                hw.classList.add("hw-active");
-                hwPanel.style.animation = "";
-            } else if (hw.classList.contains("hw-active") && !checkBox.contains(event.target)) {
-                hwPanel.style.zIndex = 90;
-                hw.style.zIndex = 30;
-                hwPanel.style.animation = "slideDown 300ms ease-out forwards";
-                setTimeout(() => {
-                    hw.classList.remove("hw-active");
-                    hw.style.zIndex = "";
-                    hwPanel.style.zIndex = "";
-                }, 300);
+            if (!checkBox.contains(event.target)) {
+                if (hw.contains(event.target)) {
+                    hw.classList.add("hw-active");
+                    hwPanel.style.animation = "";
+                } else if (hw.classList.contains("hw-active")) {
+                    hwPanel.style.zIndex = 90;
+                    hw.style.zIndex = 30;
+                    hwPanel.style.animation = "slideDown 300ms ease-out forwards";
+                    setTimeout(() => {
+                        hw.classList.remove("hw-active");
+                        hw.style.zIndex = "";
+                        hwPanel.style.zIndex = "";
+                    }, 300);
+                }
             }
         });
     });
@@ -108,7 +115,7 @@
                     }
                 } else {
                     checkBox.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i>';
-                    setTimeout(() => checkBox.innerHTML = "", 1500);
+                    setTimeout(() => checkBox.innerHTML = "", 2000);
                 }
             }
         });
