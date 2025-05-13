@@ -174,6 +174,7 @@ def get_token():
 
     else:
         response.raise_for_status()
+
         authdata = response.json()
         access_token = authdata["access_token"]
         success = set_token_and_info(access_token)
@@ -732,6 +733,7 @@ def schedule_island():
         appointment["start_time"] = dt_start.strftime("%H:%M")
         appointment["end_time"] = dt_end.strftime("%H:%M")
         appointment["type"] = appointment["afspraakItemType"].lower()
+        appointment["date"] = dt_start.strftime("%a %d %b")
 
         schedule_data[dt_start.weekday()].append(appointment)
 
@@ -815,10 +817,14 @@ def planner_island():
         homework["subject_long"] = capit(subject_name).replace("e taal en literatuur", "")
         homework["subject_short"] = homework["lesgroep"]["vak"]["afkorting"]
 
-        if homework["studiewijzerItem"].get("onderwerp"):
-            homework["title"] = max_len(remove_html(homework["studiewijzerItem"]["onderwerp"]), 35)
+        if homework.get("studiewijzerItem"):
+            if homework["studiewijzerItem"].get("onderwerp"):
+                homework["title"] = max_len(remove_html(homework["studiewijzerItem"]["onderwerp"]), 35)
+            else:
+                homework["title"] = max_len(remove_html(homework["studiewijzerItem"]["omschrijving"]), 35)
         else:
-            homework["title"] = max_len(remove_html(homework["studiewijzerItem"]["omschrijving"]), 35)
+            continue
+
         homework["icon"] = get_icon(subject_name)
         homework["type"] = "inleveropdracht" if homework["studiewijzerItem"]["inleverperiodes"] else homework["studiewijzerItem"].get("huiswerkType", "undefined").lower()
         planner_data[dt.weekday()].append(homework)

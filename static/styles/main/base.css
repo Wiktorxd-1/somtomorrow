@@ -289,7 +289,7 @@ du-island[loading] > *:not(#island-loading) {
 
     gap: 15px;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: center;
     flex-wrap: wrap;
 
     animation: slideUp 300ms ease-out forwards;

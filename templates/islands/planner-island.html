@@ -27,9 +27,13 @@
                                     <span class="info-panel-subject">{{ homework.subject_long }}</span>
                                 </div>
                             </div>
+                            <div class="info-panel-tile-type info-panel-tile">
+                                <span class="info-panel-tile-title">Soort <i class="fa-solid fa-circle-info"></i></span>
+                                <span class="info-panel-description">{{ homework.type.capitalize() }}</span>
+                            </div>
                             <div class="info-panel-tile-content info-panel-tile">
                                 <h1>{{ homework.studiewijzerItem.onderwerp }}</h1>
-                                {{ homework.studiewijzerItem.omschrijving | safe }}
+                                {{ (homework.studiewijzerItem.omschrijving or '<span class="unavailable">Geen verdere omschrijving</span>') | safe }}
                             </div>
                         </div>
                     </div>

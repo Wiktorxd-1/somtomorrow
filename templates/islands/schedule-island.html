@@ -40,8 +40,8 @@
                                 <span class="info-panel-location">{{ (appointment.locatie or '<span class="unavailable">Onbekend</span>') | safe }}</span>
                             </div>
                             <div class="info-panel-tile-time info-panel-tile">
-                                <span class="info-panel-tile-title">Tijd <i class="fa-solid fa-clock"></i></span>
-                                <span class="info-panel-time">{{ appointment.lesson_hours ~ ': ' if appointment.lesson_hours else '' }}{{ appointment.start_time }} - {{ appointment.end_time }}</span>
+                                <span class="info-panel-tile-title">Datum & tijd <i class="fa-solid fa-clock"></i></span>
+                                <span class="info-panel-time">{{ appointment.date }} - {{ appointment.start_time }} tot {{ appointment.end_time }}{{ ' (' ~ appointment.lesson_hours ~ ')' if appointment.lesson_hours else '' }}</span>
                             </div>
                             <div class="info-panel-tile-description info-panel-tile">
                                 <span class="info-panel-tile-title">Omschrijving <i class="fa-solid fa-circle-info"></i></span>
@@ -92,7 +92,7 @@
     update()
     setInterval(() => {
         update()
-    }, 10000);
+    }, 1000);
 </script>
 
 <script>

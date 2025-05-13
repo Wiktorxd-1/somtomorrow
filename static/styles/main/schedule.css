@@ -119,10 +119,10 @@
 }
 
 #current-line {
-    border-color: var(--purple);
-    border-width: 3px;
-    z-index: 60;
+    z-index: 40;
     width: 110%;
     left: -5%;
     border-radius: 100px;
+    opacity: 0.75;
+    border-bottom: 4px solid var(--purple);
 }
