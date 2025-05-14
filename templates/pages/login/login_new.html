@@ -1,0 +1,120 @@
+{% extends "pages/login/login_base.html" %}
+
+{% block mainlogin %}
+    <form method="post" id="loginform">
+        <div class="schoolcontainer">
+            <label for="uuid">School uuid</label>
+            <input type="text" id="schoolinput" name="uuid" required>
+        </div>
+
+        <div class="usernamecontainer">
+            <label for="username">Gebruikersnaam</label>
+            <input type="text" id="usernameinput" name="username" required>
+        </div>
+
+        <div class="passwordcontainer">
+            <label for="pass">Wachtwoord</label>
+            <input type="password" id="passwordinput" name="password" required>
+        </div>
+
+        <input type="submit" id="loginbutton" value="Inloggen">
+    </form>
+{% endblock %}
+
+{% block othercontent %}
+    <div id="loading-container">
+        <h1>Data ophalen bij Somtoday...</h1>
+        <img src="/api/loading.gif">
+        <h2>Dit kan eventjes duren. Sorry!</h2>
+    </div>
+{% endblock %}     
+
+{% block otherlogin %}<a href="/login/own_token" class="otherloginmethod">Inloggen met een OAuth-token</a>{% endblock %}
+
+{% block scripts %}
+    <script>
+        const loginForm = document.getElementById("loginform");
+        const messages = document.getElementById("messages");
+        const loadingContainer = document.getElementById("loading-container");
+
+        const hideOnLoad = document.querySelectorAll(".hide-on-load");
+
+        function addMessage(text, type) {
+            let message = document.createElement("div");
+            message.innerHTML = text;
+            message.classList.add("message", type);
+
+            if (messages.children.length >= 5) {
+                messages.removeChild(messages.firstChild);
+            }
+
+            messages.appendChild(message);
+        }
+
+        loginForm.addEventListener("submit", function(event) {
+            event.preventDefault();
+            
+            setTimeout(() => {
+                loadingContainer.style.display = "unset";
+                loadingContainer.style.animation = "fadeIn 400ms forwards";
+            }, 600);
+            
+            hideOnLoad.forEach(element => {
+                element.style.animation = "fadeOut 400ms forwards";
+                setTimeout(() => {
+                    element.style.display = "none";
+                }, 400);
+            });
+
+            let formData = new FormData(this);
+            
+            fetch("/login/auth_new", {
+                method: "POST",
+                body: formData
+            })
+                .then(response => {
+                    if(response.status == 500) {
+                        throw "Authentication server returned an internal error."
+                    } else return response;
+                })
+
+                .then(response => response.json())
+
+                .then(data => {
+                    if (data.status === "success") {
+                        window.location.href = "/dashboard";
+                    } else {
+                        addMessage(`Error! ${data.message ? data.message : ""}`, "error");
+
+                        setTimeout(() => {
+                            hideOnLoad.forEach(element => {
+                                element.style.display = "unset";
+                                element.style.animation = "fadeIn 200ms forwards";
+                            });
+                        }, 400);
+                        
+                        loadingContainer.style.animation = "fadeOut 200ms forwards";
+                        setTimeout(() => {
+                            loadingContainer.style.display = "none";
+                        }, 200);
+                    }
+                })
+                
+                .catch(error => {
+                    addMessage(`Error! ${error}`, "error");
+
+                    setTimeout(() => {
+                        hideOnLoad.forEach(element => {
+                            element.style.display = "unset";
+                            element.style.animation = "fadeIn 200ms forwards";
+                        });
+                    }, 400);
+                    
+                    loadingContainer.style.animation = "fadeOut 200ms forwards";
+                    setTimeout(() => {
+                        loadingContainer.style.display = "none";
+                    }, 200);
+                });
+        });
+    </script>
+{% endblock %}
