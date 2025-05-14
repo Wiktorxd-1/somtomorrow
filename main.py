@@ -1,36 +1,8 @@
-from flask import (
-    Flask,
-    render_template,
-    request,
-    redirect,
-    url_for,
-    session,
-    flash,
-    send_from_directory,
-    g,
-    send_file,
-    jsonify,
-    Response,
-)
-
-
-import time
-from urllib.parse import urlparse, parse_qs
-import selenium
-from selenium import webdriver
-import requests
-import selenium.common
-from selenium.webdriver.common.by import By
-from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.chrome.options import Options
-
+from flask import Flask, render_template, request, redirect, url_for, session, flash, send_from_directory, g, send_file, jsonify, Response
 
 from PIL import Image
 from datetime import timedelta, datetime, timezone
 from functools import wraps
-
-from identicon import render_identicon
-
 import io
 import json
 import locale
@@ -41,7 +13,9 @@ import re
 import requests
 import string
 import subprocess
+import time
 
+from identicon import render_identicon
 
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
@@ -264,93 +238,6 @@ def set_token_and_info(token):
 @excluded
 def login_new():
     return render_template("pages/login/login_new.html", **comdepdata)
-
-
-
-def auth_new(uuid, username, password):
-    base_url = (
-        f"https://somtoday.nl/oauth2/authorize?redirect_uri=somtoday://nl.topicus.somtoday.leerling/oauth/callback&client_id=somtoday-leerling-native&response_type=code&prompt=login&state=testets&scope=openid&code_challenge=tCqjy6FPb1kdOfvSa43D8a7j8FLDmKFCAz8EdRGdtQA&code_challenge_method=S256&tenant_uuid={uuid}"
-    )
-
-    options = Options()
-    options.add_argument("--headless")
-    options.add_argument("--disable-gpu")
-    options.add_argument("--no-sandbox")
-    options.add_argument("--disable-dev-shm-usage")
-    browser = webdriver.Chrome(options=options)
-
-    def login():
-        browser.get(base_url)
-
-        username_field = browser.find_element(By.ID, "usernameField")
-        username_field.send_keys(username)
-        username_field.send_keys(Keys.RETURN)
-
-        password_field = browser.find_element(By.ID, "password-field")
-        password_field.send_keys(password)
-        password_field.send_keys(Keys.RETURN)
-
-        attempt = 0
-
-        while attempt < 3:
-            console_logs = browser.get_log("browser")
-            for log_entry in console_logs:
-                if "Failed to launch" in log_entry["message"]:
-                    url = log_entry["message"].split("'")[1]
-                    code = parse_qs(urlparse(url).query)["code"][0]
-
-                    # Exchange the authorization code for tokens
-                    payload = {"grant_type": "authorization_code", "redirect_uri": "somtoday://nl.topicus.somtoday.leerling/oauth/callback", "code_verifier": "t9b9-QCBB3hwdYa3UW2U2c9hhrhNzDdPww8Xp6wETWQ", "code": code, "scope": "openid", "client_id": "somtoday-leerling-native"}
-
-                    headers = {"Content-Type": "application/x-www-form-urlencoded"}
-
-                    response = requests.post("https://somtoday.nl/oauth2/token", data=payload, headers=headers)
-                    token_data = response.json()
-                    browser.quit()
-                    return token_data
-
-            time.sleep(1)
-
-            password_field = browser.find_element(By.ID, "password-field")
-            password_field.send_keys(password)
-            password_field.send_keys(Keys.RETURN)
-
-            attempt += 1
-            print(f"attempt {attempt}")
-
-        return {"message": "error"}
-
-    try:
-        return login()
-    except selenium.common.exceptions.NoSuchElementException:
-        # Retry
-        print("Ouioui")
-        return login()
-    except Exception as e:
-        print(e)
-        return {"message": "error"}
-
-
-@app.route("/login/auth_new", methods=["POST"])
-@excluded
-def auth_new_route():
-    uuid = request.form.get("uuid")
-    username = request.form.get("username")
-    password = request.form.get("password")
-
-    authdata = auth_new(uuid, username, password)
-
-    print(authdata)
-    
-    access_token = authdata["access_token"]
-    success = set_token_and_info(access_token)
-
-   
-    if not success:
-        return jsonify({"status": "error", "message": "Invalid token!"}), 400
-
-    return jsonify({"status": "success"})
-
 
 
 @app.route("/logout")
