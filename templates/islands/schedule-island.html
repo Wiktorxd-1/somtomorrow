@@ -57,6 +57,16 @@
                                     {% endif %}
                                 </span>
                             </div>
+                            <div class="info-panel-tile-classgroup info-panel-tile">
+                                <span class="info-panel-tile-title">Statusmeldingen <i class="fa-solid fa-users"></i></span>
+                                <span class="info-panel-classgroup">
+                                    {% if appointment.statusNotifications %}
+                                        {{ appointment.statusNotifications | map(attribute="message") | join(", ") }}
+                                    {% else %}
+                                        <span class="unavailable">Geen</span>
+                                    {% endif %}
+                                </span>
+                            </div>
                             <div class="info-panel-tile-teachers info-panel-tile">
                                 <span class="info-panel-tile-title">Docent(en) <i class="fa-solid fa-user"></i></span>
                                 <span class="info-panel-teachers">{{ appointment.docentNamen | join(", ") }}</span>
