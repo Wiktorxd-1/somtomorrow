@@ -50,6 +50,10 @@ def robots():
 def dashboard():
     return render_template("pages/main/dashboard.html")
 
+@base_bp.route("/info")
+@use_session_data
+def info():
+    return render_template("pages/main/info.html")
 
 @base_bp.route("/api/identicon/<username>")
 @excluded

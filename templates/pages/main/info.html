@@ -1,0 +1,24 @@
+{% extends "pages/main/base.html" %}
+
+{% set active_page = "info" %}
+
+{% block title %}Over Somtomorrow{% endblock %}
+
+
+{% block extra_headers %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/main/info.css') }}">
+{% endblock %}
+
+
+{% block content %}
+    <div id="logo-text">
+        <img src="/static/images/logo_padding.png" id="big-logo">
+        <span>Somtomorrow</span>
+    </div>
+    <p><strong>Somtomorrow</strong> is beter werkende Somtoday-client, gemaakt voor en door scholieren.</p>
+    <p>Somtomorrow is een project van <a href="https://dupunkto.org">{du}punkto</a></p>
+    Gemaakt met <a href="https://github.com/pallets/flask" target="_blank">Flask</a> and <a href="https://github.com/pallets/jinja" target="_blank">Jinja</a>, hosted at <a href="https://eu.pythonanywhere.com/" target="_blank">PythonAnwyhere</a>.<br>
+
+    <p>Feedback of nieuwe ideeën: stuur een mailtje naar <a href="mailto:gijs6@dupunkto.org">gijs6@dupunkto.org</a>!</p>
+    
+{% endblock %}

@@ -16,6 +16,7 @@
     padding: 10px;
     display: inline-block;
     border-radius: 10px;
+    cursor: pointer;
 }
 
 #go-to-current-week {

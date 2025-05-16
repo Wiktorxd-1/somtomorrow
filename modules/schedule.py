@@ -50,17 +50,17 @@ def schedule_island():
 
     schedule_data = [[], [], [], [], []]
 
-    for appointment in api_data["items"]:
-        dt_start = datetime.strptime(appointment["beginDatumTijd"], "%Y-%m-%dT%H:%M:%S")
-        dt_end = datetime.strptime(appointment["eindDatumTijd"], "%Y-%m-%dT%H:%M:%S")
+    for appo in api_data["items"]:
+        dt_start = datetime.strptime(appo["beginDatumTijd"], "%Y-%m-%dT%H:%M:%S")
+        dt_end = datetime.strptime(appo["eindDatumTijd"], "%Y-%m-%dT%H:%M:%S")
 
-        appointment["title"] = (capit(appointment["vak"]["naam"]).replace("e taal en literatuur", "") if len(appointment["vak"]["naam"].replace("e taal en literatuur", "")) < 20 else appointment["vak"]["afkorting"].upper()) if appointment.get("vak", {}).get("naam") else appointment["titel"]
-        appointment["title_full"] = capit(appointment["vak"]["naam"]) if appointment.get("vak", {}).get("naam") else appointment["titel"]
+        appo["title"] = (capit(appo["vak"]["naam"]).replace("e taal en literatuur", "") if len(appo["vak"]["naam"].replace("e taal en literatuur", "")) < 20 else appo["vak"]["afkorting"].upper()) if appo.get("vak", {}).get("naam") else appo["titel"]
+        appo["title_full"] = capit(appo["vak"]["naam"]) if appo.get("vak", {}).get("naam") else appo["titel"]
 
-        appointment["icon"] = get_icon(appointment["vak"]["naam"] if appointment.get("vak", {}).get("naam") else appointment["titel"])
+        appo["icon"] = get_icon(appo["vak"]["naam"] if appo.get("vak", {}).get("naam") else appo["titel"])
 
-        appointment["dt_start"] = dt_start
-        appointment["dt_end"] = dt_end
+        appo["dt_start"] = dt_start
+        appo["dt_end"] = dt_end
 
         # The container goes from 8 to 18, so 10 hours, so 100% is 10 hours, so 10% is 60 minutes so 1 minute is 1/6%
 
@@ -69,39 +69,49 @@ def schedule_island():
         eight_am = datetime(dt_start.year, dt_start.month, dt_start.day, 8, 0)
         minutes_since_8am = max(0, (dt_start - eight_am).total_seconds() // 60)
 
-        appointment["height"] = duration_minutes * (1 / 6)
-        appointment["top"] = minutes_since_8am * (1 / 6)
+        appo["height"] = duration_minutes * (1 / 6)
+        appo["top"] = minutes_since_8am * (1 / 6)
 
-        if appointment.get("beginLesuur"):
-            if appointment.get("eindLesuur"):
-                appointment["lesson_hours"] = f"{appointment['beginLesuur']}e" if appointment["beginLesuur"] == appointment["eindLesuur"] else f"{appointment['beginLesuur']}e - {appointment['eindLesuur']}e"
+        if appo.get("beginLesuur"):
+            if appo.get("eindLesuur"):
+                appo["lesson_hours"] = f"{appo['beginLesuur']}e" if appo["beginLesuur"] == appo["eindLesuur"] else f"{appo['beginLesuur']}e - {appo['eindLesuur']}e"
             else:
-                appointment["lesson_hours"] = f"{appointment['beginLesuur']}e"
-        appointment["start_time"] = dt_start.strftime("%H:%M")
-        appointment["end_time"] = dt_end.strftime("%H:%M")
-        appointment["type"] = appointment["afspraakItemType"].lower()
-        appointment["date"] = dt_start.strftime("%a %d %b")
+                appo["lesson_hours"] = f"{appo['beginLesuur']}e"
+        appo["start_time"] = dt_start.strftime("%H:%M")
+        appo["end_time"] = dt_end.strftime("%H:%M")
+        appo["type"] = appo["afspraakItemType"].lower()
+        appo["date"] = dt_start.strftime("%a %d %b")
 
-        schedule_data[dt_start.weekday()].append(appointment)
+        schedule_data[dt_start.weekday()].append(appo)
 
     # This is very broken, but i dont want to fix
 
     for daydata in schedule_data:
         daydata = sorted(daydata, key=lambda x: x["dt_start"])
 
-        for appt in daydata:
-            overlapping = [a for a in daydata if not (a["dt_end"] <= appt["dt_start"] or a["dt_start"] >= appt["dt_end"])]
-            count = len(overlapping)
+        def overlaps(a, b):
+            return not (a["dt_end"] <= b["dt_start"] or a["dt_start"] >= b["dt_end"])
 
-            # Position is the percentage of left-margin that needs to be added
+        for i, appo in enumerate(daydata):
+            appo["column"] = 0
+            used_columns = set()
 
-            if count == 1:
-                appt["position"] = 0
-                appt["width"] = 100
-            else:
-                index = sorted(overlapping, key=lambda x: x["dt_end"]).index(appt)
-                appt["position"] = index * (100 / count)
-                appt["width"] = 100 / count
+            for j, other in enumerate(daydata):
+                if i == j:
+                    continue
+                if overlaps(appo, other):
+                    if "column" in other:
+                        used_columns.add(other["column"])
+
+            col = 0
+            while col in used_columns:
+                col += 1
+            appo["column"] = col
+
+        max_column = max((appo.get("column", 0) for appo in daydata if "column" in appo), default=0) + 1
+        for appo in daydata:
+            appo["width"] = 100 / max_column
+            appo["right"] = appo["column"] * appo["width"]
 
     zipped_data = get_zipped_data_with_dates(year, weeknum, schedule_data, request.args.get("days"))
 
