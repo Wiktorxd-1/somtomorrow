@@ -4,6 +4,8 @@ A next-gen Somtoday webapp that works how students want it to work.
 Built with the amazing Flask framework and the Jinja templating engine.  
 It's currently still a prototype, but what we have already built is quite great :D
 
+![The Somtomorrow dashboard](./dashboard.png)
+
 ## Run yourself
 
 Flask is very simple, so this is all you need to run the app locally:
