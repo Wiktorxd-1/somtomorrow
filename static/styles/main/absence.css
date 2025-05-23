@@ -1,0 +1,31 @@
+#absencetilecontainer {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, auto));
+    gap: 20px;
+}
+
+.absencetile {
+    color: white;
+    border-radius: 10px;
+    border: 1px solid #666;
+    background: var(--back);
+    padding: 10px;
+}
+
+.absence-entry {
+    display: grid;
+    font-size: 0.9em;
+    font-weight: 200;
+}
+
+.absence-entriescontainer {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.absence-description {
+    font-weight: 900;
+    font-size: 1.2em;
+}

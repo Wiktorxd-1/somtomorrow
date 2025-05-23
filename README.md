@@ -1,6 +1,6 @@
 # Somtomorrow
 
-A next-gen Somtoday webapp that works how students want it to work.  
+A next-gen Somtoday web app that works how students want it to work.  
 Built with the amazing Flask framework and the Jinja templating engine.  
 It's currently still a prototype, but what we have already built is quite great :D
 

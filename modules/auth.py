@@ -111,8 +111,6 @@ def set_token_and_info(token):
 
     response = requests.get(url, headers=headers)
 
-    print(response)
-
     if str(response.status_code) == "401":
         return False
 
@@ -137,7 +135,7 @@ def set_token_and_info(token):
 
     session["student_id"] = student_id
     session["first_name"] = first_name
-    session["last_name"] = last_name.replace("Ten Berg", "ten Berg")
+    session["last_name"] = last_name.replace("Ten Berg", "ten Berg")  # Yeah I did just hardcode a fix that my school made in my surname
     session["identicon_name"] = first_name.strip().lower().replace(" ", "") + last_name.strip().lower().replace(" ", "")
     session["school_name"] = schooldata_data["huidigeVestiging"]["naam"]
     session["main_class"] = schooldata_data["stamgroepnaam"]

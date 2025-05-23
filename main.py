@@ -4,6 +4,7 @@ from modules.base import base_bp
 from modules.grades import grades_bp
 from modules.planner import planner_bp
 from modules.schedule import schedule_bp
+from modules.absence import absence_bp
 
 from modules.utils import logged_in, excluded
 
@@ -48,7 +49,7 @@ app.register_blueprint(base_bp)
 app.register_blueprint(grades_bp)
 app.register_blueprint(planner_bp)
 app.register_blueprint(schedule_bp)
-
+app.register_blueprint(absence_bp)
 
 # Error pages
 

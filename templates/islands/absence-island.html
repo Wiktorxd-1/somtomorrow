@@ -1,0 +1,26 @@
+<div id="absencetilecontainer">
+    {% for tiledata in absencedata %}
+        <div class="absencetile">
+            <h2 class="tile-title">{{ tiledata.type }}</h2>
+            <div class="absence-entriescontainer">
+                {% if tiledata.entries %}
+                    {% for entry in tiledata.entries %}
+                        <div class="absence-entry">
+                            <span class="absence-description">
+                                {{ g.capit(entry.omschrijving) }}
+                            </span>
+                            <span class="absence-date">
+                                {{ entry.datetime }}
+                            </span>
+                            <span class="absence-missed-schedule-appos">
+                                {{ entry.afspraken | length }} roosterafspraken gemist
+                            </span>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="unavailable">Geen registraties</div>
+                {% endif %}
+            </div>
+        </div>
+    {% endfor %}
+</div>

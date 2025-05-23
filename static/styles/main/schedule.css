@@ -1,7 +1,7 @@
 .weekcontainer {
     display: grid;
     grid-template-columns: auto repeat(5, 1fr);
-    column-gap: 20px;
+    column-gap: 15px;
 }
 
 .daycontainer {
@@ -31,7 +31,7 @@
 
 .dayitems {
     position: relative;
-    height: 100vh;
+    height: 90vh;
 }
 
 .dayitems .line {

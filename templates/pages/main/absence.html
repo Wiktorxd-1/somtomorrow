@@ -1,0 +1,15 @@
+{% extends "pages/main/base.html" %}
+
+{% set active_page = "absence" %}
+
+{% block title %}Absentie{% endblock %}
+
+
+{% block extra_headers %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/main/absence.css') }}">
+{% endblock %}
+
+
+{% block content %}
+    <du-island url="absence" />
+{% endblock %}
