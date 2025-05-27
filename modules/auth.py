@@ -121,17 +121,30 @@ def set_token_and_info(token):
 
     last_name = f"{middle_name} {response_data['items'][0]['achternaam']}" if (middle_name := response_data["items"][0].get("voorvoegsel")) else response_data["items"][0]["achternaam"]
 
-    url = f"https://api.somtoday.nl/rest/v1/leerlingen/{student_id}/schoolgegevens"
+    url_schooldata = f"https://api.somtoday.nl/rest/v1/leerlingen/{student_id}/schoolgegevens"
 
-    headers = {
+    headers_schooldata = {
         "Authorization": f"Bearer {token}",
         "Accept": "application/json",
     }
 
-    response_schooldata = requests.get(url, headers=headers)
+    response_schooldata = requests.get(url_schooldata, headers=headers_schooldata)
     response_schooldata.raise_for_status()
 
     schooldata_data = response_schooldata.json()
+
+
+    url_schoolyear = "https://api.somtoday.nl/rest/v1/schooljaren/huidig"
+
+    headers_schoolyear = {
+        "Authorization": f"Bearer {token}",
+        "Accept": "application/json",
+    }
+
+    response_schoolyear = requests.get(url_schoolyear, headers=headers_schoolyear)
+    response_schoolyear.raise_for_status()
+
+    schoolyear_data = response_schoolyear.json()
 
     session["student_id"] = student_id
     session["first_name"] = first_name
@@ -139,7 +152,8 @@ def set_token_and_info(token):
     session["identicon_name"] = first_name.strip().lower().replace(" ", "") + last_name.strip().lower().replace(" ", "")
     session["school_name"] = schooldata_data["huidigeVestiging"]["naam"]
     session["main_class"] = schooldata_data["stamgroepnaam"]
-
+    session["school_year"] = schoolyear_data
+ 
     session["token"] = token
     session["login_time"] = datetime.now(timezone.utc).timestamp()
 

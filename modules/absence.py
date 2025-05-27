@@ -13,8 +13,7 @@ absence_bp = Blueprint("absence", __name__)
 def absence_main():
     return render_template("pages/main/absence.html")
 
-
-@absence_bp.route("/api/islands/registrations")
+@absence_bp.route("/api/islands/absence/registrations")
 @use_session_data
 def registrations_island():
     token = session["token"]
@@ -48,3 +47,24 @@ def registrations_island():
 
     return render_template("islands/absence/registrations-island.html", registrationsdata=data)
 
+
+@absence_bp.route("/api/islands/absence/notifications")
+@use_session_data
+def notifications_island():
+    token = session["token"]
+    
+    schoolyear_start = session["school_year"]["vanafDatum"]
+    schoolyear_end = session["school_year"]["totDatum"]
+
+
+    api_url = f"https://api.somtoday.nl/rest/v1/absentiemeldingen?begindatumtijd={schoolyear_start}&einddatumtijd={schoolyear_end}"
+
+    api_headers = {"Authorization": f"Bearer {token}", "Accept": "application/json"}
+
+    response = requests.get(api_url, headers=api_headers)
+    data = response.json()["items"]
+
+    for notification in data:
+        notification["ding"] = ""
+
+    return render_template("islands/absence/notifications-island.html", notificationsdata=data)
