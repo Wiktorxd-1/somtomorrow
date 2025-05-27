@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="nl">
     <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>{% block title %}{% endblock %} - Somtomorrow</title>
-        <link rel="icon" type="image/x-icon" href="/static/images/favs/fav.ico">
-        <link rel="stylesheet" href="{{ url_for('static', filename='styles/main/base.css') }}">
+        <link rel="icon" type="image/x-icon" href="/static/images/favs/fav.ico" />
+        <link rel="stylesheet" href="{{ url_for('static', filename='styles/main/base.css') }}" />
         <script src="https://kit.fontawesome.com/4a94c21782.js" crossorigin="anonymous"></script>
         <script id="island-component">
             class Island extends HTMLElement {
@@ -24,13 +24,13 @@
                 attributeChangedCallback() {
                     this.reloadData();
                 }
-                
+
                 setLoading() {
                     const loadingIndicator = '<div id="island-loading"><span>Data ophalen...</span><img src="/api/loading.gif?speed=350"></div>';
 
                     this.setAttribute("loading", "");
                     this.loadingNow = true;
-                    this.innerHTML += loadingIndicator;          
+                    this.innerHTML += loadingIndicator;
                 }
 
                 setFinished() {
@@ -42,7 +42,7 @@
                 setData(data) {
                     this.setFinished();
 
-                    this.querySelectorAll("script").forEach(script => script.remove());
+                    this.querySelectorAll("script").forEach((script) => script.remove());
 
                     this.innerHTML = data;
 
@@ -75,25 +75,22 @@
 
                 async reloadData() {
                     const url = this.getAttribute("url");
-                    if(this.loadingNow || !url) return;
+                    if (this.loadingNow || !url) return;
 
                     this.setLoading();
 
                     const response = await fetch(`/api/islands/${url}`);
-                    
+
                     if (response.status === 401) {
                         window.location.href = "/logout";
                         return Promise.reject(new Error("Unauthorized"));
-                    }
-                    else if(response.status == 404) {
+                    } else if (response.status == 404) {
                         this.setError("That is not an island you idiot! HTTP 404 of course");
-                    }
-                    else if(!response.ok) {
+                    } else if (!response.ok) {
                         this.setError(`HTTP error! Status: ${response.status}`);
+                    } else {
+                        this.setData(await response.text());
                     }
-                    else {
-                        this.setData(await response.text());    
-                    }  
                 }
             }
 
@@ -104,28 +101,14 @@
     <body>
         <header id="sidebar">
             <div id="menu">
-                <img src="/static/images/logo_padding.png" id="logo">
-                <a href="/dashboard" class="menu-item{% if active_page == 'dashboard' %} active{% endif %} primary">
-                    <i class="fa-solid fa-house-user"></i> <span>Dashboard</span>
-                </a>
-                <a href="/rooster" class="menu-item{% if active_page == 'schedule' %} active{% endif %} primary">
-                    <i class="fa-solid fa-calendar-days"></i> <span>Rooster</span>
-                </a>
-                <a href="/planner" class="menu-item{% if active_page == 'planner' %} active{% endif %} primary">
-                    <i class="fa-solid fa-clipboard-list"></i> <span>Planner</span>
-                </a>
-                <a href="/cijfers/toetscijfers" class="menu-item{% if active_page == 'grades' %} active{% endif %} primary">
-                    <i class="fa-solid fa-square-poll-vertical"></i> <span>Cijfers</span>
-                </a>
-                <a href="/materialen" class="menu-item{% if active_page == 'materials' %} active{% endif %} primary">
-                    <i class="fa-solid fa-book"></i> <span>Materialen</span>
-                </a>
-                <a href="/absentie" class="menu-item{% if active_page == 'absence' %} active{% endif %} secondary">
-                    <i class="fa-solid fa-clock"></i> <span>Absentie</span>
-                </a>
-                <a href="/vakken" class="menu-item{% if active_page == 'classes' %} active{% endif %} secondary">
-                    <i class="fa-solid fa-book-open"></i> <span>Vakken</span>
-                </a>
+                <img src="/static/images/logo_padding.png" id="logo" />
+                <a href="/dashboard" class="menu-item{% if active_page == 'dashboard' %} active{% endif %} primary"> <i class="fa-solid fa-house-user"></i> <span>Dashboard</span> </a>
+                <a href="/rooster" class="menu-item{% if active_page == 'schedule' %} active{% endif %} primary"> <i class="fa-solid fa-calendar-days"></i> <span>Rooster</span> </a>
+                <a href="/planner" class="menu-item{% if active_page == 'planner' %} active{% endif %} primary"> <i class="fa-solid fa-clipboard-list"></i> <span>Planner</span> </a>
+                <a href="/cijfers/toetscijfers" class="menu-item{% if active_page == 'grades' %} active{% endif %} primary"> <i class="fa-solid fa-square-poll-vertical"></i> <span>Cijfers</span> </a>
+                <a href="/materialen" class="menu-item{% if active_page == 'materials' %} active{% endif %} primary"> <i class="fa-solid fa-book"></i> <span>Materialen</span> </a>
+                <a href="/absentie" class="menu-item{% if active_page == 'absence' %} active{% endif %} secondary"> <i class="fa-solid fa-clock"></i> <span>Absentie</span> </a>
+                <a href="/vakken" class="menu-item{% if active_page == 'classes' %} active{% endif %} secondary"> <i class="fa-solid fa-book-open"></i> <span>Vakken</span> </a>
                 <!--
                 <a href="/schoolinformatie" class="menu-item{% if active_page == 'schoolinfo' %} active{% endif %} secondary">
                     <i class="fa-solid fa-school"></i> <span>Schoolinformatie</span>
@@ -136,12 +119,8 @@
                 -->
             </div>
             <div id="logout-info">
-                <a href="/info" class="menu-item{% if active_page == 'info' %} active{% endif %} secondary">
-                    <i class="fa-solid fa-circle-info"></i> <span>Over Somtomorrow</span>
-                </a>
-                <a href="/logout" class="menu-item">
-                    <i class="fa-solid fa-right-from-bracket"></i> <span>Uitloggen</span>
-                </a>
+                <a href="/info" class="menu-item{% if active_page == 'info' %} active{% endif %} secondary"> <i class="fa-solid fa-circle-info"></i> <span>Over Somtomorrow</span> </a>
+                <a href="/logout" class="menu-item"> <i class="fa-solid fa-right-from-bracket"></i> <span>Uitloggen</span> </a>
             </div>
         </header>
 
@@ -149,16 +128,14 @@
             <div id="topbar">
                 <h1>{{ self.title() }}</h1>
                 <div id="profilecontainer">
-                    <img id="avatar" src="/api/identicon/{{ g.identicon_name }}">
+                    <img id="avatar" src="/api/identicon/{{ g.identicon_name }}" />
                     <div id="userinfocontainer">
                         <span id="userinfoname">{{ g.first_name }} {{ g.last_name }}</span>
                         <span id="userinfoschoolclass">{{ g.school_name }} • {{ g.main_class }}</span>
                     </div>
                 </div>
             </div>
-            <div id="content">
-                {% block content %}{% endblock %}
-            </div>
+            <div id="content">{% block content %}{% endblock %}</div>
         </main>
     </body>
 </html>

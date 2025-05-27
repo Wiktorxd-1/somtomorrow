@@ -35,7 +35,9 @@ def check_login():
 
     excluded_pages = ["static", "favicon", "security", "robots"]
 
-    if any(keyword in request.endpoint for keyword in excluded_pages) or any(keyword in request.url for keyword in excluded_pages):
+    if any(keyword in request.endpoint for keyword in excluded_pages) or any(
+        keyword in request.url for keyword in excluded_pages
+    ):
         return
 
     if not logged_in():

@@ -1,4 +1,13 @@
-from flask import Blueprint, render_template, request, redirect, url_for, session, jsonify, flash
+from flask import (
+    Blueprint,
+    render_template,
+    request,
+    redirect,
+    url_for,
+    session,
+    jsonify,
+    flash,
+)
 import subprocess
 import os
 from datetime import datetime, timezone
@@ -22,13 +31,43 @@ def get_commit_and_deploy_date():
     with open(os.path.join(project_dir, "last_deploy.txt"), "r") as f:
         latest_deploy_date = f.read().strip()
 
-    latest_commit_hash = subprocess.check_output(["git", "log", "-1", "--pretty=format:%h"], cwd=project_dir).strip().decode()
-    latest_commit_hash_long = subprocess.check_output(["git", "log", "-1", "--pretty=format:%H"], cwd=project_dir).strip().decode()
-    latest_commit_timestamp = int(subprocess.check_output(["git", "log", "-1", "--pretty=format:%ct"], cwd=project_dir).strip())
-    latest_commit_date = datetime.fromtimestamp(latest_commit_timestamp).strftime("%d-%m-%Y at %H:%M:%S")
+    latest_commit_hash = (
+        subprocess.check_output(
+            ["git", "log", "-1", "--pretty=format:%h"], cwd=project_dir
+        )
+        .strip()
+        .decode()
+    )
+    latest_commit_hash_long = (
+        subprocess.check_output(
+            ["git", "log", "-1", "--pretty=format:%H"], cwd=project_dir
+        )
+        .strip()
+        .decode()
+    )
+    latest_commit_timestamp = int(
+        subprocess.check_output(
+            ["git", "log", "-1", "--pretty=format:%ct"], cwd=project_dir
+        ).strip()
+    )
+    latest_commit_date = datetime.fromtimestamp(latest_commit_timestamp).strftime(
+        "%d-%m-%Y at %H:%M:%S"
+    )
 
-    author_name = subprocess.check_output(["git", "log", "-1", "--pretty=format:%an"], cwd=project_dir).strip().decode()
-    author_email = subprocess.check_output(["git", "log", "-1", "--pretty=format:%ae"], cwd=project_dir).strip().decode()
+    author_name = (
+        subprocess.check_output(
+            ["git", "log", "-1", "--pretty=format:%an"], cwd=project_dir
+        )
+        .strip()
+        .decode()
+    )
+    author_email = (
+        subprocess.check_output(
+            ["git", "log", "-1", "--pretty=format:%ae"], cwd=project_dir
+        )
+        .strip()
+        .decode()
+    )
 
     comdepdata = {
         "latest_deploy_date": latest_deploy_date,
@@ -67,7 +106,9 @@ def get_token():
     if str(response.status_code) == "503":
         responsedata = response.json()
         errormessage = responsedata["error"]
-        errormessage_formatted = errormessage + "." if not errormessage.endswith(".") else errormessage
+        errormessage_formatted = (
+            errormessage + "." if not errormessage.endswith(".") else errormessage
+        )
 
         return jsonify({"status": "error", "message": errormessage_formatted}), 503
 
@@ -119,9 +160,15 @@ def set_token_and_info(token):
     student_id = response_data["items"][0]["links"][0]["id"]
     first_name = response_data["items"][0]["roepnaam"]
 
-    last_name = f"{middle_name} {response_data['items'][0]['achternaam']}" if (middle_name := response_data["items"][0].get("voorvoegsel")) else response_data["items"][0]["achternaam"]
+    last_name = (
+        f"{middle_name} {response_data['items'][0]['achternaam']}"
+        if (middle_name := response_data["items"][0].get("voorvoegsel"))
+        else response_data["items"][0]["achternaam"]
+    )
 
-    url_schooldata = f"https://api.somtoday.nl/rest/v1/leerlingen/{student_id}/schoolgegevens"
+    url_schooldata = (
+        f"https://api.somtoday.nl/rest/v1/leerlingen/{student_id}/schoolgegevens"
+    )
 
     headers_schooldata = {
         "Authorization": f"Bearer {token}",
@@ -132,7 +179,6 @@ def set_token_and_info(token):
     response_schooldata.raise_for_status()
 
     schooldata_data = response_schooldata.json()
-
 
     url_schoolyear = "https://api.somtoday.nl/rest/v1/schooljaren/huidig"
 
@@ -148,12 +194,16 @@ def set_token_and_info(token):
 
     session["student_id"] = student_id
     session["first_name"] = first_name
-    session["last_name"] = last_name.replace("Ten Berg", "ten Berg")  # Yeah I did just hardcode a fix that my school made in my surname
-    session["identicon_name"] = first_name.strip().lower().replace(" ", "") + last_name.strip().lower().replace(" ", "")
+    session["last_name"] = last_name.replace(
+        "Ten Berg", "ten Berg"
+    )  # Yeah I did just hardcode a fix that my school made in my surname
+    session["identicon_name"] = first_name.strip().lower().replace(
+        " ", ""
+    ) + last_name.strip().lower().replace(" ", "")
     session["school_name"] = schooldata_data["huidigeVestiging"]["naam"]
     session["main_class"] = schooldata_data["stamgroepnaam"]
     session["school_year"] = schoolyear_data
- 
+
     session["token"] = token
     session["login_time"] = datetime.now(timezone.utc).timestamp()
 

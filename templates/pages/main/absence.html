@@ -4,18 +4,19 @@
 
 {% block title %}Absentie{% endblock %}
 
-
 {% block extra_headers %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles/main/absence.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/main/absence.css') }}" />
 {% endblock %}
-
 
 {% block content %}
     <!--Todo: add tooltips to explain the difference between registrations and notifications -->
 
-    <h1>Registraties</h1>
-    <du-island url="absence/registrations"></du-island>
-
-    <h1>Absentiemeldingen</h1>
-    <du-island url="absence/notifications"></du-island>
+    <div>
+        <h1 class="island-title">Registraties</h1>
+        <du-island url="absence/registrations"></du-island>
+    </div>
+    <div>
+        <h1 class="island-title">Absentiemeldingen</h1>
+        <du-island url="absence/notifications"></du-island>
+    </div>
 {% endblock %}

@@ -55,7 +55,10 @@ def extract_color(hex_list):
 def build_grid(hex_list):
     hex_list_tail = hex_list[2:]
 
-    hex_half_grid = [[hex_list_tail[col : col + 2] for col in range(row, row + 2 * 3, 2)] for row in range(0, 2 * 3 * 5, 2 * 3)]
+    hex_half_grid = [
+        [hex_list_tail[col : col + 2] for col in range(row, row + 2 * 3, 2)]
+        for row in range(0, 2 * 3 * 5, 2 * 3)
+    ]
 
     hex_grid = mirror_row(hex_half_grid)
 
@@ -82,7 +85,10 @@ def set_pixels(flatten_grid):
 
 def mirror_row(half_grid):
     opposite_half_grid = [list(reversed(row)) for row in half_grid]
-    grid = [row + mirrored_row[1:] for row, mirrored_row in zip(half_grid, opposite_half_grid)]
+    grid = [
+        row + mirrored_row[1:]
+        for row, mirrored_row in zip(half_grid, opposite_half_grid)
+    ]
 
     return grid
 

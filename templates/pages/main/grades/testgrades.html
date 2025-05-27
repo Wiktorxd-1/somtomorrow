@@ -4,21 +4,15 @@
 
 {% block title %}Toetscijfers{% endblock %}
 
-
 {% block extra_headers %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles/main/grades/testgrades.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/main/grades/testgrades.css') }}" />
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
-{% endblock %}
-
-
-{% block content %}
+    
+    {% endblock %}{% block content %}
+    
     <div id="subpagemenu">
-        <a class="subpagemenu-item active">
-            Alle toetscijfers
-        </a>
-        <a class="subpagemenu-item" href="/cijfers/rapport">
-            Rapportcijfers
-        </a>
+        <a class="subpagemenu-item active"> Alle toetscijfers </a>
+        <a class="subpagemenu-item" href="/cijfers/rapport"> Rapportcijfers </a>
         <!-- Other subpages such as stats and stuff things -->
     </div>
 

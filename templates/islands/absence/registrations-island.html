@@ -6,15 +6,9 @@
                 {% if tiledata.entries %}
                     {% for entry in tiledata.entries %}
                         <div class="absence-entry">
-                            <span class="absence-description">
-                                {{ g.capit(entry.omschrijving) }}
-                            </span>
-                            <span class="absence-date">
-                                {{ entry.datetime }}
-                            </span>
-                            <span class="absence-missed-schedule-appos">
-                                {{ entry.afspraken | length }} roosterafspraken gemist
-                            </span>
+                            <span class="absence-description">{{ g.capit(entry.omschrijving) }}</span>
+                            <span class="absence-date">{{ entry.datetime }}</span>
+                            <span class="absence-missed-schedule-appos">{{ entry.afspraken | length }} roosterafspraken gemist</span>
                         </div>
                     {% endfor %}
                 {% else %}

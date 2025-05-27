@@ -79,7 +79,12 @@ def testgrades_island():
     api_data = clean_somdata(api_data)
 
     types_to_include = ["Toetskolom", "Werkstukcijferkolom", "Advieskolom"]
-    api_data = [item for item in api_data if item["type"] in types_to_include and ("geldendResultaat" in item or "resultaatLabelAfkorting" in item)]  # Filter unwanted grade types
+    api_data = [
+        item
+        for item in api_data
+        if item["type"] in types_to_include
+        and ("geldendResultaat" in item or "resultaatLabelAfkorting" in item)
+    ]  # Filter unwanted grade types
 
     def format_date(dt_entered):
         now = datetime.now(pytz.timezone("Europe/Amsterdam"))
@@ -112,16 +117,22 @@ def testgrades_island():
     for grade in api_data:
         if grade.get("resultaatLabelAfkorting"):
             result = grade["resultaatLabelAfkorting"]
-            dt_entered = datetime.strptime(grade["datumInvoer"], "%Y-%m-%dT%H:%M:%S.%f%z")
+            dt_entered = datetime.strptime(
+                grade["datumInvoer"], "%Y-%m-%dT%H:%M:%S.%f%z"
+            )
         else:
             result = grade["resultaat"]
             real_result = grade["geldendResultaat"]
 
             if result == real_result:
-                dt_entered = datetime.strptime(grade["datumInvoer"], "%Y-%m-%dT%H:%M:%S.%f%z")
+                dt_entered = datetime.strptime(
+                    grade["datumInvoer"], "%Y-%m-%dT%H:%M:%S.%f%z"
+                )
             else:
                 result = real_result
-                dt_entered = datetime.strptime(grade["herkansing"]["datumInvoer"], "%Y-%m-%dT%H:%M:%S.%f%z")
+                dt_entered = datetime.strptime(
+                    grade["herkansing"]["datumInvoer"], "%Y-%m-%dT%H:%M:%S.%f%z"
+                )
 
         formatted_dt_entered = format_date(dt_entered)
 
@@ -137,28 +148,65 @@ def testgrades_island():
         grade["result"] = result
         grade["max_weight"] = max(grade["weging"], grade.get("examenWeging", 0))
 
-        grade["is_fail"] = grade_is_fail(grade.get("geldendResultaat"), grade.get("resultaatLabelAfkorting"))
+        grade["is_fail"] = grade_is_fail(
+            grade.get("geldendResultaat"), grade.get("resultaatLabelAfkorting")
+        )
 
-        grade["confetti"] = True if float(grade.get("geldendResultaat", "0.0").replace(",", ".")) >= 10 else False
+        grade["confetti"] = (
+            True
+            if float(grade.get("geldendResultaat", "0.0").replace(",", ".")) >= 10
+            else False
+        )
 
         if grade.get("herkansing"):
             grade["retake"] = {
                 "first_retake": {
-                    "date": format_date(datetime.strptime(grade["herkansing"]["datumInvoer"], "%Y-%m-%dT%H:%M:%S.%f%z")),
+                    "date": format_date(
+                        datetime.strptime(
+                            grade["herkansing"]["datumInvoer"], "%Y-%m-%dT%H:%M:%S.%f%z"
+                        )
+                    ),
                     "result": grade["herkansing"].get("resultaat", "onbekend"),
-                    "result_is_fail": grade_is_fail(grade["herkansing"].get("resultaat", "onbekend"), ""),
-                    "result_is_confetti": True if float(grade["herkansing"].get("resultaat", "10.0").replace(",", ".")) >= 10 else False,
-                    "effective_result": True if grade["geldendResultaat"] == grade["herkansing"].get("resultaat", "onbekend") else False,
+                    "result_is_fail": grade_is_fail(
+                        grade["herkansing"].get("resultaat", "onbekend"), ""
+                    ),
+                    "result_is_confetti": True
+                    if float(
+                        grade["herkansing"].get("resultaat", "10.0").replace(",", ".")
+                    )
+                    >= 10
+                    else False,
+                    "effective_result": True
+                    if grade["geldendResultaat"]
+                    == grade["herkansing"].get("resultaat", "onbekend")
+                    else False,
                 },
                 "first_attempt": {
-                    "date": format_date(datetime.strptime(grade["datumInvoer"], "%Y-%m-%dT%H:%M:%S.%f%z")),
+                    "date": format_date(
+                        datetime.strptime(
+                            grade["datumInvoer"], "%Y-%m-%dT%H:%M:%S.%f%z"
+                        )
+                    ),
                     "result": grade["resultaat"],
-                    "result_is_fail": grade_is_fail(grade.get("resultaat"), grade.get("resultaatLabelAfkorting")),
-                    "result_is_confetti": True if float(grade.get("resultaat", grade.get("resultaatLabelAfkorting")).replace(",", ".")) >= 10 else False,
-                    "effective_result": True if grade["resultaat"] == grade["geldendResultaat"] else False,
+                    "result_is_fail": grade_is_fail(
+                        grade.get("resultaat"), grade.get("resultaatLabelAfkorting")
+                    ),
+                    "result_is_confetti": True
+                    if float(
+                        grade.get(
+                            "resultaat", grade.get("resultaatLabelAfkorting")
+                        ).replace(",", ".")
+                    )
+                    >= 10
+                    else False,
+                    "effective_result": True
+                    if grade["resultaat"] == grade["geldendResultaat"]
+                    else False,
                 },
             }
-            grade["retake_is_effective_result"] = False if grade["resultaat"] == grade["geldendResultaat"] else True
+            grade["retake_is_effective_result"] = (
+                False if grade["resultaat"] == grade["geldendResultaat"] else True
+            )
 
     api_data = sorted(api_data, key=lambda x: x["datetime_sort"], reverse=True)
 

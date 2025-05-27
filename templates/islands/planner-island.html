@@ -2,10 +2,8 @@
     {% for day, day_name, current_day_class in zipped_data %}
         <div class="daycontainer">
             <div class="dayheader{% if current_day_class %} today{% endif %}">{{ day_name }}</div>
-            {% if not day %} 
-                <div class="no-homework unavailable">
-                    Geen items op de planner!
-                </div>
+            {% if not day %}
+                <div class="no-homework unavailable">Geen items op de planner!</div>
             {% else %}
                 {% for homework in day %}
                     <div class="homeworkitem {{ homework.type }}">
@@ -14,11 +12,10 @@
                         <span class="homework-title">{{ homework.title }}</span>
                         <div class="homework-finished-container{{ ' finished' if homework.is_finished else ' unfinised' }}" id="{{ homework.id }}">
                             <!-- For homework that is finished on load -->
-                            {% if homework.is_finished %} 
+                            {% if homework.is_finished %}
                                 <i class="fa-solid fa-check"></i>
                             {% endif %}
                         </div>
-
 
                         <div class="info-panel">
                             <div class="info-panel-tile-subject-title">
@@ -45,9 +42,9 @@
 
 <script>
     document.addEventListener("click", function (event) {
-        document.querySelectorAll(".homeworkitem").forEach(hw => {
+        document.querySelectorAll(".homeworkitem").forEach((hw) => {
             const hwPanel = hw.querySelector(".info-panel");
-            const checkBox = hw.querySelector(".homework-finished-container")
+            const checkBox = hw.querySelector(".homework-finished-container");
 
             if (!checkBox.contains(event.target)) {
                 if (hw.contains(event.target)) {
@@ -73,19 +70,19 @@
         return fetch(`/api/finish_homework?id=${id}&action=${state}`, {
             method: "PUT",
         })
-        .then(response => {
-            if (response.status === 200) return true;
-            else return false;
-        })
-        .catch(error => {
-            console.error("Error updating planner item:", error);
-            return false;
-        });
+            .then((response) => {
+                if (response.status === 200) return true;
+                else return false;
+            })
+            .catch((error) => {
+                console.error("Error updating planner item:", error);
+                return false;
+            });
     }
 
     const checkBoxes = document.querySelectorAll(".homework-finished-container");
-    
-    checkBoxes.forEach(checkBox => {
+
+    checkBoxes.forEach((checkBox) => {
         checkBox.addEventListener("click", async function () {
             let checkBoxId = checkBox.getAttribute("id");
             let isFinished = checkBox.classList.contains("finished");
@@ -119,7 +116,7 @@
                     }
                 } else {
                     checkBox.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i>';
-                    setTimeout(() => checkBox.innerHTML = "", 2000);
+                    setTimeout(() => (checkBox.innerHTML = ""), 2000);
                 }
             }
         });

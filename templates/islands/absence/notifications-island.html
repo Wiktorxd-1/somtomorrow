@@ -1,4 +1,17 @@
-{{ notificationsdata }}
+<div class="absence-entriescontainer">
+    {% if notificationsdata %}
+        {% for entry in notificationsdata %}
+            <div class="absence-entry">
+                <span class="absence-type">{{ entry.absentieReden.absentieSoort }} /span>
+                <span class="absence-reason">{{ entry.absentieReden.omschrijving }}</span>
+                <span class="absence-permitted">{% if entry.absentieReden.geoorloofd %}Geoorloofd{% else %}Ongeoorloofd{% endif %}</span>
+                <span class="absence-info">{{ entry.opmerkingen }}</span>
+            </div>
+        {% endfor %}
+    {% else %}
+        <div class="unavailable">Geen registraties</div>
+    {% endif %}
+</div>
 
 <!-- Todo: put this in html lol 
 

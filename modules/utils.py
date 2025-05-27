@@ -11,7 +11,10 @@ def excluded(endpoint):
 
 
 def logged_in():
-    if "token" in session and datetime.now(timezone.utc).timestamp() - session.get("login_time", 0) < 3600:
+    if (
+        "token" in session
+        and datetime.now(timezone.utc).timestamp() - session.get("login_time", 0) < 3600
+    ):
         return True
     return False
 
@@ -64,7 +67,11 @@ def clean_somdata(data):
     if isinstance(data, list):
         return [clean_somdata(item) for item in data]
     elif isinstance(data, dict):
-        return {key: clean_somdata(value) for key, value in data.items() if key not in ["links", "permissions", "UUID"]}
+        return {
+            key: clean_somdata(value)
+            for key, value in data.items()
+            if key not in ["links", "permissions", "UUID"]
+        }
     else:
         return data
 

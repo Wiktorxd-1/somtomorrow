@@ -1,4 +1,14 @@
-from flask import Blueprint, render_template, redirect, url_for, session, send_from_directory, request, send_file, Response
+from flask import (
+    Blueprint,
+    render_template,
+    redirect,
+    url_for,
+    session,
+    send_from_directory,
+    request,
+    send_file,
+    Response,
+)
 import random
 import string
 from datetime import datetime, timezone
@@ -13,7 +23,11 @@ base_bp = Blueprint("base", __name__)
 @base_bp.route("/")
 @excluded
 def index():
-    if "token" in session and datetime.now(timezone.utc).timestamp() - session.get("login_time", 10000) <= 3600:
+    if (
+        "token" in session
+        and datetime.now(timezone.utc).timestamp() - session.get("login_time", 10000)
+        <= 3600
+    ):
         # If user is already logged in and the token is valid, redirect to dashboard
         return redirect(url_for("base.dashboard"))
     return redirect(url_for("auth.login"))
@@ -23,7 +37,9 @@ def index():
 @base_bp.route("/favicon")
 @excluded
 def favicon():
-    return send_from_directory("static", "images/favs/fav.ico", mimetype="image/vnd.microsoft.icon")
+    return send_from_directory(
+        "static", "images/favs/fav.ico", mimetype="image/vnd.microsoft.icon"
+    )
 
 
 @base_bp.route("/.well-known/security.txt")
@@ -50,10 +66,12 @@ def robots():
 def dashboard():
     return render_template("pages/main/dashboard.html")
 
+
 @base_bp.route("/info")
 @use_session_data
 def info():
     return render_template("pages/main/info.html")
+
 
 @base_bp.route("/api/identicon/<username>")
 @excluded

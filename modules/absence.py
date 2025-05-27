@@ -13,6 +13,7 @@ absence_bp = Blueprint("absence", __name__)
 def absence_main():
     return render_template("pages/main/absence.html")
 
+
 @absence_bp.route("/api/islands/absence/registrations")
 @use_session_data
 def registrations_island():
@@ -40,22 +41,27 @@ def registrations_island():
         for entry in entries:
             dt_start = datetime.strptime(entry["begin"], "%Y-%m-%dT%H:%M:%S.%f%z")
             dt_end = datetime.strptime(entry["eind"], "%Y-%m-%dT%H:%M:%S.%f%z")
-            entry["datetime"] = f"{dt_start.strftime('%a %d %b')}, {dt_start.strftime('%H:%M:%S')} tot {dt_end.strftime('%H:%M:%S')}" if dt_start.date() == dt_end.date() else f"{dt_start.strftime('%a %d %b %Y %H:%M')} tot {dt_end.strftime('%a %d %b %Y %H:%M')}"
+            entry["datetime"] = (
+                f"{dt_start.strftime('%a %d %b')}, {dt_start.strftime('%H:%M:%S')} tot {dt_end.strftime('%H:%M:%S')}"
+                if dt_start.date() == dt_end.date()
+                else f"{dt_start.strftime('%a %d %b %Y %H:%M')} tot {dt_end.strftime('%a %d %b %Y %H:%M')}"
+            )
             entries_data.append(entry)
 
         data.append({"type": type_name_formatted, "entries": entries_data})
 
-    return render_template("islands/absence/registrations-island.html", registrationsdata=data)
+    return render_template(
+        "islands/absence/registrations-island.html", registrationsdata=data
+    )
 
 
 @absence_bp.route("/api/islands/absence/notifications")
 @use_session_data
 def notifications_island():
     token = session["token"]
-    
+
     schoolyear_start = session["school_year"]["vanafDatum"]
     schoolyear_end = session["school_year"]["totDatum"]
-
 
     api_url = f"https://api.somtoday.nl/rest/v1/absentiemeldingen?begindatumtijd={schoolyear_start}&einddatumtijd={schoolyear_end}"
 
@@ -64,7 +70,6 @@ def notifications_island():
     response = requests.get(api_url, headers=api_headers)
     data = response.json()["items"]
 
-    for notification in data:
-        notification["ding"] = ""
-
-    return render_template("islands/absence/notifications-island.html", notificationsdata=data)
+    return render_template(
+        "islands/absence/notifications-island.html", notificationsdata=data
+    )

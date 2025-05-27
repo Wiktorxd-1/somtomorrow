@@ -4,12 +4,10 @@
 
 {% block title %}Planner{% endblock %}
 
-
 {% block extra_headers %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles/main/planner.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles/snippets/controllable_weeks.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/main/planner.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/snippets/controllable_weeks.css') }}" />
 {% endblock %}
-
 
 {% block content %}
     {% with api_url="planner" %}

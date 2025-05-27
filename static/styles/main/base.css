@@ -345,7 +345,7 @@ du-island[loading] > *:not(#island-loading) {
 
 .info-panel-tile-title-main {
     color: #aaa;
-    font-size: .8em;
+    font-size: 0.8em;
 }
 
 .unavailable {

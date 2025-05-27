@@ -2,7 +2,13 @@ from flask import Blueprint, render_template, session, request
 from datetime import datetime, timedelta
 import requests
 
-from .utils import use_session_data, clean_somdata, get_icon, capit, get_zipped_data_with_dates
+from .utils import (
+    use_session_data,
+    clean_somdata,
+    get_icon,
+    capit,
+    get_zipped_data_with_dates,
+)
 
 
 schedule_bp = Blueprint("schedule", __name__)
@@ -18,7 +24,9 @@ def schedule_main():
         next_week = today
     year = next_week.year
     weeknum = next_week.isocalendar()[1]
-    return render_template("pages/main/schedule.html", current_weeknum=weeknum, current_year=year)
+    return render_template(
+        "pages/main/schedule.html", current_weeknum=weeknum, current_year=year
+    )
 
 
 @schedule_bp.route("/api/islands/schedule")
@@ -54,10 +62,24 @@ def schedule_island():
         dt_start = datetime.strptime(appo["beginDatumTijd"], "%Y-%m-%dT%H:%M:%S")
         dt_end = datetime.strptime(appo["eindDatumTijd"], "%Y-%m-%dT%H:%M:%S")
 
-        appo["title"] = (capit(appo["vak"]["naam"]).replace("e taal en literatuur", "") if len(appo["vak"]["naam"].replace("e taal en literatuur", "")) < 20 else appo["vak"]["afkorting"].upper()) if appo.get("vak", {}).get("naam") else appo["titel"]
-        appo["title_full"] = capit(appo["vak"]["naam"]) if appo.get("vak", {}).get("naam") else appo["titel"]
+        appo["title"] = (
+            (
+                capit(appo["vak"]["naam"]).replace("e taal en literatuur", "")
+                if len(appo["vak"]["naam"].replace("e taal en literatuur", "")) < 20
+                else appo["vak"]["afkorting"].upper()
+            )
+            if appo.get("vak", {}).get("naam")
+            else appo["titel"]
+        )
+        appo["title_full"] = (
+            capit(appo["vak"]["naam"])
+            if appo.get("vak", {}).get("naam")
+            else appo["titel"]
+        )
 
-        appo["icon"] = get_icon(appo["vak"]["naam"] if appo.get("vak", {}).get("naam") else appo["titel"])
+        appo["icon"] = get_icon(
+            appo["vak"]["naam"] if appo.get("vak", {}).get("naam") else appo["titel"]
+        )
 
         appo["dt_start"] = dt_start
         appo["dt_end"] = dt_end
@@ -74,7 +96,11 @@ def schedule_island():
 
         if appo.get("beginLesuur"):
             if appo.get("eindLesuur"):
-                appo["lesson_hours"] = f"{appo['beginLesuur']}e" if appo["beginLesuur"] == appo["eindLesuur"] else f"{appo['beginLesuur']}e - {appo['eindLesuur']}e"
+                appo["lesson_hours"] = (
+                    f"{appo['beginLesuur']}e"
+                    if appo["beginLesuur"] == appo["eindLesuur"]
+                    else f"{appo['beginLesuur']}e - {appo['eindLesuur']}e"
+                )
             else:
                 appo["lesson_hours"] = f"{appo['beginLesuur']}e"
         appo["start_time"] = dt_start.strftime("%H:%M")
@@ -108,11 +134,19 @@ def schedule_island():
                 col += 1
             appo["column"] = col
 
-        max_column = max((appo.get("column", 0) for appo in daydata if "column" in appo), default=0) + 1
+        max_column = (
+            max(
+                (appo.get("column", 0) for appo in daydata if "column" in appo),
+                default=0,
+            )
+            + 1
+        )
         for appo in daydata:
             appo["width"] = 100 / max_column
             appo["right"] = appo["column"] * appo["width"]
 
-    zipped_data = get_zipped_data_with_dates(year, weeknum, schedule_data, request.args.get("days"))
+    zipped_data = get_zipped_data_with_dates(
+        year, weeknum, schedule_data, request.args.get("days")
+    )
 
     return render_template("islands/schedule-island.html", zipped_data=zipped_data)

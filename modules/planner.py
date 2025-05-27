@@ -3,7 +3,14 @@ from datetime import datetime, timedelta
 
 import requests
 
-from .utils import use_session_data, get_zipped_data_with_dates, get_icon, capit, max_len, remove_html
+from .utils import (
+    use_session_data,
+    get_zipped_data_with_dates,
+    get_icon,
+    capit,
+    max_len,
+    remove_html,
+)
 
 
 planner_bp = Blueprint("planner", __name__)
@@ -20,7 +27,9 @@ def planner_main():
     year = next_week.year
     weeknum = next_week.isocalendar()[1]
 
-    return render_template("pages/main/planner.html", current_weeknum=weeknum, current_year=year)
+    return render_template(
+        "pages/main/planner.html", current_weeknum=weeknum, current_year=year
+    )
 
 
 @planner_bp.route("/api/islands/planner")
@@ -62,25 +71,39 @@ def planner_island():
     for homework in api_data:
         dt = datetime.strptime(homework["datumTijd"], "%Y-%m-%dT%H:%M:%S.%f%z")
         subject_name = homework["lesgroep"]["vak"]["naam"]
-        homework["subject_long"] = capit(subject_name).replace("e taal en literatuur", "")
+        homework["subject_long"] = capit(subject_name).replace(
+            "e taal en literatuur", ""
+        )
         homework["subject_short"] = homework["lesgroep"]["vak"]["afkorting"]
 
         if homework.get("studiewijzerItem"):
             if homework["studiewijzerItem"].get("onderwerp"):
-                homework["title"] = max_len(remove_html(homework["studiewijzerItem"]["onderwerp"]), 35)
+                homework["title"] = max_len(
+                    remove_html(homework["studiewijzerItem"]["onderwerp"]), 35
+                )
             else:
-                homework["title"] = max_len(remove_html(homework["studiewijzerItem"]["omschrijving"]), 35)
+                homework["title"] = max_len(
+                    remove_html(homework["studiewijzerItem"]["omschrijving"]), 35
+                )
         else:
             continue
 
         homework["icon"] = get_icon(subject_name)
-        homework["type"] = "inleveropdracht" if homework["studiewijzerItem"]["inleverperiodes"] else homework["studiewijzerItem"].get("huiswerkType", "undefined").lower()
+        homework["type"] = (
+            "inleveropdracht"
+            if homework["studiewijzerItem"]["inleverperiodes"]
+            else homework["studiewijzerItem"].get("huiswerkType", "undefined").lower()
+        )
         planner_data[dt.weekday()].append(homework)
 
         if homework["additionalObjects"].get("swigemaaktVinkjes"):
             if homework["additionalObjects"]["swigemaaktVinkjes"].get("items"):
-                homework["is_finished"] = homework["additionalObjects"]["swigemaaktVinkjes"]["items"][0]["gemaakt"]
-                homework["id"] = homework["additionalObjects"]["swigemaaktVinkjes"]["items"][0]["swiToekenningId"]
+                homework["is_finished"] = homework["additionalObjects"][
+                    "swigemaaktVinkjes"
+                ]["items"][0]["gemaakt"]
+                homework["id"] = homework["additionalObjects"]["swigemaaktVinkjes"][
+                    "items"
+                ][0]["swiToekenningId"]
             else:
                 homework["is_finished"] = False
                 homework["id"] = homework["links"][0]["id"]
@@ -88,7 +111,9 @@ def planner_island():
             homework["is_finished"] = False
             homework["id"] = homework["links"][0]["id"]
 
-    zipped_data = get_zipped_data_with_dates(year, weeknum, planner_data, request.args.get("days"))
+    zipped_data = get_zipped_data_with_dates(
+        year, weeknum, planner_data, request.args.get("days")
+    )
 
     return render_template("islands/planner-island.html", zipped_data=zipped_data)
 

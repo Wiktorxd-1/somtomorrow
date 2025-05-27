@@ -10,18 +10,19 @@
     {% for day, day_name, current_day_class in zipped_data %}
         <div class="daycontainer">
             <div class="dayheader{% if current_day_class %} today{% endif %}">{{ day_name }}</div>
-                <div class="dayitems">
-
+            <div class="dayitems">
                 {% for i in range(11) %}
                     <div class="line" style="top: {{ i * 10}}%"></div>
                 {% endfor %}
 
                 {% for appointment in day %}
-                    <div class="appointment {{ appointment.type }}"
+                    <div
+                        class="appointment {{ appointment.type }}"
                         style="height: {{ appointment.height }}%;
-                        top: {{ appointment.top }}%;
-                        right: {{ appointment.right }}%;
-                        width: {{ appointment.width }}%">
+                                top: {{ appointment.top }}%;
+                                right: {{ appointment.right }}%;
+                                width: {{ appointment.width }}%"
+                    >
                         <div class="appo-subject">
                             <span class="appo-icon">{{ appointment.icon | safe }}</span>
                             <span class="appo-title">{{ appointment.title }}</span>
@@ -33,7 +34,7 @@
                                     <span class="info-panel-icon">{{ appointment.icon | safe }}</span>
                                     <span class="info-panel-subject">{{ appointment.title_full }}</span>
                                 </div>
-                                <span class="info-panel-tile-title-main">{{ (appointment.titel  or '<span class="unavailable">Onbekend</span>') | safe }}</span>
+                                <span class="info-panel-tile-title-main">{{ (appointment.titel or '<span class="unavailable">Onbekend</span>') | safe }}</span>
                             </div>
                             <div class="info-panel-tile-location info-panel-tile">
                                 <span class="info-panel-tile-title">Locatie <i class="fa-solid fa-location-dot"></i></span>
@@ -50,9 +51,7 @@
                             <div class="info-panel-tile-classgroup info-panel-tile">
                                 <span class="info-panel-tile-title">Lesgroep <i class="fa-solid fa-users"></i></span>
                                 <span class="info-panel-classgroup">
-                                    {% if appointment.lesgroepen %}
-                                        {{ appointment.lesgroepen | map(attribute="naam") | join(", ") }}
-                                    {% else %}
+                                    {% if appointment.lesgroepen %} {{ appointment.lesgroepen | map(attribute="naam") | join(", ") }} {% else %}
                                         <span class="unavailable">Onbekend</span>
                                     {% endif %}
                                 </span>
@@ -60,9 +59,7 @@
                             <div class="info-panel-tile-classgroup info-panel-tile">
                                 <span class="info-panel-tile-title">Statusmeldingen <i class="fa-solid fa-users"></i></span>
                                 <span class="info-panel-classgroup">
-                                    {% if appointment.statusNotifications %}
-                                        {{ appointment.statusNotifications | map(attribute="message") | join(", ") }}
-                                    {% else %}
+                                    {% if appointment.statusNotifications %} {{ appointment.statusNotifications | map(attribute="message") | join(", ") }} {% else %}
                                         <span class="unavailable">Geen</span>
                                     {% endif %}
                                 </span>
@@ -84,7 +81,7 @@
 </div>
 
 <script>
-    const currentLine = document.getElementById("current-line")
+    const currentLine = document.getElementById("current-line");
 
     function update() {
         const now = new Date();
@@ -96,20 +93,19 @@
         const diffInMinutes = diffInMs / (1000 * 60);
 
         if (currentLine) {
-            currentLine.style.top = diffInMinutes * (1/6) + "%";
+            currentLine.style.top = diffInMinutes * (1 / 6) + "%";
         }
     }
-    update()
+    update();
     setInterval(() => {
-        update()
+        update();
     }, 1000);
 </script>
 
 <script>
     document.addEventListener("click", function (event) {
-        document.querySelectorAll(".appointment").forEach(appo => {
+        document.querySelectorAll(".appointment").forEach((appo) => {
             const appoPanel = appo.querySelector(".info-panel");
-
 
             if (appo.contains(event.target)) {
                 appo.classList.add("appo-active");

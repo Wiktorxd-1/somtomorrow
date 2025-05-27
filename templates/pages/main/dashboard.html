@@ -4,16 +4,15 @@
 
 {% block title %}Dashboard{% endblock %}
 
-
 {% block extra_headers %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles/main/dashboard.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/main/dashboard.css') }}" />
 
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles/main/grades/testgrades.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/main/grades/testgrades.css') }}" />
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
 
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles/main/planner.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/main/planner.css') }}" />
 
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles/main/schedule.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/main/schedule.css') }}" />
 
     <style>
         .weekcontainer.planner {
@@ -25,7 +24,6 @@
         }
     </style>
 {% endblock %}
-
 
 {% block content %}
     <h1 id="page-title">Welkom, {{ g.first_name }}!</h1>
@@ -45,5 +43,5 @@
             <a class="tile-title" href="/rooster">Rooster</a>
             <du-island url="schedule?days=today" />
         </div>
-    </div>  
+    </div>
 {% endblock %}

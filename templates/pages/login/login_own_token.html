@@ -4,10 +4,10 @@
     <form method="post" action="/login/own_token">
         <div class="tokeninputcontainer">
             <label for="token">access_token</label>
-            <input type="text" id="tokeninput" name="token" required>
+            <input type="text" id="tokeninput" name="token" required />
         </div>
 
-        <input type="submit" id="loginbutton" value="Inloggen">
+        <input type="submit" id="loginbutton" value="Inloggen" />
     </form>
     {% with messages = get_flashed_messages(with_categories=True) %}
         {% if messages %}
@@ -18,7 +18,6 @@
             </div>
         {% endif %}
     {% endwith %}
-
-{% endblock mainlogin %}
+{% endblock %}
 
 {% block otherlogin %}<a href="/login" class="otherloginmethod">Inloggen met school, gebruikersnaam en wachtwoord</a>{% endblock %}

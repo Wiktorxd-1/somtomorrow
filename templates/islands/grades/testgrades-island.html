@@ -13,19 +13,14 @@
                 <div class="weight-exams"><i class="fa-solid fa-scale-unbalanced-flip"></i> Examenweging: {{ grade.examenWeging if grade.examenWeging else 0 }}</div>
                 <div class="retake-ability"><i class="fa-solid fa-repeat"></i> {% if grade.herkansingstype != "Geen" %}Wel herkansbaar{% else %}Niet herkansbaar{% endif %}</div>
                 <div class="year-period"><i class="fa-solid fa-clock"></i> Jaar {{ grade.leerjaar }}, periode {{ grade.periode }}</div>
-
                 {% if grade.retake %}
-
                     <div class="retake-container">
-                        <span class="retake-title">
-                            Herkansingen
-                        </span>
+                        <span class="retake-title"> Herkansingen </span>
                         <div class="retake-attempt">
                             <div class="retake-infocontainer">
                                 <span class="retake-info">
                                     <span class="retake-number">Eerste herkansing</span>
                                     <span class="retake-date"><i class="fa-solid fa-calendar-day"></i> {{ grade.retake.first_retake.date }}</span>
-                                    
                                 </span>
                                 {% if grade.retake.first_retake.effective_result %}
                                     <span class="retake-effective-result">Geldend cijfer</span>
@@ -46,9 +41,7 @@
                             <span class="retake-result{% if grade.retake.first_attempt.result_is_fail %} grade-fail{% endif %}{% if grade.retake.first_attempt.result_is_confetti %} grade-confetti{% endif %}">{{ grade.retake.first_attempt.result }}</span>
                         </div>
                     </div>
-
                 {% endif %}
-
             </div>
         </div>
     {% endfor %}
@@ -56,7 +49,7 @@
 
 <script>
     document.addEventListener("click", function (event) {
-        document.querySelectorAll(".gradeitem").forEach(grade => {
+        document.querySelectorAll(".gradeitem").forEach((grade) => {
             if (grade.contains(event.target)) {
                 if (grade.classList.contains("open")) {
                     grade.classList.remove("open");
@@ -65,7 +58,7 @@
                     if (grade.classList.contains("confetti")) {
                         const x = event.clientX / window.innerWidth;
                         const y = event.clientY / window.innerHeight;
-                        
+
                         confetti({ origin: { x, y } });
                     }
                 }
