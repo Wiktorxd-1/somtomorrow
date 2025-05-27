@@ -14,9 +14,9 @@ def absence_main():
     return render_template("pages/main/absence.html")
 
 
-@absence_bp.route("/api/islands/absence")
+@absence_bp.route("/api/islands/registrations")
 @use_session_data
-def absence_island():
+def registrations_island():
     token = session["token"]
     student_id = session["student_id"]
 
@@ -46,4 +46,5 @@ def absence_island():
 
         data.append({"type": type_name_formatted, "entries": entries_data})
 
-    return render_template("islands/absence-island.html", absencedata=data)
+    return render_template("islands/absence/registrations-island.html", registrationsdata=data)
+

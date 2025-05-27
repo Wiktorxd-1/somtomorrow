@@ -57,5 +57,4 @@ Yeah it's a lot...
 #### Other
 
 - [ ] Leermids
-- [ ] Afwezigheid
 - [ ] Subjects (also leermids???)
