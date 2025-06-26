@@ -234,11 +234,13 @@ def logindev():
     body = {
         "grant_type": "refresh_token",
         "refresh_token": rtoken,
-        "client_id": "somtoday-leerling-native",
+        "client_id": "somtoday-leerling-web",
     }
     response = requests.post(url, data=body)
 
     data = response.json()
+
+    print(data)
 
     with open(os.path.join(project_dir, f"rtoken{user}.txt"), "w") as file:
         file.write(data.get("refresh_token", rtoken))
