@@ -54,9 +54,11 @@ for root, dirs, files in os.walk("."):
                 remove_dev_blocks(file_path, start_comment, end_comment)
 
 
-with open("last_deploy.txt", "w") as file:
+if not os.path.exists("static/txts/last_deploy.txt"):
+    os.makedirs("static/txts/last_deploy.txt")
+last_deploy_path = "static/txts/last_deploy.txt"
+with open(last_deploy_path, "w") as file:
     file.write(datetime.now().strftime("%d-%m-%Y at %H:%M:%S"))
-
 
 subprocess.run(["touch", "/var/www/som_dupunkto_org_wsgi.py"], check=True)
 print("Redeployed page")
