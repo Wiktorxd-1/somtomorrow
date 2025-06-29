@@ -28,8 +28,12 @@ project_dir = os.path.abspath(project_dir)
 
 
 def get_commit_and_deploy_date():
-    with open(os.path.join(project_dir, "last_deploy.txt"), "r") as f:
-        latest_deploy_date = f.read().strip()
+    deploy_file_path = os.path.join(project_dir, "static/txts/last_deploy.txt")
+    if os.path.exists(deploy_file_path):
+        with open(deploy_file_path, "r") as f:
+            latest_deploy_date = f.read().strip()
+    else:
+        latest_deploy_date = "Unknown"
 
     latest_commit_hash = (
         subprocess.check_output(
